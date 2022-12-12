@@ -1,0 +1,8 @@
+springdoc:
+  swagger-ui:
+    enabled: false
+spring:
+  security:
+    cors:
+      allowedOrigins: ${SERVER_URL}
+      allowedMethods: "*"

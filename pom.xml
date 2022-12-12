@@ -14,6 +14,7 @@
         <io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
         <org.projectlombok.mapstruct.binding>0.2.0</org.projectlombok.mapstruct.binding>
         <org.projectlombok>1.18.24</org.projectlombok>
+        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
     </properties>
 
     <dependencyManagement>
@@ -36,6 +37,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
