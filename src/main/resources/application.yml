@@ -7,3 +7,9 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: true
+  security:
+    jwt:
+      secret: "profile"
+      expired: 3600000
+  main:
+    banner-mode: "off"
