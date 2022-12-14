@@ -1,5 +1,4 @@
-FROM openjdk:17-ea-jdk-oracle
-VOLUME /tmp
+FROM openjdk:17-alpine
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} Profiler2022.jar
-ENTRYPOINT ["java","-jar","/Profiler2022.jar"]
+COPY ${JAR_FILE}  /opt/profiler/app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
