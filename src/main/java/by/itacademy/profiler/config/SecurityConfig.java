@@ -3,6 +3,7 @@ package by.itacademy.profiler.config;
 import by.itacademy.profiler.security.jwt.JwtTokenFilterConfigurer;
 import by.itacademy.profiler.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
@@ -12,13 +13,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalAuthentication
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
+    @Value("${spring.security.cors.allowedOrigins}")
+    private String allowedOrigins;
+    @Value("${spring.security.cors.allowedMethods}")
+    private String allowedMethods;
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -42,5 +49,12 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(allowedOrigins)
+                .allowedMethods(allowedMethods);
     }
 }
