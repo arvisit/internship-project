@@ -1,6 +1,18 @@
-# dev
+# Info for DevOps
 
+## List of environment variables
 
+SERVER_URL - Server URL for CORS purpose.
+
+DATABASE_URL - Database URL. (Example: "jdbc:mysql://localhost:3306/profiler-db" or "jdbc:mysql://192.168.205.200:3306/profiler-db")
+
+DATABASE_USERNAME - Database username.
+
+DATABASE_PASSWORD - Database password.
+
+SPRING_PROFILES_ACTIVE - Active profile for spring application properties, can be "DEV", "QA", "PROD".
+
+JWT_SECRET_PHRASE - JWT token secret phrase, for now we use "profile".
 
 ## Getting started
 

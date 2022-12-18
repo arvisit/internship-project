@@ -1,6 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/profiler-db
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   liquibase:
     change-log: db.changelog/changelog.xml
   jpa:
@@ -8,11 +10,8 @@ spring:
       ddl-auto: none
     open-in-view: true
   security:
-    cors:
-      allowedOrigins: "*"
-      allowedMethods: "*"
     jwt:
-      secret: "profile"
+      secret: ${JWT_SECRET_PHRASE}
       expired: 3600000
   main:
     banner-mode: "off"
