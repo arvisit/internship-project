@@ -12,5 +12,5 @@ public record AuthenticationRequestDto(
 
         @NotBlank(message = "Password is mandatory!")
         String password) implements Serializable {
-    private static final String REGEXP_VALIDATE_EMAIL = "^[\\w ]+(?:\\w+[!#$%&'()*,\\-./:;<=>?\\[\\]^_{}]?)+\\w+@[a-zA-Z0-9-]+\\.+([a-zA-Z]{2,6}+[ +]*)$";
+    private static final String REGEXP_VALIDATE_EMAIL = "^[\\w ]+(?:\\w+[!#$%&'()*,\\-./:;<=>?\\[\\]^_{}]?)+\\w+@[a-zA-Z0-9-_]+\\.+([a-zA-Z]{2,6}+[ +]*)$";
 }
