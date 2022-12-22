@@ -1,7 +1,7 @@
 package by.itacademy.profiler.api.exception;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
-public record ErrorResponse(int statusCode, String message, LocalDateTime timeStamp) {
+public record ErrorResponse(int statusCode, String message, ZonedDateTime timeStamp) {
 }
 
