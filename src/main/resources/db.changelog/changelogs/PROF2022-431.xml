@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-431" author="s-afer@yandex.ru">
+        <createTable tableName="phone_codes">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_phone_code"/>
+            </column>
+            <column name="code" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="phone_codes"
+                                 constraintName="FK_PHONE_CODE_ON_COUNTRY_ID"
+                                 referencedColumnNames="id"
+                                 referencedTableName="countries"/>
+    <sql dbms="all">
+        INSERT INTO phone_codes (code, country_id)
+        SELECT 375, countries.id
+        FROM countries
+        WHERE country_name = 'Belarus';
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 7, countries.id
+        FROM countries
+
+        WHERE country_name = 'Russia';
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 380, countries.id
+        FROM countries
+
+        WHERE country_name = 'Ukraine';
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 370, countries.id
+        FROM countries
+        WHERE country_name = 'Lithuania';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 371, countries.id
+        FROM countries
+        WHERE country_name = 'Latvia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 93, countries.id
+        FROM countries
+        WHERE country_name = 'Afghanistan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 355, countries.id
+        FROM countries
+        WHERE country_name = 'Albania';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 213, countries.id
+        FROM countries
+        WHERE country_name = 'Algeria';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 376, countries.id
+        FROM countries
+        WHERE country_name = 'Andorra';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 244, countries.id
+        FROM countries
+        WHERE country_name = 'Angola';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 54, countries.id
+        FROM countries
+        WHERE country_name = 'Argentina';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 374, countries.id
+        FROM countries
+        WHERE country_name = 'Armenia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 297, countries.id
+        FROM countries
+        WHERE country_name = 'Aruba';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 61, countries.id
+        FROM countries
+        WHERE country_name = 'Australia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 43, countries.id
+        FROM countries
+        WHERE country_name = 'Austria';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 994, countries.id
+        FROM countries
+        WHERE country_name = 'Azerbaijan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 973, countries.id
+        FROM countries
+        WHERE country_name = 'Bahrain';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 880, countries.id
+        FROM countries
+        WHERE country_name = 'Bangladesh';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 32, countries.id
+        FROM countries
+        WHERE country_name = 'Belgium';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 501, countries.id
+        FROM countries
+        WHERE country_name = 'Belize';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 229, countries.id
+        FROM countries
+        WHERE country_name = 'Benin';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 975, countries.id
+        FROM countries
+        WHERE country_name = 'Bhutan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 591, countries.id
+        FROM countries
+        WHERE country_name = 'Bolivia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 387, countries.id
+        FROM countries
+        WHERE country_name = 'Bosnia and Herzegovina';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 267, countries.id
+        FROM countries
+        WHERE country_name = 'Botswana';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 55, countries.id
+        FROM countries
+        WHERE country_name = 'Brazil';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 673, countries.id
+        FROM countries
+        WHERE country_name = 'Brunei Darussalam';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 359, countries.id
+        FROM countries
+        WHERE country_name = 'Bulgaria';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 226, countries.id
+        FROM countries
+        WHERE country_name = 'Burkina-Faso';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 257, countries.id
+        FROM countries
+        WHERE country_name = 'Burundi';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 855, countries.id
+        FROM countries
+        WHERE country_name = 'Cambodia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 1, countries.id
+        FROM countries
+        WHERE country_name = 'Canada';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 237, countries.id
+        FROM countries
+        WHERE country_name = 'Cameroon';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 238, countries.id
+        FROM countries
+        WHERE country_name = 'Cape-Verde';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 236, countries.id
+        FROM countries
+        WHERE country_name = 'Central African republic';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 235, countries.id
+        FROM countries
+        WHERE country_name = 'Chad';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 56, countries.id
+        FROM countries
+        WHERE country_name = 'Chile';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 86, countries.id
+        FROM countries
+        WHERE country_name = 'China';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 57, countries.id
+        FROM countries
+        WHERE country_name = 'Colombia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 242, countries.id
+        FROM countries
+        WHERE country_name = 'Congo';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 243, countries.id
+        FROM countries
+        WHERE country_name = 'Congo D.R.';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 506, countries.id
+        FROM countries
+        WHERE country_name = 'Costa-Rica';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 225, countries.id
+        FROM countries
+        WHERE country_name = 'Cote d''Ivoire';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 385, countries.id
+        FROM countries
+        WHERE country_name = 'Croatia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 53, countries.id
+        FROM countries
+        WHERE country_name = 'Cuba';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 357, countries.id
+        FROM countries
+        WHERE country_name = 'Cyprus';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 420, countries.id
+        FROM countries
+        WHERE country_name = 'Czech Republic';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 45, countries.id
+        FROM countries
+        WHERE country_name = 'Denmark';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 253, countries.id
+        FROM countries
+        WHERE country_name = 'Djibouti';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 593, countries.id
+        FROM countries
+        WHERE country_name = 'Ecuador';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 503, countries.id
+        FROM countries
+        WHERE country_name = 'El Salvador';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 240, countries.id
+        FROM countries
+        WHERE country_name = 'Equatorial guinea';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 20, countries.id
+        FROM countries
+        WHERE country_name = 'Egypt';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 291, countries.id
+        FROM countries
+        WHERE country_name = 'Eritrea';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 372, countries.id
+        FROM countries
+        WHERE country_name = 'Estonia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 251, countries.id
+        FROM countries
+        WHERE country_name = 'Ethiopia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 298, countries.id
+        FROM countries
+        WHERE country_name = 'Faroe Islands';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 679, countries.id
+        FROM countries
+        WHERE country_name = 'Fiji';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 358, countries.id
+        FROM countries
+        WHERE country_name = 'Finland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 33, countries.id
+        FROM countries
+        WHERE country_name = 'France';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 241, countries.id
+        FROM countries
+        WHERE country_name = 'Gabon';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 220, countries.id
+        FROM countries
+        WHERE country_name = 'Gambia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 995, countries.id
+        FROM countries
+        WHERE country_name = 'Georgia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 49, countries.id
+        FROM countries
+        WHERE country_name = 'Germany';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 233, countries.id
+        FROM countries
+        WHERE country_name = 'Ghana';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 350, countries.id
+        FROM countries
+        WHERE country_name = 'Gibraltar';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 30, countries.id
+        FROM countries
+        WHERE country_name = 'Greece';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 299, countries.id
+        FROM countries
+        WHERE country_name = 'Greenland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 590, countries.id
+        FROM countries
+        WHERE country_name = 'Guadeloupe';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 502, countries.id
+        FROM countries
+        WHERE country_name = 'Guatemala';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 44, countries.id
+        FROM countries
+        WHERE country_name = 'Guernsey';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 594, countries.id
+        FROM countries
+        WHERE country_name = 'Guiana';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 224, countries.id
+        FROM countries
+        WHERE country_name = 'Guinea';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 245, countries.id
+        FROM countries
+        WHERE country_name = 'Guinea-Bissau';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 592, countries.id
+        FROM countries
+        WHERE country_name = 'Guyana';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 509, countries.id
+        FROM countries
+        WHERE country_name = 'Haiti';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 504, countries.id
+        FROM countries
+        WHERE country_name = 'Honduras';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 852, countries.id
+        FROM countries
+        WHERE country_name = 'Hong Kong';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 36, countries.id
+        FROM countries
+        WHERE country_name = 'Hungary';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 354, countries.id
+        FROM countries
+        WHERE country_name = 'Iceland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 91, countries.id
+        FROM countries
+        WHERE country_name = 'India';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 62, countries.id
+        FROM countries
+        WHERE country_name = 'Indonesia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 98, countries.id
+        FROM countries
+        WHERE country_name = 'Iran';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 964, countries.id
+        FROM countries
+        WHERE country_name = 'Iraq';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 353, countries.id
+        FROM countries
+        WHERE country_name = 'Irish';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 972, countries.id
+        FROM countries
+        WHERE country_name = 'Israel';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 39, countries.id
+        FROM countries
+        WHERE country_name = 'Italy';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 81, countries.id
+        FROM countries
+        WHERE country_name = 'Japan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 44, countries.id
+        FROM countries
+        WHERE country_name = 'Jersey';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 962, countries.id
+        FROM countries
+        WHERE country_name = 'Jordan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 7, countries.id
+        FROM countries
+        WHERE country_name = 'Kazakhstan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 254, countries.id
+        FROM countries
+        WHERE country_name = 'Kenya';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 82, countries.id
+        FROM countries
+        WHERE country_name = 'Korea';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 850, countries.id
+        FROM countries
+        WHERE country_name = 'Korea, D.P.R';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 965, countries.id
+        FROM countries
+        WHERE country_name = 'Kuwait';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 996, countries.id
+        FROM countries
+        WHERE country_name = 'Kyrgyzstan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 856, countries.id
+        FROM countries
+        WHERE country_name = 'Laos';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 961, countries.id
+        FROM countries
+        WHERE country_name = 'Lebanon';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 266, countries.id
+        FROM countries
+        WHERE country_name = 'Lesotho';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 231, countries.id
+        FROM countries
+        WHERE country_name = 'Liberia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 218, countries.id
+        FROM countries
+        WHERE country_name = 'Libya';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 423, countries.id
+        FROM countries
+        WHERE country_name = 'Liechtenstein';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 352, countries.id
+        FROM countries
+        WHERE country_name = 'Luxembourg';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 853, countries.id
+        FROM countries
+        WHERE country_name = 'Macau';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 389, countries.id
+        FROM countries
+        WHERE country_name = 'Macedonia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 261, countries.id
+        FROM countries
+        WHERE country_name = 'Madagascar';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 265, countries.id
+        FROM countries
+        WHERE country_name = 'Malawi';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 60, countries.id
+        FROM countries
+        WHERE country_name = 'Malaysia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 960, countries.id
+        FROM countries
+        WHERE country_name = 'Maldives';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 223, countries.id
+        FROM countries
+        WHERE country_name = 'Mali';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 356, countries.id
+        FROM countries
+        WHERE country_name = 'Malta';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 222, countries.id
+        FROM countries
+        WHERE country_name = 'Mauritania';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 230, countries.id
+        FROM countries
+        WHERE country_name = 'Mauritius';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 52, countries.id
+        FROM countries
+        WHERE country_name = 'Mexico';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 691, countries.id
+        FROM countries
+        WHERE country_name = 'Micronesia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 373, countries.id
+        FROM countries
+        WHERE country_name = 'Moldova';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 377, countries.id
+        FROM countries
+        WHERE country_name = 'Monaco';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 976, countries.id
+        FROM countries
+        WHERE country_name = 'Mongolia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 382, countries.id
+        FROM countries
+        WHERE country_name = 'Montenegro';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 212, countries.id
+        FROM countries
+        WHERE country_name = 'Morocco';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 258, countries.id
+        FROM countries
+        WHERE country_name = 'Mozambique';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 95, countries.id
+        FROM countries
+        WHERE country_name = 'Myanmar';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 264, countries.id
+        FROM countries
+        WHERE country_name = 'Namibia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 674, countries.id
+        FROM countries
+        WHERE country_name = 'Nauru';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 977, countries.id
+        FROM countries
+        WHERE country_name = 'Nepal';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 31, countries.id
+        FROM countries
+        WHERE country_name = 'Netherlands';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 64, countries.id
+        FROM countries
+        WHERE country_name = 'New Zealand';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 505, countries.id
+        FROM countries
+        WHERE country_name = 'Nicaragua';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 227, countries.id
+        FROM countries
+        WHERE country_name = 'Niger';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 234, countries.id
+        FROM countries
+        WHERE country_name = 'Nigeria';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 47, countries.id
+        FROM countries
+        WHERE country_name = 'Norway';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 968, countries.id
+        FROM countries
+        WHERE country_name = 'Oman';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 92, countries.id
+        FROM countries
+        WHERE country_name = 'Pakistan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 970, countries.id
+        FROM countries
+        WHERE country_name = 'Palestine';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 507, countries.id
+        FROM countries
+        WHERE country_name = 'Panama';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 675, countries.id
+        FROM countries
+        WHERE country_name = 'Papua New Guinea';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 595, countries.id
+        FROM countries
+        WHERE country_name = 'Paraguay';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 51, countries.id
+        FROM countries
+        WHERE country_name = 'Peru';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 63, countries.id
+        FROM countries
+        WHERE country_name = 'Philippines';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 48, countries.id
+        FROM countries
+        WHERE country_name = 'Poland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 351, countries.id
+        FROM countries
+        WHERE country_name = 'Portugal';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 974, countries.id
+        FROM countries
+        WHERE country_name = 'Qatar';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 40, countries.id
+        FROM countries
+        WHERE country_name = 'Romania';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 250, countries.id
+        FROM countries
+        WHERE country_name = 'Rwanda';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 378, countries.id
+        FROM countries
+        WHERE country_name = 'San Marino';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 966, countries.id
+        FROM countries
+        WHERE country_name = 'Saudi Arabia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 221, countries.id
+        FROM countries
+        WHERE country_name = 'Senegal';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 381, countries.id
+        FROM countries
+        WHERE country_name = 'Serbia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 248, countries.id
+        FROM countries
+        WHERE country_name = 'Seychelles';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 232, countries.id
+        FROM countries
+        WHERE country_name = 'Sierra Leone';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 65, countries.id
+        FROM countries
+        WHERE country_name = 'Singapore';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 421, countries.id
+        FROM countries
+        WHERE country_name = 'Slovakia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 386, countries.id
+        FROM countries
+        WHERE country_name = 'Slovenia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 252, countries.id
+        FROM countries
+        WHERE country_name = 'Somalia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 27, countries.id
+        FROM countries
+        WHERE country_name = 'South Africa';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 34, countries.id
+        FROM countries
+        WHERE country_name = 'Spain';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 94, countries.id
+        FROM countries
+        WHERE country_name = 'Sri Lanka';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 249, countries.id
+        FROM countries
+        WHERE country_name = 'Sudan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 597, countries.id
+        FROM countries
+        WHERE country_name = 'Suriname';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 47, countries.id
+        FROM countries
+        WHERE country_name = 'Svalbard and Jan Mayen';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 268, countries.id
+        FROM countries
+        WHERE country_name = 'Swaziland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 46, countries.id
+        FROM countries
+        WHERE country_name = 'Sweden';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 41, countries.id
+        FROM countries
+        WHERE country_name = 'Switzerland';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 963, countries.id
+        FROM countries
+        WHERE country_name = 'Syria';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 992, countries.id
+        FROM countries
+        WHERE country_name = 'Tadjikistan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 886, countries.id
+        FROM countries
+        WHERE country_name = 'Taiwan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 66, countries.id
+        FROM countries
+        WHERE country_name = 'Thailand';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 255, countries.id
+        FROM countries
+        WHERE country_name = 'Tanzania';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 216, countries.id
+        FROM countries
+        WHERE country_name = 'Tunisia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 90, countries.id
+        FROM countries
+        WHERE country_name = 'Turkey';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 993, countries.id
+        FROM countries
+        WHERE country_name = 'Turkmenistan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 256, countries.id
+        FROM countries
+        WHERE country_name = 'Uganda';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 971, countries.id
+        FROM countries
+        WHERE country_name = 'United Arab Emirates';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 44, countries.id
+        FROM countries
+        WHERE country_name = 'United Kingdom';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 1, countries.id
+        FROM countries
+        WHERE country_name = 'United States';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 598, countries.id
+        FROM countries
+        WHERE country_name = 'Uruguay';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 998, countries.id
+        FROM countries
+        WHERE country_name = 'Uzbekistan';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 379, countries.id
+        FROM countries
+        WHERE country_name = 'Vatican';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 58, countries.id
+        FROM countries
+        WHERE country_name = 'Venezuela';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 84, countries.id
+        FROM countries
+        WHERE country_name = 'Vietnam';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 967, countries.id
+        FROM countries
+        WHERE country_name = 'Yemen';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 260, countries.id
+        FROM countries
+        WHERE country_name = 'Zambia';
+
+        INSERT INTO phone_codes(code, country_id)
+        SELECT 263, countries.id
+        FROM countries
+        WHERE country_name = 'Zimbabwe'
+    </sql>
+</changeSet>
+        </databaseChangeLog>
