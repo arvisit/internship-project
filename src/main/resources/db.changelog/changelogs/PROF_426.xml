@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF_426" author="romanyaskevich1993@gmail.com">
+
+        <createTable tableName="positions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="position_name" type="varchar(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Java developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="JavaScript developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Python developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="PHP developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="NET developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="DevOps engineer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Android developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="iOS developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="С++ developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="C++ game developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Unity developer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Data Science"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="QA specialist"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="QA automation Java"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="QA automation Python"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="QA automation JavaScript"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Project Manager"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Business Analyst"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Technical Writer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="UI UX designer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Graphic Designer"/>
+        </insert>
+
+        <insert tableName="positions">
+            <column name="position_name" value="Motion Designer"/>
+        </insert>
+
+
+    </changeSet>
+
+</databaseChangeLog>
