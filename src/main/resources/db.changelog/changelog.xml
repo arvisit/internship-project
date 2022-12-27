@@ -7,4 +7,5 @@
     <include file="changelogs/PROF-103_131_133_134.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF_426.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-433.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/PROF2022-431.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
