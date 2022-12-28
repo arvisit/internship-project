@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationUserDto findByEmailAndPassword(AuthenticationRequestDto requestDto) {
-        User user = userRepository.findByEmail(requestDto.email().trim());
+        User user = userRepository.findByEmail(requestDto.email());
         AuthenticationUserDto authenticationUserDto = authenticationUserMapper.userToAuthenticationUserDto(user);
         if (user != null) {
             if (passwordEncoder.matches(requestDto.password(), user.getPassword())) {
