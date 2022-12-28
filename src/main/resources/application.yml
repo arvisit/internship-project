@@ -9,6 +9,11 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: true
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: UNSPECIFIED
   security:
     jwt:
       secret: ${JWT_SECRET_PHRASE}
@@ -20,3 +25,7 @@ management:
     web:
       exposure:
         include: health, info
+logging:
+  level:
+    root: info
+    by.itacademy.profiler: debug

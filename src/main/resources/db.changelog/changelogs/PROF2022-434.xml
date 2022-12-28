@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-434" author="aleksandr.mikhalevich89@gmail.com">
+        <createTable tableName="profiles">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="profile_user_id"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="surname" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="profile_country_id"
+                             referencedTableName="countries"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="phone_code_id" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="profile_phone_code_id"
+                             referencedTableName="phone_codes"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="phone_number" type="varchar(25)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="position_id" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="profile_position_id"
+                             referencedTableName="positions"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -9,24 +9,24 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "phone_codes")
 public class PhoneCode {
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Getter
     @Column(name = "code")
     private Integer code;
 
-    @Getter
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
