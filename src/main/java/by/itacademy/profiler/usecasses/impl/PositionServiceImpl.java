@@ -6,7 +6,7 @@ import by.itacademy.profiler.usecasses.PositionService;
 import by.itacademy.profiler.usecasses.dto.PositionDto;
 import by.itacademy.profiler.usecasses.mapper.PositionMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +15,13 @@ import java.util.List;
 @Service
 public class PositionServiceImpl implements PositionService {
 
+    public static final String POSITION_ID = "id";
     private final PositionRepository positionRepository;
     private final PositionMapper positionMapper;
 
     @Override
     public List<PositionDto> getPositions() {
-        List<Position> positions = positionRepository.findAll();
+        List<Position> positions = positionRepository.findAll(Sort.by(Sort.Order.asc(POSITION_ID)));
         return positionMapper.toListDto(positions);
     }
 }
