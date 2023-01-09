@@ -29,7 +29,7 @@ public class AuthenticationRestController {
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequestDto requestDto) {
         AuthenticationUserDto user = authenticationService.findByEmailAndPassword(requestDto);
         if (user == null) {
-            throw new BadRequestException("Invalid email or password");
+            throw new BadRequestException("Wrong email or password");
         }
         Map<Object, Object> response = new HashMap<>();
         response.put("username", user.email());
