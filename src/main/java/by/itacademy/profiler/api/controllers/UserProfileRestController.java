@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,14 @@ public class UserProfileRestController {
         if (profile == null) {
             throw new UserProfileNotFoundException("Profile not found");
         }
+        return ResponseEntity.ok(profile);
+    }
+
+    @PutMapping
+    public ResponseEntity<UserProfileResponseDto> updateUserProfile(@RequestBody @Valid UserProfileDto userProfileDto) {
+        UserProfileResponseDto profile = userProfileService.updateUserProfile(userProfileDto)
+                .orElseThrow(() -> new UserProfileNotFoundException("Profile not updated"));
+        log.debug("Updated profile from database: {} ", profile);
         return ResponseEntity.ok(profile);
     }
 }
