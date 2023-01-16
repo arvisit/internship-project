@@ -9,18 +9,18 @@ import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VA
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_SURNAME;
 
 public record UserProfileDto(@Pattern(regexp = REGEXP_VALIDATE_NAME,
-                                     message = "The user name was entered incorrectly, it is allowed to use Latin letters, dashes and spaces.")
+                                     message = "Invalid name")
                              String name,
                              @Pattern(regexp = REGEXP_VALIDATE_SURNAME,
-                                     message = "The surname of the user was entered incorrectly, it is allowed to use Latin letters, dashes and spaces.")
+                                     message = "Invalid surname")
                              String surname,
                              Long countryId,
                              @Pattern(regexp = REGEXP_VALIDATE_EMAIL,
-                                     message = "The email of the user was entered incorrectly. Email address must have four parts: Recipient name, @ symbol, Domain name, Top-level domain")
+                                     message = "Invalid email. Example of the correct variant: example@example.com ")
                              String email,
                              Long phoneCodeId,
                              @Pattern(regexp = REGEXP_VALIDATE_CELL_PHONE,
-                                     message = "The user's phone number was entered incorrectly. It is not allowed to use a dashes and a spaces between numbers.")
+                                     message = "Invalid cell phone number. Example of the correct variant: 29233XXXX")
                              String cellPhone,
                              Long positionId) {
 }
