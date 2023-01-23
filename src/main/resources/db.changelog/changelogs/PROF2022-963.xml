@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-963" author="romanyaskevich1993@gmail.com">
+        <update tableName="positions">
+            <column name="position_name" value="QA automation C#"/>
+            <where>position_name='Project Manager'</where>
+        </update>
+        <update tableName="positions">
+            <column name="position_name" value="Project Manager"/>
+            <where>position_name='Business Analyst'</where>
+        </update>
+        <update tableName="positions">
+            <column name="position_name" value="Business Analyst"/>
+            <where>position_name='Technical Writer'</where>
+        </update>
+        <update tableName="positions">
+            <column name="position_name" value="Technical Writer"/>
+            <where>position_name='UI UX designer'</where>
+        </update>
+        <update tableName="positions">
+            <column name="position_name" value="UI/UX designer"/>
+            <where>position_name='Graphic Designer'</where>
+        </update>
+        <update tableName="positions">
+            <column name="position_name" value="Graphic Designer"/>
+            <where>position_name='Motion Designer'</where>
+        </update>
+        <insert tableName="positions">
+            <column name="position_name" value="Motion Designer"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="React developer"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="Ruby on Rails developer"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="Go developer"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="Product manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="HR manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="PR manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="Sales manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="IT Finance manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="SEO specialist"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="SMM manager"/>
+        </insert>
+        <insert tableName="positions">
+            <column name="position_name" value="Digital marketing manager"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
