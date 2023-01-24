@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-933" author="s-afer@yandex.ru">
+        <createTable tableName="cvs">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="uuid"  >
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="cvs_user_id"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="image_uuid" type="uuid">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="cvs_country_id"
+                             referencedTableName="countries"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="position_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="cvs_position_id"
+                             referencedTableName="positions"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="city" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_ready_to_relocate" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_ready_for_remote_work" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createIndex indexName="uuid_index" tableName="cvs">
+            <column name="uuid"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

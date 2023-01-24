@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-448" author="JustShooter@gmail.com">
+        <comment>Adding database changes for functionality to save image for user profile</comment>
+
+        <createTable tableName="images">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_images"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <addColumn tableName="profiles">
+            <column name="image_id" type="BIGINT"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="image_id" baseTableName="profiles"
+                                 constraintName="FK_PROFILES_ON_IMAGES" referencedColumnNames="id"
+                                 referencedTableName="images"/>
+    </changeSet>
+
+</databaseChangeLog>
