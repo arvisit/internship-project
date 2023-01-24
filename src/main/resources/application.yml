@@ -29,3 +29,5 @@ logging:
   level:
     root: info
     by.itacademy.profiler: debug
+curriculum-vitae:
+  number-of-user-curriculum-vitae: 5
