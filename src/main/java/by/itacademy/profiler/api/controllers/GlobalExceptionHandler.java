@@ -1,6 +1,7 @@
 package by.itacademy.profiler.api.controllers;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
+import by.itacademy.profiler.api.exception.CurriculumVitaeNotFoundException;
 import by.itacademy.profiler.api.exception.ErrorResponse;
 import by.itacademy.profiler.api.exception.UserProfileNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UserProfileNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handlerNotFoundException(UserProfileNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(CurriculumVitaeNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handlerCurriculumVitaeNotFoundException(CurriculumVitaeNotFoundException exception) {
         return new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 exception.getMessage(),

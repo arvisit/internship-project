@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
@@ -43,6 +44,19 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         curriculumVitae.setUser(user);
         curriculumVitae.setUuid(UUID.randomUUID().toString());
         curriculumVitaeRepository.save(curriculumVitae);
+        return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+    }
+
+    @Override
+    public List<CurriculumVitaeResponseDto> getAllCvOfUser() {
+        String username = getUsername();
+        List<CurriculumVitae> curriculumVitaeList = curriculumVitaeRepository.findByUsername(username);
+        return curriculumVitaeMapper.curriculumVitaeListToCurriculumVitaeResponseDtoList(curriculumVitaeList);
+    }
+
+    @Override
+    public CurriculumVitaeResponseDto getCvOfUser(String uuid) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuid(uuid);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
     }
 
