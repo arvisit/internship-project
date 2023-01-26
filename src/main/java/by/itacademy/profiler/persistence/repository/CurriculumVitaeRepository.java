@@ -15,5 +15,6 @@ public interface CurriculumVitaeRepository extends JpaRepository<CurriculumVitae
     @Query("SELECT c from CurriculumVitae c, User u where c.user.id = u.id and u.email = :username")
     List<CurriculumVitae> findByUsername(@Param("username") String username);
 
-    CurriculumVitae findByUuid(String uuid);
+    @Query("SELECT c from CurriculumVitae c where c.uuid = :uuid and c.user.email = :username")
+    CurriculumVitae findByUuidAndUsername(@Param("uuid") String uuid, @Param("username") String username);
 }
