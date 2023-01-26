@@ -1,4 +1,8 @@
 spring:
+  servlet:
+    multipart:
+      file-size-threshold: 2048
+      max-file-size: 5MB
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -29,5 +33,7 @@ logging:
   level:
     root: info
     by.itacademy.profiler: debug
+image:
+  storage-dir: ${IMAGES_STORAGE_FOLDER}
 curriculum-vitae:
   number-of-user-curriculum-vitae: 5

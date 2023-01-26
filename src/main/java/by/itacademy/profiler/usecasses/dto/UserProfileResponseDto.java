@@ -8,5 +8,6 @@ public record UserProfileResponseDto(String name,
                                      String email,
                                      Long phoneCodeId, Integer phoneCode,
                                      String cellPhone,
-                                     Long positionId, String position) implements Serializable {
+                                     Long positionId, String position,
+                                     String profileImageUuid) implements Serializable {
 }

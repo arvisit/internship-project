@@ -1,7 +1,9 @@
 package by.itacademy.profiler.usecasses.dto;
 
 
+import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.UUID;
 
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_CELL_PHONE;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_EMAIL;
@@ -22,5 +24,8 @@ public record UserProfileDto(@Pattern(regexp = REGEXP_VALIDATE_NAME,
                              @Pattern(regexp = REGEXP_VALIDATE_CELL_PHONE,
                                      message = "Invalid cell phone number. Example of the correct variant: 29233XXXX")
                              String cellPhone,
-                             Long positionId) {
+                             Long positionId,
+                             @UUID(allowNil = false)
+                             @UserImageValidation
+                             String profileImageUuid) {
 }

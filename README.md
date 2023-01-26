@@ -16,6 +16,8 @@ CORS_ALLOWED_ORIGINS - Server URL for CORS purpose. Should be like "http://it-ac
 
 CORS_ALLOWED_METHODS - Allowed methods for CORS configuration purpose, should be "*"
 
+IMAGES_STORAGE_FOLDER - Full path to storage images directory.
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
