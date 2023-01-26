@@ -56,7 +56,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
 
     @Override
     public CurriculumVitaeResponseDto getCvOfUser(String uuid) {
-        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuid(uuid);
+        String username = getUsername();
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(uuid, username);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
     }
 
