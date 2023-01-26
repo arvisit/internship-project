@@ -4,6 +4,7 @@ package by.itacademy.profiler.usecasses.impl;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.model.UserProfile;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
+import by.itacademy.profiler.persistence.repository.ImageRepository;
 import by.itacademy.profiler.persistence.repository.PhoneCodeRepository;
 import by.itacademy.profiler.persistence.repository.PositionRepository;
 import by.itacademy.profiler.persistence.repository.UserProfileRepository;
@@ -31,6 +32,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final PhoneCodeRepository phoneCodeRepository;
     private final PositionRepository positionRepository;
     private final UserProfileMapper userProfileMapper;
+    private final ImageRepository imageRepository;
 
     @Override
     @Transactional
@@ -39,6 +41,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         User user = userRepository.findByEmail(username);
         UserProfile userProfile = userProfileMapper.userProfileDtoToUserProfile(userProfileDto);
         userProfile.setId(user.getId());
+        imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
         userProfileRepository.save(userProfile);
         return userProfileDto;
     }
@@ -85,6 +88,9 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         if (!isNull(userProfileDto.positionId())) {
             positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
+        }
+        if (!isNull(userProfileDto.profileImageUuid())) {
+            imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
         }
     }
 }

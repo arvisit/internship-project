@@ -29,4 +29,12 @@
                                  referencedTableName="images"/>
     </changeSet>
 
+    <changeSet id="PROF2022-448-2" author="JustShooter@gmail.com">
+        <comment>Changing database structure to actual state, after changes made by s-afer@yandex.ru</comment>
+
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="images"
+                                 constraintName="FK_IMAGES_ON_USERS" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
 </databaseChangeLog>
