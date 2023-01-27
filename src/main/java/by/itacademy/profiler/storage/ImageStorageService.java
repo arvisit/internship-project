@@ -5,5 +5,8 @@ import by.itacademy.profiler.api.exception.ImageStorageException;
 import java.io.InputStream;
 
 public interface ImageStorageService {
-    void saveImage(InputStream content, String fileName) throws ImageStorageException;
+
+    void save(InputStream content, String imageName) throws ImageStorageException;
+
+    void delete(String imageName) throws ImageStorageException;
 }
