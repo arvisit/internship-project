@@ -8,4 +8,6 @@ import java.io.InputStream;
 public interface ImageService {
 
     ImageDto storageImage(InputStream imageInputStream, String username) throws ImageStorageException;
+
+    ImageDto replaceImage(InputStream imageInputStream, String uuid) throws ImageStorageException;
 }

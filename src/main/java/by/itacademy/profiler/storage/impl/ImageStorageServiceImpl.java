@@ -22,7 +22,7 @@ public class ImageStorageServiceImpl implements ImageStorageService {
     private String imageStorageLocation;
 
     @Override
-    public void saveImage(InputStream content, String imageName) throws ImageStorageException {
+    public void save(InputStream content, String imageName) throws ImageStorageException {
         try {
             Path location = Paths.get(imageStorageLocation);
             if (!Files.exists(location)) {
@@ -30,7 +30,18 @@ public class ImageStorageServiceImpl implements ImageStorageService {
             }
             Path imageLocation = Paths.get(imageStorageLocation, imageName);
             Files.copy(content, imageLocation);
-            log.debug("Image was saved successful {}", imageName);
+            log.debug("Image was saved successfully {}", imageName);
+        } catch (IOException e) {
+            throw new ImageStorageException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(String imageName) throws ImageStorageException {
+        try {
+            Path imageLocation = Paths.get(imageStorageLocation, imageName);
+            Files.delete(imageLocation);
+            log.debug("Image was deleted successfully {}", imageName);
         } catch (IOException e) {
             throw new ImageStorageException(e.getMessage());
         }
