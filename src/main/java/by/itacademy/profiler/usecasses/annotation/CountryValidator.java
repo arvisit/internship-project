@@ -11,6 +11,9 @@ public class CountryValidator implements ConstraintValidator<CountryValidation, 
     private final CountryRepository countryRepository;
 
     public boolean isValid(Long id, ConstraintValidatorContext cxt) {
+        if (id == null) {
+            return true;
+        }
         return countryRepository.findById(id).isPresent();
     }
 }
