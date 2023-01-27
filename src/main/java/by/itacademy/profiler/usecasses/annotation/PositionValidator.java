@@ -11,6 +11,9 @@ public class PositionValidator implements ConstraintValidator<PositionValidation
     private final PositionRepository positionRepository;
 
     public boolean isValid(Long id, ConstraintValidatorContext cxt) {
+        if (id == null) {
+            return true;
+        }
         return positionRepository.findById(id).isPresent();
     }
 }
