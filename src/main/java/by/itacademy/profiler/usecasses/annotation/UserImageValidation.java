@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserImageValidation {
-    String message() default "Invalid image uuid";
+    String message() default "Not a users image!";
 
     Class<?>[] groups() default {};
 
