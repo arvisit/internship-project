@@ -10,6 +10,8 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
+import static java.util.Objects.isNull;
+
 @RequiredArgsConstructor
 public class UserImageValidator implements ConstraintValidator<UserImageValidation, String> {
 
@@ -19,13 +21,12 @@ public class UserImageValidator implements ConstraintValidator<UserImageValidati
 
     @Override
     public boolean isValid(String imageUuid, ConstraintValidatorContext context) {
+        if (isNull(imageUuid)) {
+            return true;
+        }
         Image image = imageRepository.findByUuid(imageUuid)
                 .orElseThrow(() -> new BadRequestException(String.format("No such image %s!", imageUuid)));
         User user = userRepository.findByEmail(AuthUtil.getUsername());
-        if (image.getUser().getId().equals(user.getId())) {
-            return true;
-        } else {
-            throw new BadRequestException("Not a users image!");
-        }
+        return image.getUser().getId().equals(user.getId());
     }
 }
