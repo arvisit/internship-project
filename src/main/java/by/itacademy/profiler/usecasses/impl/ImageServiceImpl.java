@@ -47,8 +47,7 @@ public class ImageServiceImpl implements ImageService {
         if (null != image) {
             imageStorageService.delete(uuid);
             imageStorageService.save(imageInputStream, uuid);
-        }
-        else {
+        } else {
             throw new ImageStorageException(String.format("Image with UUID %s could not be replaced", uuid));
         }
         return imageMapper.imageToImageDto(image);
@@ -57,5 +56,17 @@ public class ImageServiceImpl implements ImageService {
     private Image createImage(String imageName, String username) {
         User user = userRepository.findByEmail(username);
         return new Image(user, imageName);
+    }
+
+    @Transactional
+    public void delete(String uuid) throws ImageStorageException {
+        String username = AuthUtil.getUsername();
+        Image image = imageRepository.findByUuidAndUsername(uuid, username);
+        if (null != image) {
+            imageStorageService.delete(uuid);
+            imageRepository.delete(image);
+        } else {
+            throw new ImageStorageException(String.format("Image with UUID %s could not be remove", uuid));
+        }
     }
 }

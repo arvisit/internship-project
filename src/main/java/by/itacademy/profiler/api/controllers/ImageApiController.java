@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -57,6 +58,16 @@ public class ImageApiController {
         try {
             ImageDto imageDto = imageService.replaceImage(image.getInputStream(), uuid);
             return new ResponseEntity<>(imageDto, HttpStatus.OK);
+        } catch (IOException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<String> delete(@PathVariable String uuid) {
+        try {
+            imageService.delete(uuid);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IOException e) {
             throw new BadRequestException(e.getMessage());
         }
