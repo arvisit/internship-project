@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-1140" author="justshooter@gmail.com">
+        <comment>Changing country name Tadjikistan to Tajikistan as per QA requests in PROF2022-1140 enhancement
+            ticket
+        </comment>
+        <update tableName="countries">
+            <column name="country_name" value="Tajikistan"/>
+            <where>country_name='Tadjikistan'</where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog>
