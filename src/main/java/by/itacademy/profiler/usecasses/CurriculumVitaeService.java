@@ -14,4 +14,6 @@ public interface CurriculumVitaeService {
     List<CurriculumVitaeResponseDto> getAllCvOfUser();
 
     CurriculumVitaeResponseDto getCvOfUser(String uuid);
+
+    CurriculumVitaeResponseDto update(String curriculumVitaeUuid, CurriculumVitaeRequestDto curriculumVitaeRequestDto);
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
+import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +56,17 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     }
 
     @Override
+    @Transactional
+    public CurriculumVitaeResponseDto update(String curriculumVitaeUuid,
+                                             CurriculumVitaeRequestDto curriculumVitaeDto) {
+        String username = getUsername();
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username);
+        updateCurriculumVitaeByRequestDto(curriculumVitae, curriculumVitaeDto, username);
+        CurriculumVitae updatedCurriculumVitae = curriculumVitaeRepository.save(curriculumVitae);
+        return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(updatedCurriculumVitae);
+    }
+
+    @Override
     public CurriculumVitaeResponseDto getCvOfUser(String uuid) {
         String username = getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(uuid, username);
@@ -81,5 +93,38 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         curriculumVitae.setIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate());
         curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
         return curriculumVitae;
+    }
+
+    private void updateCurriculumVitaeByRequestDto(CurriculumVitae curriculumVitae,
+                                                   CurriculumVitaeRequestDto curriculumVitaeRequestDto,
+                                                   String username) {
+        if (nonNull(curriculumVitaeRequestDto.imageUuid())
+                && !curriculumVitaeRequestDto.imageUuid().equals(curriculumVitae.getImage().getUuid())) {
+            String imageUuid = curriculumVitaeRequestDto.imageUuid();
+            curriculumVitae.setImage(imageRepository.findByUuidAndUsername(imageUuid, username));
+        }
+        if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
+            curriculumVitae.setName(curriculumVitaeRequestDto.name());
+        }
+        if (!curriculumVitaeRequestDto.surname().equals(curriculumVitae.getName())) {
+            curriculumVitae.setSurname(curriculumVitaeRequestDto.surname());
+        }
+        if (!curriculumVitaeRequestDto.positionId().equals(curriculumVitae.getPosition().getId())) {
+            positionRepository.findById(curriculumVitaeRequestDto.positionId())
+                    .ifPresent(curriculumVitae::setPosition);
+        }
+        if (!curriculumVitaeRequestDto.countryId().equals(curriculumVitae.getCountry().getId())) {
+            countryRepository.findById(curriculumVitaeRequestDto.positionId())
+                    .ifPresent(curriculumVitae::setCountry);
+        }
+        if (!curriculumVitaeRequestDto.city().equals(curriculumVitae.getCity())) {
+            curriculumVitae.setCity(curriculumVitaeRequestDto.city());
+        }
+        if (!curriculumVitaeRequestDto.isReadyToRelocate().equals(curriculumVitae.getIsReadyToRelocate())) {
+            curriculumVitae.setIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate());
+        }
+        if (!curriculumVitaeRequestDto.isReadyForRemoteWork().equals(curriculumVitae.getIsReadyForRemoteWork())) {
+            curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
+        }
     }
 }
