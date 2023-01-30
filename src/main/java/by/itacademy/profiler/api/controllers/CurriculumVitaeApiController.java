@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,13 @@ public class CurriculumVitaeApiController {
             throw new CurriculumVitaeNotFoundException("CV with UUID " + uuid + " not found");
         }
         return new ResponseEntity<>(curriculumVitae, HttpStatus.OK);
+    }
+
+    @PutMapping("/{uuid}")
+    public ResponseEntity<CurriculumVitaeResponseDto> update(@RequestBody @Valid CurriculumVitaeRequestDto curriculumVitaeRequestDto,
+                                                             @PathVariable String uuid) {
+        log.debug("Updating CV with UUID {} by the data: {} ", uuid, curriculumVitaeRequestDto);
+        CurriculumVitaeResponseDto responseCurriculumVitae = curriculumVitaeService.update(uuid, curriculumVitaeRequestDto);
+        return new ResponseEntity<>(responseCurriculumVitae, HttpStatus.OK);
     }
 }
