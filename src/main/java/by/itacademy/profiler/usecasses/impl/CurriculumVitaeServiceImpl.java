@@ -98,9 +98,9 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     private void updateCurriculumVitaeByRequestDto(CurriculumVitae curriculumVitae,
                                                    CurriculumVitaeRequestDto curriculumVitaeRequestDto,
                                                    String username) {
+        String imageUuid = curriculumVitaeRequestDto.imageUuid();
         if (nonNull(curriculumVitaeRequestDto.imageUuid())
                 && !curriculumVitaeRequestDto.imageUuid().equals(curriculumVitae.getImage().getUuid())) {
-            String imageUuid = curriculumVitaeRequestDto.imageUuid();
             curriculumVitae.setImage(imageRepository.findByUuidAndUsername(imageUuid, username));
         }
         if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
