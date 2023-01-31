@@ -57,16 +57,4 @@ public class ImageServiceImpl implements ImageService {
         User user = userRepository.findByEmail(username);
         return new Image(user, imageName);
     }
-
-    @Transactional
-    public void delete(String uuid) throws ImageStorageException {
-        String username = AuthUtil.getUsername();
-        Image image = imageRepository.findByUuidAndUsername(uuid, username);
-        if (null != image) {
-            imageStorageService.delete(uuid);
-            imageRepository.delete(image);
-        } else {
-            throw new ImageStorageException(String.format("Image with UUID %s could not be remove", uuid));
-        }
-    }
 }

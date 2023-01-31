@@ -7,15 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -41,12 +38,6 @@ public class Image {
     @Column(name = "uuid", nullable = false, unique = true, length = 50)
     private String uuid;
 
-    @OneToMany(mappedBy = "profileImage")
-    private Set<UserProfile> profiles;
-
-    @OneToMany(mappedBy = "image")
-    private Set<CurriculumVitae> curriculumVitaes;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,15 +49,5 @@ public class Image {
     @Override
     public int hashCode() {
         return Objects.hash(id, user, uuid);
-    }
-
-    @PreRemove
-    private void preRemove() {
-        for (UserProfile user : profiles) {
-            user.setProfileImage(null);
-        }
-        for (CurriculumVitae user : curriculumVitaes) {
-            user.setImage(null);
-        }
     }
 }

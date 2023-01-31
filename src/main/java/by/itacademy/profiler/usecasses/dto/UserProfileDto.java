@@ -2,9 +2,9 @@ package by.itacademy.profiler.usecasses.dto;
 
 
 import by.itacademy.profiler.usecasses.annotation.CountryValidation;
+import by.itacademy.profiler.usecasses.annotation.ImageValidation;
 import by.itacademy.profiler.usecasses.annotation.PhoneCodeValidation;
 import by.itacademy.profiler.usecasses.annotation.PositionValidation;
-import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UUID;
@@ -35,6 +35,6 @@ public record UserProfileDto(@Length(max = 50, message = "The name is too long, 
                              @PositionValidation
                              Long positionId,
                              @UUID(allowNil = false)
-                             @UserImageValidation
+                             @ImageValidation
                              String profileImageUuid) {
 }
