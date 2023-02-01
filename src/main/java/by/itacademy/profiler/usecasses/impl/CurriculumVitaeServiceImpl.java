@@ -99,8 +99,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
                                                    CurriculumVitaeRequestDto curriculumVitaeRequestDto,
                                                    String username) {
         String imageUuid = curriculumVitaeRequestDto.imageUuid();
-        if (nonNull(curriculumVitaeRequestDto.imageUuid())
-                && !curriculumVitaeRequestDto.imageUuid().equals(curriculumVitae.getImage().getUuid())) {
+        if (nonNull(imageUuid) && !imageUuid.equals(curriculumVitae.getImage().getUuid())) {
             curriculumVitae.setImage(imageRepository.findByUuidAndUsername(imageUuid, username));
         }
         if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
