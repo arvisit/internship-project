@@ -4,6 +4,7 @@ import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.api.exception.CurriculumVitaeNotFoundException;
 import by.itacademy.profiler.api.exception.EmptyFileException;
 import by.itacademy.profiler.api.exception.ErrorResponse;
+import by.itacademy.profiler.api.exception.ImageNotFoundException;
 import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.api.exception.UserProfileNotFoundException;
 import by.itacademy.profiler.api.exception.WrongMediaTypeException;
@@ -97,6 +98,15 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleImageStorageException(ImageStorageException exception) {
         return new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleImageNotFoundException(ImageNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
                 exception.getMessage(),
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
