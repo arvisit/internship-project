@@ -47,8 +47,7 @@ public class ImageServiceImpl implements ImageService {
         if (null != image) {
             imageStorageService.delete(uuid);
             imageStorageService.save(imageInputStream, uuid);
-        }
-        else {
+        } else {
             throw new ImageStorageException(String.format("Image with UUID %s could not be replaced", uuid));
         }
         return imageMapper.imageToImageDto(image);

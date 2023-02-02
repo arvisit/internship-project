@@ -1,6 +1,8 @@
 package by.itacademy.profiler.usecasses.impl;
 
 
+import by.itacademy.profiler.api.exception.BadRequestException;
+import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.model.UserProfile;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -9,6 +11,7 @@ import by.itacademy.profiler.persistence.repository.PhoneCodeRepository;
 import by.itacademy.profiler.persistence.repository.PositionRepository;
 import by.itacademy.profiler.persistence.repository.UserProfileRepository;
 import by.itacademy.profiler.persistence.repository.UserRepository;
+import by.itacademy.profiler.storage.ImageStorageService;
 import by.itacademy.profiler.usecasses.UserProfileService;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
@@ -33,6 +36,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final PositionRepository positionRepository;
     private final UserProfileMapper userProfileMapper;
     private final ImageRepository imageRepository;
+    private final ImageStorageService imageStorageService;
 
     @Override
     @Transactional
@@ -89,8 +93,18 @@ public class UserProfileServiceImpl implements UserProfileService {
         if (!isNull(userProfileDto.positionId())) {
             positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
         }
-        if (!isNull(userProfileDto.profileImageUuid())) {
-            imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
-        }
+        replaceImage(userProfileDto, userProfile);
+    }
+
+    private void replaceImage(UserProfileDto userProfileDto, UserProfile userProfile) {
+        if (isNull(userProfileDto.profileImageUuid())) {
+            String uuid = userProfile.getProfileImage().getUuid();
+            try {
+                imageStorageService.delete(uuid);
+            } catch (ImageStorageException e) {
+                throw new BadRequestException(String.format("Image with UUID %s could not be remove", uuid));
+            }
+            userProfile.setProfileImage(null);
+        } else imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
     }
 }

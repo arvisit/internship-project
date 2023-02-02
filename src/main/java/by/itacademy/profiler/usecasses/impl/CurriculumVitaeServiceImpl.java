@@ -1,5 +1,7 @@
 package by.itacademy.profiler.usecasses.impl;
 
+import by.itacademy.profiler.api.exception.BadRequestException;
+import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -7,6 +9,7 @@ import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
 import by.itacademy.profiler.persistence.repository.ImageRepository;
 import by.itacademy.profiler.persistence.repository.PositionRepository;
 import by.itacademy.profiler.persistence.repository.UserRepository;
+import by.itacademy.profiler.storage.ImageStorageService;
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     private final PositionRepository positionRepository;
     private final CountryRepository countryRepository;
     private final ImageRepository imageRepository;
+    private final ImageStorageService imageStorageService;
 
     @Override
     @Transactional
@@ -61,7 +65,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
                                              CurriculumVitaeRequestDto curriculumVitaeDto) {
         String username = getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username);
-        updateCurriculumVitaeByRequestDto(curriculumVitae, curriculumVitaeDto, username);
+        updateCurriculumVitaeByRequestDto(curriculumVitae, curriculumVitaeDto);
         CurriculumVitae updatedCurriculumVitae = curriculumVitaeRepository.save(curriculumVitae);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(updatedCurriculumVitae);
     }
@@ -96,12 +100,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     }
 
     private void updateCurriculumVitaeByRequestDto(CurriculumVitae curriculumVitae,
-                                                   CurriculumVitaeRequestDto curriculumVitaeRequestDto,
-                                                   String username) {
-        String imageUuid = curriculumVitaeRequestDto.imageUuid();
-        if (nonNull(imageUuid) && !imageUuid.equals(curriculumVitae.getImage().getUuid())) {
-            curriculumVitae.setImage(imageRepository.findByUuidAndUsername(imageUuid, username));
-        }
+                                                   CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
+        replaceImage(curriculumVitaeRequestDto, curriculumVitae);
         if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
             curriculumVitae.setName(curriculumVitaeRequestDto.name());
         }
@@ -125,5 +125,17 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         if (!curriculumVitaeRequestDto.isReadyForRemoteWork().equals(curriculumVitae.getIsReadyForRemoteWork())) {
             curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
         }
+    }
+
+    private void replaceImage(CurriculumVitaeRequestDto curriculumVitaeRequestDto, CurriculumVitae curriculumVitae) {
+        if (isNull(curriculumVitaeRequestDto.imageUuid())) {
+            String uuid = curriculumVitae.getImage().getUuid();
+            try {
+                imageStorageService.delete(uuid);
+            } catch (ImageStorageException e) {
+                throw new BadRequestException(String.format("Image with UUID %s could not be remove", uuid));
+            }
+            curriculumVitae.setImage(null);
+        } else imageRepository.findByUuid(curriculumVitaeRequestDto.imageUuid()).ifPresent(curriculumVitae::setImage);
     }
 }
