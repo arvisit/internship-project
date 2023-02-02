@@ -9,7 +9,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -58,6 +60,19 @@ public class ImageApiController {
             ImageDto imageDto = imageService.replaceImage(image.getInputStream(), uuid);
             return new ResponseEntity<>(imageDto, HttpStatus.OK);
         } catch (IOException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/{uuid}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {
+        String username = AuthUtil.getUsername();
+        try {
+            byte[] image = imageService.getImage(uuid);
+            log.debug("User {} is successful download image with uuid {}", username, uuid);
+            return new ResponseEntity<>(image, HttpStatus.OK);
+        } catch (IOException e) {
+            log.error(e.getMessage());
             throw new BadRequestException(e.getMessage());
         }
     }

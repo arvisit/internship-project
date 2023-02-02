@@ -1,5 +1,6 @@
 package by.itacademy.profiler.storage.impl;
 
+import by.itacademy.profiler.api.exception.ImageNotFoundException;
 import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.storage.ImageStorageService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -45,5 +47,16 @@ public class ImageStorageServiceImpl implements ImageStorageService {
         } catch (IOException e) {
             throw new ImageStorageException(e.getMessage());
         }
+    }
+
+    @Override
+    public File getImage(String imageName) {
+        File image = new File(imageStorageLocation + imageName);
+        if (!image.exists()) {
+            log.error("Image {} not found", image.getName());
+            throw new ImageNotFoundException(String.format("Image %s not found", image.getName()));
+        }
+        log.debug("Image was download successful {}", image.getName());
+        return image;
     }
 }
