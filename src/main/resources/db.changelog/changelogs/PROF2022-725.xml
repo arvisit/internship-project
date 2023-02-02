@@ -6,8 +6,16 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
     <changeSet id="PROF2022-725" author="S-afer@yandex.ru">
-        <addForeignKeyConstraint baseColumnNames="image_uuid" baseTableName="cvs"
-                                 constraintName="cvs_images_uuid_fk" referencedColumnNames="uuid"
+        <addColumn tableName="cvs">
+            <column name="image_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="image_id" baseTableName="cvs"
+                                 constraintName="cvs_images_id_fk" referencedColumnNames="id"
                                  referencedTableName="images"/>
+        <sql>
+            UPDATE cvs
+            SET image_id = image_uuid;
+        </sql>
+        <dropColumn tableName="cvs" columnName="image_uuid"/>
     </changeSet>
 </databaseChangeLog>
