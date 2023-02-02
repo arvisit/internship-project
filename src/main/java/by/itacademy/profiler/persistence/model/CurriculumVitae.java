@@ -34,7 +34,7 @@ public class CurriculumVitae {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "image_uuid", referencedColumnName = "uuid")
+    @JoinColumn(name = "image_id")
     private Image image;
 
     @Column(name = "name")
