@@ -113,7 +113,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
                     .ifPresent(curriculumVitae::setPosition);
         }
         if (!curriculumVitaeRequestDto.countryId().equals(curriculumVitae.getCountry().getId())) {
-            countryRepository.findById(curriculumVitaeRequestDto.positionId())
+            countryRepository.findById(curriculumVitaeRequestDto.countryId())
                     .ifPresent(curriculumVitae::setCountry);
         }
         if (!curriculumVitaeRequestDto.city().equals(curriculumVitae.getCity())) {
