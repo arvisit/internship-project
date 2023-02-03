@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-940" author="aleksandr.mikhalevich89@gmail.com">
+        <createTable tableName="contacts">
+            <column name="cv_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="contacts_cv_id"
+                             referencedTableName="cvs"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="phone_code_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="contacts_phone_code_id"
+                             referencedTableName="phone_codes"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="phone_number" type="varchar(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="skype" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="linkedin" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="portfolio_link" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

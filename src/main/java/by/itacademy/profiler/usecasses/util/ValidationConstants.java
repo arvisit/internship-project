@@ -18,4 +18,6 @@ public class ValidationConstants {
     public static final List<String> CONTENT_TYPES = Arrays.asList(IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE);
 
     public static final String REGEXP_VALIDATE_CITY = "^(?=.{1,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$";
+
+    public static final String REGEXP_VALIDATE_NOT_BLANK_BUT_NULL = "^\\s*\\S[^]]*";
 }
