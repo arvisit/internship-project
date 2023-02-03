@@ -51,7 +51,7 @@ public class ImageStorageServiceImpl implements ImageStorageService {
 
     @Override
     public File getImage(String imageName) {
-        File image = new File(imageStorageLocation + imageName);
+        File image = Paths.get(imageStorageLocation, imageName).toFile();
         if (!image.exists()) {
             log.error("Image {} not found", image.getName());
             throw new ImageNotFoundException(String.format("Image %s not found", image.getName()));
