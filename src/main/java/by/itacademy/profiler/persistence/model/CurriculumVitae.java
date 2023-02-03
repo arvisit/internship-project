@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,22 +61,24 @@ public class CurriculumVitae {
     @Column(name = "is_ready_for_remote_work")
     private Boolean isReadyForRemoteWork;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Contacts contacts;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CurriculumVitae curriculumVitae)) return false;
-        return Objects.equals(id, curriculumVitae.id) && Objects.equals(uuid, curriculumVitae.uuid) &&
-                Objects.equals(user, curriculumVitae.user) && Objects.equals(image, curriculumVitae.image) &&
-                Objects.equals(name, curriculumVitae.name) && Objects.equals(surname, curriculumVitae.surname) &&
-                Objects.equals(position, curriculumVitae.position) && Objects.equals(country, curriculumVitae.country) &&
-                Objects.equals(city, curriculumVitae.city) && Objects.equals(isReadyToRelocate, curriculumVitae.isReadyToRelocate) &&
-                Objects.equals(isReadyForRemoteWork, curriculumVitae.isReadyForRemoteWork);
+        if (!(o instanceof CurriculumVitae that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(uuid, that.uuid) && Objects.equals(user, that.user)
+                && Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
+                Objects.equals(position, that.position) && Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
+                Objects.equals(isReadyToRelocate, that.isReadyToRelocate) && Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork) &&
+                Objects.equals(contacts, that.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, user, image, name, surname, position,
-                country, city, isReadyToRelocate, isReadyForRemoteWork);
+        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts);
     }
 
     @Override
@@ -84,14 +87,15 @@ public class CurriculumVitae {
                 "id=" + id +
                 ", uuid='" + uuid + '\'' +
                 ", user=" + user +
-                ", image='" + image + '\'' +
+                ", image=" + image +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", position='" + position + '\'' +
-                ", country='" + country + '\'' +
+                ", position=" + position +
+                ", country=" + country +
                 ", city='" + city + '\'' +
-                ", isReadyToRelocate='" + isReadyToRelocate + '\'' +
-                ", isReadyForRemoteWork='" + isReadyForRemoteWork + '\'' +
+                ", isReadyToRelocate=" + isReadyToRelocate +
+                ", isReadyForRemoteWork=" + isReadyForRemoteWork +
+                ", contacts=" + contacts +
                 '}';
     }
 }
