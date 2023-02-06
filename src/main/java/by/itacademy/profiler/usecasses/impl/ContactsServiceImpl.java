@@ -1,5 +1,6 @@
 package by.itacademy.profiler.usecasses.impl;
 
+import by.itacademy.profiler.api.exception.ContactsNotFoundException;
 import by.itacademy.profiler.persistence.model.Contacts;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.repository.ContactsRepository;
@@ -31,5 +32,14 @@ public class ContactsServiceImpl implements ContactsService {
         contacts.setId(curriculumVitae.getId());
         contactsRepository.save(contacts);
         return contactsDto;
+    }
+
+    @Override
+    @Transactional
+    public ContactsDto getContacts(String uuid) {
+        String username = AuthUtil.getUsername();
+        Contacts contacts = contactsRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
+                new ContactsNotFoundException(String.format("Contacts not available for CV UUID: %s of user %s", uuid, username)));
+        return contactsMapper.contactsToContactsDto(contacts);
     }
 }
