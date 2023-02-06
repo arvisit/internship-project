@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,12 @@ public class ContactsApiController {
         ContactsDto contacts = contactsService.getContacts(uuid);
         log.debug("Getting contacts information section of CV {} from database: {} ", uuid, contacts);
         return new ResponseEntity<>(contacts, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<ContactsDto> updateContacts(@PathVariable String uuid, @RequestBody @Valid ContactsDto contacts) {
+        ContactsDto contactsDto = contactsService.updateContacts(uuid, contacts);
+        log.debug("Update contacts information section of CV {} by the data: {}", uuid, contactsDto);
+        return new ResponseEntity<>(contactsDto, HttpStatus.OK);
     }
 }

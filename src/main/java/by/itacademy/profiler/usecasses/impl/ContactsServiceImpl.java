@@ -5,6 +5,7 @@ import by.itacademy.profiler.persistence.model.Contacts;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.repository.ContactsRepository;
 import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
+import by.itacademy.profiler.persistence.repository.PhoneCodeRepository;
 import by.itacademy.profiler.usecasses.ContactsService;
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
 import by.itacademy.profiler.usecasses.mapper.ContactsMapper;
@@ -20,6 +21,8 @@ public class ContactsServiceImpl implements ContactsService {
     private final ContactsRepository contactsRepository;
 
     private final CurriculumVitaeRepository curriculumVitaeRepository;
+
+    private final PhoneCodeRepository phoneCodeRepository;
 
     private final ContactsMapper contactsMapper;
 
@@ -41,5 +44,38 @@ public class ContactsServiceImpl implements ContactsService {
         Contacts contacts = contactsRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
                 new ContactsNotFoundException(String.format("Contacts not available for CV UUID: %s of user %s", uuid, username)));
         return contactsMapper.contactsToContactsDto(contacts);
+    }
+
+    @Override
+    @Transactional
+    public ContactsDto updateContacts(String uuid, ContactsDto contactsDto) {
+        String username = AuthUtil.getUsername();
+        Contacts contacts = contactsRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
+                new ContactsNotFoundException(String.format("Contacts not available for CV UUID: %s of user %s", uuid, username)));
+        updateContacts(contactsDto, contacts);
+        Contacts updateContacts = contactsRepository.save(contacts);
+        return contactsMapper.contactsToContactsDto(updateContacts);
+    }
+
+    private void updateContacts(ContactsDto contactsDto, Contacts contacts) {
+        if (!contacts.getPhoneNumber().equals(contactsDto.phoneNumber())) {
+            contacts.setPhoneNumber(contactsDto.phoneNumber());
+        }
+        if (!contacts.getSkype().equals(contactsDto.skype())) {
+            contacts.setSkype(contactsDto.skype());
+        }
+        if (!contacts.getEmail().equals(contactsDto.email())) {
+            contacts.setEmail(contactsDto.email());
+        }
+        if (!contacts.getPortfolio().equals(contactsDto.portfolio())) {
+            contacts.setPortfolio(contactsDto.portfolio());
+        }
+        if (!contacts.getLinkedin().equals(contactsDto.linkedin())) {
+            contacts.setLinkedin(contactsDto.linkedin());
+        }
+        if (!contacts.getPhoneCode().getId().equals(contactsDto.phoneCodeId())) {
+            phoneCodeRepository.findById(contactsDto.phoneCodeId())
+                    .ifPresent(contacts::setPhoneCode);
+        }
     }
 }
