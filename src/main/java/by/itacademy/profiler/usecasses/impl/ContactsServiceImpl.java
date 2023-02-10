@@ -8,6 +8,7 @@ import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
 import by.itacademy.profiler.persistence.repository.PhoneCodeRepository;
 import by.itacademy.profiler.usecasses.ContactsService;
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
+import by.itacademy.profiler.usecasses.dto.ContactsResponseDto;
 import by.itacademy.profiler.usecasses.mapper.ContactsMapper;
 import by.itacademy.profiler.usecasses.util.AuthUtil;
 import jakarta.transaction.Transactional;
@@ -28,33 +29,32 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     @Transactional
-    public ContactsDto saveContacts(String uuid, ContactsDto contactsDto) {
+    public ContactsResponseDto saveContacts(String uuid, ContactsDto contactsDto) {
         String username = AuthUtil.getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(uuid, username);
         Contacts contacts = contactsMapper.contactsDtoToContacts(contactsDto);
         contacts.setId(curriculumVitae.getId());
-        contactsRepository.save(contacts);
-        return contactsDto;
+        return contactsMapper.contactsToContactsResponseDto(contactsRepository.save(contacts));
     }
 
     @Override
     @Transactional
-    public ContactsDto getContacts(String uuid) {
+    public ContactsResponseDto getContacts(String uuid) {
         String username = AuthUtil.getUsername();
         Contacts contacts = contactsRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
                 new ContactsNotFoundException(String.format("Contacts not available for CV UUID: %s of user %s", uuid, username)));
-        return contactsMapper.contactsToContactsDto(contacts);
+        return contactsMapper.contactsToContactsResponseDto(contacts);
     }
 
     @Override
     @Transactional
-    public ContactsDto updateContacts(String uuid, ContactsDto contactsDto) {
+    public ContactsResponseDto updateContacts(String uuid, ContactsDto contactsDto) {
         String username = AuthUtil.getUsername();
         Contacts contacts = contactsRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
                 new ContactsNotFoundException(String.format("Contacts not available for CV UUID: %s of user %s", uuid, username)));
         updateContacts(contactsDto, contacts);
         Contacts updateContacts = contactsRepository.save(contacts);
-        return contactsMapper.contactsToContactsDto(updateContacts);
+        return contactsMapper.contactsToContactsResponseDto(updateContacts);
     }
 
     private void updateContacts(ContactsDto contactsDto, Contacts contacts) {
