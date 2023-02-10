@@ -9,5 +9,6 @@ public record UserProfileResponseDto(String name,
                                      Long phoneCodeId, Integer phoneCode,
                                      String cellPhone,
                                      Long positionId, String position,
-                                     String profileImageUuid) implements Serializable {
+                                     String profileImageUuid,
+                                     String uniqueStudentIdentifier) implements Serializable {
 }

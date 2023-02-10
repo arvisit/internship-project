@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-1177" author="s-afer@yandex.ru">
+        <addColumn tableName="profiles">
+            <column name="unique_student_identifier" type="varchar(30)"/>
+        </addColumn>
+        <update tableName="profiles">
+            <column name="unique_student_identifier"
+                    valueComputed="(select v.unique_student_identifier from users v where v.id=user_id)"/>
+        </update>
+        <dropColumn tableName="users" columnName="unique_student_identifier"/>
+    </changeSet>
+
+</databaseChangeLog>

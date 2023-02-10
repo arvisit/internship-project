@@ -29,6 +29,7 @@ import static java.util.Objects.isNull;
 @RequiredArgsConstructor
 public class UserProfileServiceImpl implements UserProfileService {
 
+    private static final int DEFAULT_PHONE_CODE = 375;
     private final UserProfileRepository userProfileRepository;
     private final UserRepository userRepository;
     private final CountryRepository countryRepository;
@@ -72,27 +73,27 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     private void updateProfile(UserProfileDto userProfileDto, UserProfile userProfile) {
-        if (!isNull(userProfileDto.name())) {
-            userProfile.setName(userProfileDto.name());
-        }
-        if (!isNull(userProfileDto.surname())) {
-            userProfile.setSurname(userProfileDto.surname());
-        }
-        if (!isNull(userProfileDto.cellPhone())) {
-            userProfile.setCellPhone(userProfileDto.cellPhone());
-        }
-        if (!isNull(userProfileDto.email())) {
-            userProfile.setEmail(userProfileDto.email());
-        }
-        if (!isNull(userProfileDto.countryId())) {
-            countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
-        }
-        if (!isNull(userProfileDto.phoneCodeId())) {
-            phoneCodeRepository.findById(userProfileDto.phoneCodeId()).ifPresent(userProfile::setPhoneCode);
-        }
-        if (!isNull(userProfileDto.positionId())) {
-            positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
-        }
+        if (isNull(userProfileDto.name())) {
+            userProfile.setName(null);
+        } else userProfile.setName(userProfileDto.name());
+        if (isNull(userProfileDto.surname())) {
+            userProfile.setSurname(null);
+        } else userProfile.setSurname(userProfileDto.surname());
+        if (isNull(userProfileDto.cellPhone())) {
+            userProfile.setCellPhone(null);
+        } else userProfile.setCellPhone(userProfileDto.cellPhone());
+        if (isNull(userProfileDto.email())) {
+            userProfile.setEmail(null);
+        } else userProfile.setEmail(userProfileDto.email());
+        if (isNull(userProfileDto.countryId())) {
+            userProfile.setCountry(null);
+        } else countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
+        if (isNull(userProfileDto.phoneCodeId())) {
+            userProfile.setPhoneCode(phoneCodeRepository.findByCode(DEFAULT_PHONE_CODE));
+        } else phoneCodeRepository.findById(userProfileDto.phoneCodeId()).ifPresent(userProfile::setPhoneCode);
+        if (isNull(userProfileDto.positionId())) {
+            userProfile.setPosition(null);
+        } else positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
         replaceImage(userProfileDto, userProfile);
     }
 

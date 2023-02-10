@@ -38,7 +38,6 @@ public class JwtTokenProvider {
 
     public String createToken(AuthenticationUserDto user) {
         Claims claims = Jwts.claims().setSubject(user.email());
-        claims.put("uniqueStudentIdentifier",user.uniqueStudentIdentifier());
         claims.put("roles", getRoleNames(user.roleNames().stream().toList()));
 
         Date now = new Date();
