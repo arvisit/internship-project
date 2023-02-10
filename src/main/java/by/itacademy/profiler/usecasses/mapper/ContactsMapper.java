@@ -2,7 +2,7 @@ package by.itacademy.profiler.usecasses.mapper;
 
 import by.itacademy.profiler.persistence.model.Contacts;
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
-import org.mapstruct.InheritInverseConfiguration;
+import by.itacademy.profiler.usecasses.dto.ContactsResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,6 +14,7 @@ public interface ContactsMapper {
     @Mapping(target = "phoneCode.id", source = "phoneCodeId")
     Contacts contactsDtoToContacts(ContactsDto contactsDto);
 
-    @InheritInverseConfiguration
-    ContactsDto contactsToContactsDto(Contacts contacts);
+    @Mapping(target = "phoneCodeId", source = "phoneCode.id")
+    @Mapping(target = "phoneCode", source = "phoneCode.code")
+    ContactsResponseDto contactsToContactsResponseDto(Contacts contacts);
 }

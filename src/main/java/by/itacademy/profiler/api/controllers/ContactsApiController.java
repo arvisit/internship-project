@@ -3,6 +3,7 @@ package by.itacademy.profiler.api.controllers;
 import by.itacademy.profiler.usecasses.ContactsService;
 import by.itacademy.profiler.usecasses.annotation.IsCvExists;
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
+import by.itacademy.profiler.usecasses.dto.ContactsResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,22 +28,22 @@ public class ContactsApiController {
     private final ContactsService contactsService;
 
     @PostMapping
-    public ResponseEntity<ContactsDto> saveContacts(@PathVariable String uuid, @RequestBody @Valid ContactsDto contacts) {
+    public ResponseEntity<ContactsResponseDto> saveContacts(@PathVariable String uuid, @RequestBody @Valid ContactsDto contacts) {
         log.debug("Input data for creating contact information section of CV with UUID {}: {}", uuid, contacts);
-        ContactsDto cvContacts = contactsService.saveContacts(uuid, contacts);
+        ContactsResponseDto cvContacts = contactsService.saveContacts(uuid, contacts);
         return new ResponseEntity<>(cvContacts, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<ContactsDto> getContacts(@PathVariable @IsCvExists String uuid) {
-        ContactsDto contacts = contactsService.getContacts(uuid);
+    public ResponseEntity<ContactsResponseDto> getContacts(@PathVariable @IsCvExists String uuid) {
+        ContactsResponseDto contacts = contactsService.getContacts(uuid);
         log.debug("Getting contacts information section of CV {} from database: {} ", uuid, contacts);
         return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<ContactsDto> updateContacts(@PathVariable String uuid, @RequestBody @Valid ContactsDto contacts) {
-        ContactsDto contactsDto = contactsService.updateContacts(uuid, contacts);
+    public ResponseEntity<ContactsResponseDto> updateContacts(@PathVariable String uuid, @RequestBody @Valid ContactsDto contacts) {
+        ContactsResponseDto contactsDto = contactsService.updateContacts(uuid, contacts);
         log.debug("Update contacts information section of CV {} by the data: {}", uuid, contactsDto);
         return new ResponseEntity<>(contactsDto, HttpStatus.OK);
     }

@@ -2,12 +2,13 @@ package by.itacademy.profiler.usecasses;
 
 
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
+import by.itacademy.profiler.usecasses.dto.ContactsResponseDto;
 
 public interface ContactsService {
 
-    ContactsDto saveContacts(String uuid, ContactsDto contactsDto);
+    ContactsResponseDto saveContacts(String uuid, ContactsDto contactsDto);
 
-    ContactsDto getContacts(String uuid);
+    ContactsResponseDto getContacts(String uuid);
 
-    ContactsDto updateContacts(String uuid, ContactsDto contactsDto);
+    ContactsResponseDto updateContacts(String uuid, ContactsDto contactsDto);
 }
