@@ -16,4 +16,6 @@ public interface CurriculumVitaeService {
     CurriculumVitaeResponseDto getCvOfUser(String uuid);
 
     CurriculumVitaeResponseDto update(String curriculumVitaeUuid, CurriculumVitaeRequestDto curriculumVitaeRequestDto);
+
+    boolean isCurriculumVitaeExists(String uuid);
 }

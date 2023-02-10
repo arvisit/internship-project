@@ -138,4 +138,9 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
             curriculumVitae.setImage(null);
         } else imageRepository.findByUuid(curriculumVitaeRequestDto.imageUuid()).ifPresent(curriculumVitae::setImage);
     }
+
+    @Override
+    public boolean isCurriculumVitaeExists(String uuid) {
+        return curriculumVitaeRepository.existsByUuid(uuid);
+    }
 }
