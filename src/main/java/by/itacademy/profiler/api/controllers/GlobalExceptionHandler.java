@@ -113,10 +113,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ContactsNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ErrorResponse handleContactsNotFoundException(ContactsNotFoundException exception) {
         return new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NO_CONTENT.value(),
                 exception.getMessage(),
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
