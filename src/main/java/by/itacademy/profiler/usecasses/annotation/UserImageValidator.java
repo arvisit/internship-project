@@ -27,6 +27,9 @@ public class UserImageValidator implements ConstraintValidator<UserImageValidati
         if (isNull(imageUuid)) {
             return true;
         }
+        if (imageUuid.equals("")) {
+            return false;
+        }
         if (!imageValidationService.isImageBelongsToUser(imageUuid)) {
             return false;
         }
