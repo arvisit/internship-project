@@ -2,12 +2,11 @@ package by.itacademy.profiler.usecasses.dto;
 
 
 import by.itacademy.profiler.usecasses.annotation.CountryValidation;
-import by.itacademy.profiler.usecasses.annotation.ImageValidation;
 import by.itacademy.profiler.usecasses.annotation.PhoneCodeValidation;
 import by.itacademy.profiler.usecasses.annotation.PositionValidation;
+import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UUID;
 
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_CELL_PHONE;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_EMAIL;
@@ -34,7 +33,6 @@ public record UserProfileDto(@Length(max = 50, message = "The name is too long, 
                              String cellPhone,
                              @PositionValidation
                              Long positionId,
-                             @UUID(allowNil = false)
-                             @ImageValidation
+                             @UserImageValidation(toValidate = UserImageValidation.ValidatedDto.PROFILE_DTO)
                              String profileImageUuid) {
 }
