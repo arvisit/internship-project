@@ -10,13 +10,15 @@ import org.hibernate.validator.constraints.Length;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.*;
 
 public record ContactsDto(@PhoneCodeValidation
-                          @NotNull(message = "Field must not be null")
+                          @NotNull(message = "Field must not be empty")
                           Long phoneCodeId,
                           @Length(max = 25, message = "The user's phone number is too long, the max number of symbols is 25")
                           @Pattern(regexp = REGEXP_VALIDATE_CELL_PHONE, message = "Invalid cell phone number. Example of the correct variant: 29233XXXX")
+                          @NotBlank(message = "Field must not be empty")
                           String phoneNumber,
                           @Length(max = 50, message = "The email is too long, the max number of symbols is 50")
                           @Pattern(regexp = REGEXP_VALIDATE_EMAIL, message = "Invalid email. Example of the correct variant: example@example.com")
+                          @NotBlank(message = "Field must not be empty")
                           String email,
                           @Length(max = 50, message = "The Skype address is too long, the max number of symbols is 50")
                           @Pattern(regexp = REGEXP_VALIDATE_NOT_BLANK_BUT_NULL, message = "Field must be filled or null")
