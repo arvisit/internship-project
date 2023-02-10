@@ -61,14 +61,8 @@ public class ContactsServiceImpl implements ContactsService {
         if (!contacts.getPhoneNumber().equals(contactsDto.phoneNumber())) {
             contacts.setPhoneNumber(contactsDto.phoneNumber());
         }
-        if (!contacts.getSkype().equals(contactsDto.skype())) {
-            contacts.setSkype(contactsDto.skype());
-        }
         if (!contacts.getEmail().equals(contactsDto.email())) {
             contacts.setEmail(contactsDto.email());
-        }
-        if (!contacts.getPortfolio().equals(contactsDto.portfolio())) {
-            contacts.setPortfolio(contactsDto.portfolio());
         }
         if (!contacts.getLinkedin().equals(contactsDto.linkedin())) {
             contacts.setLinkedin(contactsDto.linkedin());
@@ -77,5 +71,7 @@ public class ContactsServiceImpl implements ContactsService {
             phoneCodeRepository.findById(contactsDto.phoneCodeId())
                     .ifPresent(contacts::setPhoneCode);
         }
+        contacts.setSkype(contactsDto.skype());
+        contacts.setPortfolio(contactsDto.portfolio());
     }
 }
