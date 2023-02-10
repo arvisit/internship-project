@@ -1,16 +1,17 @@
 package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
-import by.itacademy.profiler.api.exception.ImageStorageException;
+import by.itacademy.profiler.api.exception.CurriculumVitaeNotFoundException;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
+import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
 import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
 import by.itacademy.profiler.persistence.repository.ImageRepository;
 import by.itacademy.profiler.persistence.repository.PositionRepository;
 import by.itacademy.profiler.persistence.repository.UserRepository;
-import by.itacademy.profiler.storage.ImageStorageService;
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
+import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import by.itacademy.profiler.usecasses.mapper.CurriculumVitaeMapper;
@@ -20,10 +21,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
-import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -38,14 +40,14 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     private final PositionRepository positionRepository;
     private final CountryRepository countryRepository;
     private final ImageRepository imageRepository;
-    private final ImageStorageService imageStorageService;
+    private final ImageService imageService;
 
     @Override
     @Transactional
     public CurriculumVitaeResponseDto save(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
         String username = getUsername();
-        User user = userRepository.findByEmail(username);
         CurriculumVitae curriculumVitae = curriculumVitaeRequestDtoToCurriculumVitae(curriculumVitaeRequestDto);
+        User user = userRepository.findByEmail(username);
         curriculumVitae.setUser(user);
         curriculumVitae.setUuid(UUID.randomUUID().toString());
         curriculumVitaeRepository.save(curriculumVitae);
@@ -64,7 +66,9 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     public CurriculumVitaeResponseDto update(String curriculumVitaeUuid,
                                              CurriculumVitaeRequestDto curriculumVitaeDto) {
         String username = getUsername();
-        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username);
+        CurriculumVitae curriculumVitae = Optional
+                .ofNullable(curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username))
+                .orElseThrow(() -> new CurriculumVitaeNotFoundException(String.format("CV with UUID: %s of user %s not found", curriculumVitaeUuid, username)));
         updateCurriculumVitaeByRequestDto(curriculumVitae, curriculumVitaeDto);
         CurriculumVitae updatedCurriculumVitae = curriculumVitaeRepository.save(curriculumVitae);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(updatedCurriculumVitae);
@@ -87,8 +91,13 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     }
 
     private CurriculumVitae curriculumVitaeRequestDtoToCurriculumVitae(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
+        String imageUuid = curriculumVitaeRequestDto.imageUuid();
         CurriculumVitae curriculumVitae = new CurriculumVitae();
-        imageRepository.findByUuid(curriculumVitaeRequestDto.imageUuid()).ifPresent(curriculumVitae::setImage);
+        if (nonNull(imageUuid) && imageRepository.isImageBelongCurriculumVitae(imageUuid)) {
+            throw new BadRequestException(String.format("Image with UUID %s is already in use", imageUuid));
+        } else {
+            imageRepository.findByUuid(imageUuid).ifPresent(curriculumVitae::setImage);
+        }
         curriculumVitae.setName(curriculumVitaeRequestDto.name());
         curriculumVitae.setSurname(curriculumVitaeRequestDto.surname());
         positionRepository.findById(curriculumVitaeRequestDto.positionId()).ifPresent(curriculumVitae::setPosition);
@@ -101,7 +110,13 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
 
     private void updateCurriculumVitaeByRequestDto(CurriculumVitae curriculumVitae,
                                                    CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
-        replaceImage(curriculumVitaeRequestDto, curriculumVitae);
+        String incomingImageUuid = curriculumVitaeRequestDto.imageUuid();
+        Image storedImage = curriculumVitae.getImage();
+        if (imageService.isImageChanging(incomingImageUuid, storedImage)) {
+            String imageUuid = imageService.replaceImage(incomingImageUuid, storedImage);
+            Image image = imageRepository.findByUuid(imageUuid).orElse(null);
+            curriculumVitae.setImage(image);
+        }
         if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
             curriculumVitae.setName(curriculumVitaeRequestDto.name());
         }
@@ -125,18 +140,6 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         if (!curriculumVitaeRequestDto.isReadyForRemoteWork().equals(curriculumVitae.getIsReadyForRemoteWork())) {
             curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
         }
-    }
-
-    private void replaceImage(CurriculumVitaeRequestDto curriculumVitaeRequestDto, CurriculumVitae curriculumVitae) {
-        if (isNull(curriculumVitaeRequestDto.imageUuid())) {
-            String uuid = curriculumVitae.getImage().getUuid();
-            try {
-                imageStorageService.delete(uuid);
-            } catch (ImageStorageException e) {
-                throw new BadRequestException(String.format("Image with UUID %s could not be remove", uuid));
-            }
-            curriculumVitae.setImage(null);
-        } else imageRepository.findByUuid(curriculumVitaeRequestDto.imageUuid()).ifPresent(curriculumVitae::setImage);
     }
 
     @Override

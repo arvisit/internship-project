@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -77,5 +80,37 @@ public class ImageServiceImpl implements ImageService {
     private Image createImage(String imageName, String username) {
         User user = userRepository.findByEmail(username);
         return new Image(user, imageName);
+    }
+
+    @Override
+    public boolean isImageChanging(String incomingImageUuid, Image storedImage) {
+        if (isNull(storedImage) && isNull(incomingImageUuid)) {
+            return false;
+        }
+        if (nonNull(storedImage) && nonNull(incomingImageUuid)) {
+            return !storedImage.getUuid().equals(incomingImageUuid);
+        }
+        return true;
+    }
+
+    @Override
+    public void deleteStoredImageFile(Image image) {
+        String imageUuid = image.getUuid();
+        try {
+            imageStorageService.delete(imageUuid);
+        } catch (ImageStorageException e) {
+            throw new BadRequestException(String.format("Image with UUID %s could not be remove", imageUuid));
+        }
+    }
+
+    @Override
+    public String replaceImage(String incomingImageUuid, Image storedImage) {
+        if (isNull(incomingImageUuid) && nonNull(storedImage)) {
+            deleteStoredImageFile(storedImage);
+            return null;
+        } else if (nonNull(incomingImageUuid) && nonNull(storedImage)) {
+            deleteStoredImageFile(storedImage);
+        }
+        return incomingImageUuid;
     }
 }

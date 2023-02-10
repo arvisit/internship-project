@@ -1,8 +1,7 @@
 package by.itacademy.profiler.usecasses.impl;
 
 
-import by.itacademy.profiler.api.exception.BadRequestException;
-import by.itacademy.profiler.api.exception.ImageStorageException;
+import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.model.UserProfile;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -11,7 +10,7 @@ import by.itacademy.profiler.persistence.repository.PhoneCodeRepository;
 import by.itacademy.profiler.persistence.repository.PositionRepository;
 import by.itacademy.profiler.persistence.repository.UserProfileRepository;
 import by.itacademy.profiler.persistence.repository.UserRepository;
-import by.itacademy.profiler.storage.ImageStorageService;
+import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.UserProfileService;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
@@ -37,7 +36,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final PositionRepository positionRepository;
     private final UserProfileMapper userProfileMapper;
     private final ImageRepository imageRepository;
-    private final ImageStorageService imageStorageService;
+    private final ImageService imageService;
 
     @Override
     @Transactional
@@ -73,6 +72,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     private void updateProfile(UserProfileDto userProfileDto, UserProfile userProfile) {
+        String incomingImageUuid = userProfileDto.profileImageUuid();
+        Image storedImage = userProfile.getProfileImage();
+        if (imageService.isImageChanging(incomingImageUuid, storedImage)) {
+            String imageUuid = imageService.replaceImage(incomingImageUuid, storedImage);
+            Image image = imageRepository.findByUuid(imageUuid).orElse(null);
+            userProfile.setProfileImage(image);
+        }
         if (isNull(userProfileDto.name())) {
             userProfile.setName(null);
         } else userProfile.setName(userProfileDto.name());
@@ -94,18 +100,5 @@ public class UserProfileServiceImpl implements UserProfileService {
         if (isNull(userProfileDto.positionId())) {
             userProfile.setPosition(null);
         } else positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
-        replaceImage(userProfileDto, userProfile);
-    }
-
-    private void replaceImage(UserProfileDto userProfileDto, UserProfile userProfile) {
-        if (isNull(userProfileDto.profileImageUuid())) {
-            String uuid = userProfile.getProfileImage().getUuid();
-            try {
-                imageStorageService.delete(uuid);
-            } catch (ImageStorageException e) {
-                throw new BadRequestException(String.format("Image with UUID %s could not be remove", uuid));
-            }
-            userProfile.setProfileImage(null);
-        } else imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
     }
 }
