@@ -19,4 +19,5 @@
     <include file="changelogs/PROF2022-1140.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-725.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-940.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/PROF2022-1177.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

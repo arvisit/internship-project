@@ -51,6 +51,9 @@ public class UserProfile {
     @JoinColumn(name = "image_id", unique = true)
     private Image profileImage;
 
+    @Column(name = "unique_student_identifier", length = 30)
+    private String uniqueStudentIdentifier;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,11 +61,14 @@ public class UserProfile {
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) && Objects.equals(country, that.country) &&
                 Objects.equals(email, that.email) && Objects.equals(phoneCode, that.phoneCode) &&
-                Objects.equals(cellPhone, that.cellPhone) && Objects.equals(position, that.position);
+                Objects.equals(cellPhone, that.cellPhone) && Objects.equals(position, that.position) &&
+                Objects.equals(profileImage, that.profileImage) &&
+                Objects.equals(uniqueStudentIdentifier, that.uniqueStudentIdentifier);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, country, email, phoneCode, cellPhone, position);
+        return Objects.hash(id, name, surname, country, email, phoneCode, cellPhone, position, profileImage,
+                uniqueStudentIdentifier);
     }
 }

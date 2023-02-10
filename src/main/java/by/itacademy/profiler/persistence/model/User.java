@@ -35,11 +35,6 @@ public class User {
     @Column
     private UUID uuid;
 
-    @Setter
-    @Getter
-    @Column(name = "unique_student_identifier", length = 30)
-    private String uniqueStudentIdentifier;
-
     @Column
     @Setter
     @Getter
@@ -67,14 +62,13 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return Objects.equals(id, user.id) && Objects.equals(uuid, user.uuid)
-                && Objects.equals(uniqueStudentIdentifier, user.uniqueStudentIdentifier) && Objects.equals(email, user.email)
+        return Objects.equals(id, user.id) && Objects.equals(uuid, user.uuid) && Objects.equals(email, user.email)
                 && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, uniqueStudentIdentifier, email, password, roles);
+        return Objects.hash(id, uuid, email, password, roles);
     }
 
     @Override
@@ -82,7 +76,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", uuid=" + uuid +
-                ", uniqueStudentIdentifier=" + uniqueStudentIdentifier +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
