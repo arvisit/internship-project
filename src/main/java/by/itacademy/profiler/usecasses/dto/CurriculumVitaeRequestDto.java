@@ -25,11 +25,11 @@ public record CurriculumVitaeRequestDto(
         @PositionValidation
         Long positionId,
         @NotNull
-                                        @CountryValidation
-                                        Long countryId,
+        @CountryValidation
+        Long countryId,
         @NotBlank
-                                        @Pattern(regexp = REGEXP_VALIDATE_CITY, message = "Invalid city")
-                                        String city,
+        @Pattern(regexp = REGEXP_VALIDATE_CITY, message = "Invalid city name")
+        String city,
         Boolean isReadyToRelocate,
         Boolean isReadyForRemoteWork) implements Serializable {
 }
