@@ -120,7 +120,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         if (!curriculumVitaeRequestDto.name().equals(curriculumVitae.getName())) {
             curriculumVitae.setName(curriculumVitaeRequestDto.name());
         }
-        if (!curriculumVitaeRequestDto.surname().equals(curriculumVitae.getName())) {
+        if (!curriculumVitaeRequestDto.surname().equals(curriculumVitae.getSurname())) {
             curriculumVitae.setSurname(curriculumVitaeRequestDto.surname());
         }
         if (!curriculumVitaeRequestDto.positionId().equals(curriculumVitae.getPosition().getId())) {
