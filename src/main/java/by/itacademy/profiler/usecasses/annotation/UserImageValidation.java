@@ -10,13 +10,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@UUID(allowNil = false)
+@UUID(allowNil = false, message = UserImageValidation.IMAGE_UUID_IS_NOT_VALID)
 @Documented
 @Constraint(validatedBy = UserImageValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserImageValidation {
-    String message() default "Image UUID is not valid!";
+
+    String IMAGE_UUID_IS_NOT_VALID = "Image UUID is not valid!";
+
+    String message() default IMAGE_UUID_IS_NOT_VALID;
 
     Class<?>[] groups() default {};
 
