@@ -1,6 +1,7 @@
 package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
+import by.itacademy.profiler.api.exception.ImageNotFoundException;
 import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.User;
@@ -69,7 +70,7 @@ public class ImageServiceImpl implements ImageService {
         Image uuid = imageRepository.findByUuidAndUsername(imageName, username);
         if (uuid == null) {
             log.error("User {} doesn't have image with uuid {}", username, imageName);
-            throw new BadRequestException(String.format("Wrong image uuid %s", imageName));
+            throw new ImageNotFoundException(String.format("Image %s not found", imageName));
         }
         File image = imageStorageService.getImage(imageName);
         try (FileInputStream inputStream = new FileInputStream(image)) {
