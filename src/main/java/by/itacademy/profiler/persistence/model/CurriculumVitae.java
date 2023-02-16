@@ -1,16 +1,6 @@
 package by.itacademy.profiler.persistence.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,20 +55,24 @@ public class CurriculumVitae {
     @PrimaryKeyJoinColumn
     private Contacts contacts;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private About about;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CurriculumVitae that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(uuid, that.uuid) && Objects.equals(user, that.user)
-                && Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
+        return Objects.equals(id, that.id) && Objects.equals(uuid, that.uuid) && Objects.equals(user, that.user) &&
+                Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
                 Objects.equals(position, that.position) && Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
                 Objects.equals(isReadyToRelocate, that.isReadyToRelocate) && Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork) &&
-                Objects.equals(contacts, that.contacts);
+                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts);
+        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts, about);
     }
 
     @Override
@@ -96,6 +90,7 @@ public class CurriculumVitae {
                 ", isReadyToRelocate=" + isReadyToRelocate +
                 ", isReadyForRemoteWork=" + isReadyForRemoteWork +
                 ", contacts=" + contacts +
+                ", about=" + about +
                 '}';
     }
 }

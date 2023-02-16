@@ -16,7 +16,7 @@ public class IsCvExistsValidator implements ConstraintValidator<IsCvExists, Stri
         if (curriculumVitaeService.isCurriculumVitaeExists(uuid)) {
             return true;
         } else {
-            throw new CurriculumVitaeNotFoundException(String.format("Invalid uuid: %s curriculum vitae not found", uuid));
+            throw new CurriculumVitaeNotFoundException(String.format("CV with UUID %s not found!!!", uuid));
         }
     }
 }
