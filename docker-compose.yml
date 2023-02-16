@@ -5,6 +5,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: profiler-db
+      MYSQL_ROOT_PASSWORD: '1234'
     ports:
       - "3306:3306"
     expose:

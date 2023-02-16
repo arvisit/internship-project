@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-1378" author="JustShooter@gmail.com">
+        <createTable tableName="about">
+            <column name="cv_id"
+                    type="BIGINT">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="about_cv_id"
+                             referencedTableName="cvs"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="description"
+                    type="VARCHAR(450)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="self_presentation"
+                    type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>

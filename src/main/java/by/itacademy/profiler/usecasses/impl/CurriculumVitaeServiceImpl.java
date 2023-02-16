@@ -1,7 +1,6 @@
 package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
-import by.itacademy.profiler.api.exception.CurriculumVitaeNotFoundException;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.User;
@@ -15,16 +14,15 @@ import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import by.itacademy.profiler.usecasses.mapper.CurriculumVitaeMapper;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -41,11 +39,12 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     private final CountryRepository countryRepository;
     private final ImageRepository imageRepository;
     private final ImageService imageService;
+    private final AuthService authService;
 
     @Override
     @Transactional
     public CurriculumVitaeResponseDto save(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
-        String username = getUsername();
+        String username = authService.getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRequestDtoToCurriculumVitae(curriculumVitaeRequestDto);
         User user = userRepository.findByEmail(username);
         curriculumVitae.setUser(user);
@@ -56,7 +55,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
 
     @Override
     public List<CurriculumVitaeResponseDto> getAllCvOfUser() {
-        String username = getUsername();
+        String username = authService.getUsername();
         List<CurriculumVitae> curriculumVitaeList = curriculumVitaeRepository.findByUsername(username);
         return curriculumVitaeMapper.curriculumVitaeListToCurriculumVitaeResponseDtoList(curriculumVitaeList);
     }
@@ -65,10 +64,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     @Transactional
     public CurriculumVitaeResponseDto update(String curriculumVitaeUuid,
                                              CurriculumVitaeRequestDto curriculumVitaeDto) {
-        String username = getUsername();
-        CurriculumVitae curriculumVitae = Optional
-                .ofNullable(curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username))
-                .orElseThrow(() -> new CurriculumVitaeNotFoundException(String.format("CV with UUID: %s of user %s not found", curriculumVitaeUuid, username)));
+        String username = authService.getUsername();
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(curriculumVitaeUuid, username);
         updateCurriculumVitaeByRequestDto(curriculumVitae, curriculumVitaeDto);
         CurriculumVitae updatedCurriculumVitae = curriculumVitaeRepository.save(curriculumVitae);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(updatedCurriculumVitae);
@@ -76,13 +73,13 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
 
     @Override
     public CurriculumVitaeResponseDto getCvOfUser(String uuid) {
-        String username = getUsername();
+        String username = authService.getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(uuid, username);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
     }
 
     public Long getAllCvByUser() {
-        String username = getUsername();
+        String username = authService.getUsername();
         return curriculumVitaeRepository.findCountByUsername(username);
     }
 
@@ -144,6 +141,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
 
     @Override
     public boolean isCurriculumVitaeExists(String uuid) {
-        return curriculumVitaeRepository.existsByUuid(uuid);
+        return curriculumVitaeRepository
+                .existsByUuidAndUsername(uuid, authService.getUsername());
     }
 }

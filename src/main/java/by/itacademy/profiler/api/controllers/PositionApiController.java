@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/positions")
 @RequiredArgsConstructor
 @Slf4j
-public class PositionRestController {
+public class PositionApiController {
     private final PositionService positionService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

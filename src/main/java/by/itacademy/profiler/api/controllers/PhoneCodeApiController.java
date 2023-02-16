@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/phonecodes")
-public class PhoneCodeRestController {
+public class PhoneCodeApiController {
 
     private final PhoneCodeService phoneCodeService;
 

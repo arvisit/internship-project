@@ -6,7 +6,7 @@ import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.ImageRepository;
 import by.itacademy.profiler.persistence.repository.UserRepository;
 import by.itacademy.profiler.usecasses.ImageValidationService;
-import by.itacademy.profiler.usecasses.util.AuthUtil;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,8 @@ public class ImageValidationServiceImpl implements ImageValidationService {
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
+
+    private final AuthService authService;
 
     @Override
     public boolean validateImageForCv(String imageUuid) {
@@ -32,7 +34,7 @@ public class ImageValidationServiceImpl implements ImageValidationService {
     public boolean isImageBelongsToUser(String imageUuid) {
         Image image = imageRepository.findByUuid(imageUuid)
                 .orElseThrow(() -> new BadRequestException(String.format("No such image %s!", imageUuid)));
-        User user = userRepository.findByEmail(AuthUtil.getUsername());
+        User user = userRepository.findByEmail(authService.getUsername());
         return image.getUser().getId().equals(user.getId());
     }
 }

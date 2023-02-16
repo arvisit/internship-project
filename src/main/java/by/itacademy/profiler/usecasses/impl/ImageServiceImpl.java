@@ -11,7 +11,7 @@ import by.itacademy.profiler.storage.ImageStorageService;
 import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.dto.ImageDto;
 import by.itacademy.profiler.usecasses.mapper.ImageMapper;
-import by.itacademy.profiler.usecasses.util.AuthUtil;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,6 +40,8 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
 
+    private final AuthService authService;
+
     @Override
     @Transactional
     public ImageDto storageImage(InputStream imageInputStream, String username) throws ImageStorageException {
@@ -53,7 +55,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     @Transactional
     public ImageDto replaceImage(InputStream imageInputStream, String uuid) throws ImageStorageException {
-        String username = AuthUtil.getUsername();
+        String username = authService.getUsername();
         Image image = imageRepository.findByUuidAndUsername(uuid, username);
         if (null != image) {
             imageStorageService.delete(uuid);
@@ -66,7 +68,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] getImage(String imageName) throws IOException {
-        String username = AuthUtil.getUsername();
+        String username = authService.getUsername();
         Image uuid = imageRepository.findByUuidAndUsername(imageName, username);
         if (uuid == null) {
             log.error("User {} doesn't have image with uuid {}", username, imageName);

@@ -15,13 +15,13 @@ import by.itacademy.profiler.usecasses.UserProfileService;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
 import by.itacademy.profiler.usecasses.mapper.UserProfileMapper;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static by.itacademy.profiler.usecasses.util.AuthUtil.getUsername;
 import static java.util.Objects.isNull;
 
 @Service
@@ -37,11 +37,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileMapper userProfileMapper;
     private final ImageRepository imageRepository;
     private final ImageService imageService;
+    private final AuthService authService;
 
     @Override
     @Transactional
     public UserProfileDto saveUserProfile(UserProfileDto userProfileDto) {
-        String username = getUsername();
+        String username = authService.getUsername();
         User user = userRepository.findByEmail(username);
         UserProfile userProfile = userProfileMapper.userProfileDtoToUserProfile(userProfileDto);
         userProfile.setId(user.getId());
@@ -52,7 +53,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public UserProfileResponseDto getUserProfile() {
-        String username = getUsername();
+        String username = authService.getUsername();
         UserProfile userProfile = userProfileRepository.findByUsername(username).orElse(null);
         return userProfileMapper.userProfileToUserProfileResponseDto(userProfile);
     }
@@ -60,7 +61,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     @Transactional
     public Optional<UserProfileResponseDto> updateUserProfile(UserProfileDto userProfileDto) {
-        String username = getUsername();
+        String username = authService.getUsername();
         Optional<UserProfile> userProfile = userProfileRepository.findByUsername(username);
         if (userProfile.isPresent()) {
             UserProfile profile = userProfile.get();

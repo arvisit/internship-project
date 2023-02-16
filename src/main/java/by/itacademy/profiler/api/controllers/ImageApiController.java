@@ -3,7 +3,7 @@ package by.itacademy.profiler.api.controllers;
 import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.dto.ImageDto;
-import by.itacademy.profiler.usecasses.util.AuthUtil;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import by.itacademy.profiler.usecasses.util.ValidateImage;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +29,12 @@ public class ImageApiController {
 
     private final ImageService imageService;
 
+    private final AuthService authService;
+
     @PostMapping
     public ResponseEntity<ImageDto> uploadImage(@NotNull MultipartFile image) {
         ValidateImage.validate(image);
-        String username = AuthUtil.getUsername();
+        String username = authService.getUsername();
         log.debug("Received file with contentType: {}, file name is: {}, file size is: {}, from user: {}",
                 image.getContentType(),
                 image.getOriginalFilename(),
@@ -50,7 +52,7 @@ public class ImageApiController {
     @PutMapping("/{uuid}")
     public ResponseEntity<ImageDto> replaceImage(@NotNull MultipartFile image, @PathVariable String uuid) {
         ValidateImage.validate(image);
-        String username = AuthUtil.getUsername();
+        String username = authService.getUsername();
         log.debug("Received file with contentType: {}, file name is: {}, file size is: {}, from user: {}",
                 image.getContentType(),
                 image.getOriginalFilename(),
@@ -66,7 +68,7 @@ public class ImageApiController {
 
     @GetMapping(value = "/{uuid}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {
-        String username = AuthUtil.getUsername();
+        String username = authService.getUsername();
         try {
             byte[] image = imageService.getImage(uuid);
             log.debug("User {} is successful download image with uuid {}", username, uuid);

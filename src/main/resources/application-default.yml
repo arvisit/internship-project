@@ -1,8 +1,9 @@
+logging:
+  level:
+    root: info
+    org.springframework.security: debug
+    org.springframework.web: debug
+    by.itacademy.profiler: debug
+    liquibase: error
 springdoc:
-  swagger-ui:
-    enabled: true
-spring:
-  security:
-    cors:
-      allowedOrigins: "*"
-      allowedMethods: "*"
+  show-actuator: true

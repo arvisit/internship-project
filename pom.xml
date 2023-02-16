@@ -4,19 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>by.itacademy</groupId>
-    <artifactId>Profiler2022</artifactId>
+    <artifactId>profiler.2022</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <java.version>17</java.version>
-        <spring.boot.dependencies.version>3.0.0</spring.boot.dependencies.version>
+        <spring.boot.dependencies.version>3.0.2</spring.boot.dependencies.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
         <org.projectlombok.mapstruct.binding>0.2.0</org.projectlombok.mapstruct.binding>
         <org.projectlombok>1.18.24</org.projectlombok>
-        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
         <spring.boot.maven.compiler.plugin.version>3.10.1</spring.boot.maven.compiler.plugin.version>
         <spring.boot.maven.plugin.version>3.0.1</spring.boot.maven.plugin.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
 
     <dependencyManagement>
@@ -34,16 +34,16 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi-ui.version}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -60,16 +60,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -93,6 +85,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
 
@@ -124,7 +120,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>by.itacademy.profiler.main.ProfilerApplication</mainClass>
+                    <mainClass>by.itacademy.profiler.ProfilerApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

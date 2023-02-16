@@ -1,9 +1,11 @@
 package by.itacademy.profiler.usecasses.util;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
-public class AuthUtil {
-    public static String getUsername() {
+@Component
+public class AuthService {
+    public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
