@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,10 +70,15 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            log.info("IN validateToken - valid JWT token");
-            return !claims.getBody().getExpiration().before(new Date());
+            if (claims.getBody().getExpiration().before(new Date())) {
+                log.info("IN validateToken - JWT token has expired");
+                return false;
+            }
+            log.info("IN validateToken - JWT token valid");
+            return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new BadCredentialsException("JWT token is expired or invalid");
+            log.info("IN validateToken  - expired or invalid JWT token");
+            return false;
         }
     }
 
