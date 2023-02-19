@@ -1,11 +1,13 @@
 package by.itacademy.profiler.usecasses.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_NOT_BLANK_BUT_NULL;
 
 /**
  * A DTO for the {@link by.itacademy.profiler.persistence.model.About} entity
@@ -13,8 +15,8 @@ import java.util.Objects;
 public record AboutDto(@Length(max = 450, message = "Description is too long, the max number of symbols is 450")
                        @NotBlank(message = "Field must not be empty")
                        String description,
-                       @URL
                        @Length(max = 255)
+                       @Pattern(regexp = REGEXP_VALIDATE_NOT_BLANK_BUT_NULL, message = "Field must be filled or null")
                        String selfPresentation) implements Serializable {
     @Override
     public boolean equals(Object o) {

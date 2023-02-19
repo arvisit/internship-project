@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,13 @@ public class AboutApiController {
         log.debug("Input data for creating about section of CV with UUID {}: {}", uuid, aboutDto);
         AboutDto saveAbout = aboutService.save(uuid, aboutDto);
         return new ResponseEntity<>(saveAbout, HttpStatus.CREATED);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update about yourself information", description = "Update About section of CV", tags = {"about"})
+    public ResponseEntity<AboutDto> updateAbout(@PathVariable @IsCvExists String uuid, @RequestBody @Valid AboutDto aboutDto) {
+        log.debug("Update about section of CV {} by the data: {}", uuid, aboutDto);
+        AboutDto updateAbout = aboutService.update(uuid, aboutDto);
+        return new ResponseEntity<>(updateAbout, HttpStatus.OK);
     }
 }
