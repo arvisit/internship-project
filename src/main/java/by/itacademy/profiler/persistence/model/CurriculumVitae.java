@@ -3,6 +3,8 @@ package by.itacademy.profiler.persistence.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -69,6 +71,10 @@ public class CurriculumVitae {
     @PrimaryKeyJoinColumn
     private About about;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private CvStatus status;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,12 +83,12 @@ public class CurriculumVitae {
                 Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
                 Objects.equals(position, that.position) && Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
                 Objects.equals(isReadyToRelocate, that.isReadyToRelocate) && Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork) &&
-                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about);
+                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about) && Objects.equals(status,that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts, about);
+        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts, about, status);
     }
 
     @Override
@@ -101,6 +107,7 @@ public class CurriculumVitae {
                 ", isReadyForRemoteWork=" + isReadyForRemoteWork +
                 ", contacts=" + contacts +
                 ", about=" + about +
+                ", status=" + status +
                 '}';
     }
 }
