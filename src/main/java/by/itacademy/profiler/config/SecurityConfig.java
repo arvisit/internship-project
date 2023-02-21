@@ -1,5 +1,6 @@
 package by.itacademy.profiler.config;
 
+import by.itacademy.profiler.api.exception.RestAuthenticationEntryPoint;
 import by.itacademy.profiler.security.jwt.JwtTokenFilterConfigurer;
 import by.itacademy.profiler.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class SecurityConfig {
             "/webjars/**"
     };
     private final JwtTokenProvider jwtTokenProvider;
+    private final RestAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,6 +42,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .httpBasic().disable();
         return http.build();
