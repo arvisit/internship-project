@@ -5,4 +5,6 @@ import by.itacademy.profiler.usecasses.dto.AboutDto;
 public interface AboutService {
 
     AboutDto save(String uuid, AboutDto aboutDto);
+
+    AboutDto update(String uuid, AboutDto aboutDto);
 }

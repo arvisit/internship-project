@@ -1,5 +1,6 @@
 package by.itacademy.profiler.usecasses.impl;
 
+import by.itacademy.profiler.api.exception.AboutNotFoundException;
 import by.itacademy.profiler.persistence.model.About;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.repository.AboutRepository;
@@ -8,6 +9,7 @@ import by.itacademy.profiler.usecasses.AboutService;
 import by.itacademy.profiler.usecasses.dto.AboutDto;
 import by.itacademy.profiler.usecasses.mapper.AboutMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,23 @@ public class AboutServiceImpl implements AboutService {
         about.setId(curriculumVitae.getId());
         About savedAbout = aboutRepository.save(about);
         return aboutMapper.aboutToAboutDto(savedAbout);
+    }
+
+    @Override
+    @Transactional
+    public AboutDto update(String uuid, AboutDto aboutDto) {
+        String username = authService.getUsername();
+        About about = aboutRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
+                new AboutNotFoundException(String.format("About section is not available for CV UUID: %s of user %s", uuid, username)));
+        updateAbout(aboutDto, about);
+        About updateAbout = aboutRepository.save(about);
+        return aboutMapper.aboutToAboutDto(updateAbout);
+    }
+
+    private void updateAbout(AboutDto aboutDto, About about) {
+        if (!about.getDescription().equals(aboutDto.description())) {
+            about.setDescription(aboutDto.description());
+        }
+        about.setSelfPresentation(aboutDto.selfPresentation());
     }
 }
