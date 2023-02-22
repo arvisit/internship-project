@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="PROF2022-1417-2" author="aleksandr.mikhalevich89@gmail.com">
+        <addDefaultValue tableName="cvs"
+                         columnName="status"
+                         defaultValue="DRAFT"/>
+        <update tableName="cvs">
+            <column name="status" value="DRAFT"/>
+            <where>status='draft'</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>
