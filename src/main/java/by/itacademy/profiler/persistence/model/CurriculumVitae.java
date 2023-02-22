@@ -73,7 +73,7 @@ public class CurriculumVitae {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private CvStatus status;
+    private CvStatus status = CvStatus.DRAFT;
 
     @Override
     public boolean equals(Object o) {
