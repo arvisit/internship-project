@@ -46,6 +46,14 @@ public class AboutServiceImpl implements AboutService {
         return aboutMapper.aboutToAboutDto(updateAbout);
     }
 
+    @Override
+    public AboutDto getAbout(String uuid) {
+        String username = authService.getUsername();
+        About about = aboutRepository.findByUuidAndUsername(uuid, username).orElseThrow(() ->
+                new AboutNotFoundException(String.format("About section is not available for CV UUID: %s of user %s", uuid, username)));
+        return aboutMapper.aboutToAboutDto(about);
+    }
+
     private void updateAbout(AboutDto aboutDto, About about) {
         if (!about.getDescription().equals(aboutDto.description())) {
             about.setDescription(aboutDto.description());
