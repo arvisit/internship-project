@@ -4,24 +4,25 @@ import by.itacademy.profiler.usecasses.AboutService;
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
 import by.itacademy.profiler.usecasses.dto.AboutDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = AboutApiController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class AboutApiControllerTest {
@@ -112,5 +113,41 @@ class AboutApiControllerTest {
                 .andReturn();
         String updatedAbout = mvcResult.getResponse().getContentAsString();
         assertThat(updatedAbout).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(about));
+    }
+
+    @Test
+    void shouldReturn200WhenGetAboutSectionByValidInput() throws Exception {
+        String uuid = "20c3cb38-abb4-11ed-afa1-0242ac120002";
+        when(curriculumVitaeService.isCurriculumVitaeExists(uuid)).thenReturn(true);
+        mockMvc.perform(get("/api/v1/cvs/{uuid}/about", uuid)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldReturn404WhenGetAboutSectionByInvalidInputUuid() throws Exception {
+        String uuid = "20c3cb38-abb4-11ed-afa1-0242ac120002";
+        when(curriculumVitaeService.isCurriculumVitaeExists(uuid)).thenReturn(true);
+        String wrongUuid = "20c3cb38-abb4-11ed-afa1-0242ac120302";
+        mockMvc.perform(get("/api/v1/cvs/{uuid}/about", wrongUuid)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturn200AndCallBusinessLogicWhenGetAboutSectionByValidInput() throws Exception {
+        String uuid = "20c3cb38-abb4-11ed-afa1-0242ac120002";
+        AboutDto about = new AboutDto("test description", "https://test.com/12334");
+        when(curriculumVitaeService.isCurriculumVitaeExists(uuid)).thenReturn(true);
+        when(aboutService.getAbout(uuid)).thenReturn(about);
+        MvcResult mvcResult = mockMvc.perform(
+                        get("/api/v1/cvs/{uuid}/about", uuid)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+        AboutDto result = objectMapper.readValue(actualResponseBody, AboutDto.class);
+        verify(aboutService, times(1)).getAbout(uuid);
+        Assertions.assertEquals("test description", result.description());
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,5 +44,13 @@ public class AboutApiController {
         log.debug("Update about section of CV {} by the data: {}", uuid, aboutDto);
         AboutDto updateAbout = aboutService.update(uuid, aboutDto);
         return new ResponseEntity<>(updateAbout, HttpStatus.OK);
+    }
+
+    @GetMapping
+    @Operation(summary = "Find about section by cv uuid", description = "Name search by %name% format", tags = {"about"})
+    public ResponseEntity<AboutDto> getAbout(@PathVariable @IsCvExists String uuid){
+        AboutDto about = aboutService.getAbout(uuid);
+        log.debug("Getting about section of CV {} from database: {} ", uuid, about);
+        return new ResponseEntity<>(about, HttpStatus.OK);
     }
 }

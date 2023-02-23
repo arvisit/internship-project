@@ -1,5 +1,6 @@
 package by.itacademy.profiler.api.controllers;
 
+import by.itacademy.profiler.api.exception.AboutNotFoundException;
 import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.api.exception.ContactsNotFoundException;
 import by.itacademy.profiler.api.exception.CurriculumVitaeNotFoundException;
@@ -115,6 +116,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ContactsNotFoundException.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ErrorResponse handleContactsNotFoundException(ContactsNotFoundException exception) {
+        return new ErrorResponse(
+                HttpStatus.NO_CONTENT.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(AboutNotFoundException.class)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ErrorResponse handleAboutNotFoundException(AboutNotFoundException exception) {
         return new ErrorResponse(
                 HttpStatus.NO_CONTENT.value(),
                 exception.getMessage(),

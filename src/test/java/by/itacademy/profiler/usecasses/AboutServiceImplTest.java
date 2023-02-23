@@ -59,4 +59,25 @@ class AboutServiceImplTest {
         assertThrows(AboutNotFoundException.class, () -> aboutService.update(cvUUID, aboutDto));
         verify(aboutRepository, never()).save(any(About.class));
     }
+
+    @Test
+    void shouldGetAboutSection() {
+        String username = authService.getUsername();
+        String uuid = "20c3cb38-abb4-11ed-afa1-0242ac120002";
+        AboutDto aboutDto = new AboutDto("Test", "Test");
+        About about = new About();
+        when(aboutRepository.findByUuidAndUsername(uuid, username)).thenReturn(Optional.of(about));
+        when(aboutMapper.aboutToAboutDto(about)).thenReturn(aboutDto);
+        AboutDto getAboutDto = aboutService.getAbout(uuid);
+        assertEquals(getAboutDto.description(), aboutDto.description());
+        assertEquals(getAboutDto.selfPresentation(), aboutDto.selfPresentation());
+    }
+
+    @Test
+    void shouldThrowAboutNotFoundException() {
+        String uuid = "20c3cb38-abb4-11ed-afa1-0242ac120002";
+        String username = authService.getUsername();
+        AboutNotFoundException aboutNotFoundException = assertThrows(AboutNotFoundException.class, () -> aboutService.getAbout(uuid));
+        assertEquals(aboutNotFoundException.getMessage(),String.format("About section is not available for CV UUID: %s of user %s", uuid, username));
+    }
 }
