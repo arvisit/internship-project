@@ -3,7 +3,6 @@ package by.itacademy.profiler.usecasses.dto;
 import by.itacademy.profiler.usecasses.annotation.CountryValidation;
 import by.itacademy.profiler.usecasses.annotation.PositionValidation;
 import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
@@ -15,10 +14,10 @@ import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VA
 
 public record CurriculumVitaeRequestDto(
         @UserImageValidation(toValidate = UserImageValidation.ValidatedDto.CV_DTO) String imageUuid,
-        @NotBlank
+        @NotNull
         @Pattern(regexp = REGEXP_VALIDATE_NAME, message = "Invalid name")
         String name,
-        @NotBlank
+        @NotNull
         @Pattern(regexp = REGEXP_VALIDATE_SURNAME, message = "Invalid surname")
         String surname,
         @NotNull
@@ -27,7 +26,7 @@ public record CurriculumVitaeRequestDto(
         @NotNull
         @CountryValidation
         Long countryId,
-        @NotBlank
+        @NotNull
         @Pattern(regexp = REGEXP_VALIDATE_CITY, message = "Invalid city name")
         String city,
         Boolean isReadyToRelocate,
