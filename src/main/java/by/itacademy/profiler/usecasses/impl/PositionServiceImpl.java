@@ -15,13 +15,13 @@ import java.util.List;
 @Service
 public class PositionServiceImpl implements PositionService {
 
-    public static final String POSITION_ID = "id";
+    public static final String SORTING_PROPERTY = "position_name";
     private final PositionRepository positionRepository;
     private final PositionMapper positionMapper;
 
     @Override
     public List<PositionDto> getPositions() {
-        List<Position> positions = positionRepository.findAll(Sort.by(Sort.Order.asc(POSITION_ID)));
+        List<Position> positions = positionRepository.findAll(Sort.by(Sort.Order.asc(SORTING_PROPERTY)));
         return positionMapper.toListDto(positions);
     }
 }
