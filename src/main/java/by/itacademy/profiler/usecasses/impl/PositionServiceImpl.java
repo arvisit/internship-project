@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class PositionServiceImpl implements PositionService {
 
-    public static final String SORTING_PROPERTY = "position_name";
+    public static final String SORTING_PROPERTY = "name";
     private final PositionRepository positionRepository;
     private final PositionMapper positionMapper;
 
