@@ -5,6 +5,7 @@ import by.itacademy.profiler.usecasses.annotation.CountryValidation;
 import by.itacademy.profiler.usecasses.annotation.PhoneCodeValidation;
 import by.itacademy.profiler.usecasses.annotation.PositionValidation;
 import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
@@ -26,6 +27,7 @@ public record UserProfileDto(@Length(max = 50, message = "The name is too long, 
                                      message = "Invalid email. Example of the correct variant: example@example.com ")
                              String email,
                              @PhoneCodeValidation
+                             @NotNull(message = "Field must not be empty")
                              Long phoneCodeId,
                              @Length(max = 25, message = "The user's phone number is too long, the max number of symbols is 25")
                              @Pattern(regexp = REGEXP_VALIDATE_CELL_PHONE,
