@@ -23,5 +23,5 @@ public final class ValidationConstants {
 
     public static final String REGEXP_VALIDATE_CITY = "^(?=.{1,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$";
 
-    public static final String REGEXP_VALIDATE_NOT_BLANK_BUT_NULL = "^\\s*\\S[^]]*";
+    public static final String REGEXP_VALIDATE_NOT_BLANK_BUT_NULL = "^(?! *$).+";
 }
