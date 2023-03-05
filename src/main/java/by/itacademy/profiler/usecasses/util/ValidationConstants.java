@@ -21,7 +21,7 @@ public final class ValidationConstants {
         throw new IllegalStateException("Utility class");
     }
 
-    public static final String REGEXP_VALIDATE_CITY = "^(?=.{1,50}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$";
+    public static final String REGEXP_VALIDATE_CITY = "^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$";
 
     public static final String REGEXP_VALIDATE_NOT_BLANK_BUT_NULL = "^(?! *$).+";
 }
