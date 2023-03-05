@@ -29,7 +29,8 @@ public record CurriculumVitaeRequestDto(
         @NotNull
         @CountryValidation
         Long countryId,
-        @NotNull
+        @Length(max = 50, message = "Maximum length of city name is 50 symbols")
+        @NotNull(message = "Field must to be filled")
         @Pattern(regexp = REGEXP_VALIDATE_CITY, message = "Invalid city name")
         String city,
         Boolean isReadyToRelocate,
