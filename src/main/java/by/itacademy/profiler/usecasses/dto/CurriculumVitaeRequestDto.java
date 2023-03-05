@@ -32,6 +32,8 @@ public record CurriculumVitaeRequestDto(
         @NotNull
         @Pattern(regexp = REGEXP_VALIDATE_CITY, message = "Invalid city name")
         String city,
+        @NotNull(message = "Invalid field value")
         Boolean isReadyToRelocate,
+        @NotNull(message = "Invalid field value")
         Boolean isReadyForRemoteWork) implements Serializable {
 }
