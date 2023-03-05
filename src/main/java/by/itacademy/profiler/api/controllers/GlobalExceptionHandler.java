@@ -11,7 +11,9 @@ import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.api.exception.UserProfileNotFoundException;
 import by.itacademy.profiler.api.exception.WrongMediaTypeException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -128,6 +130,24 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(
                 HttpStatus.NO_CONTENT.value(),
                 exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorResponse handleMethodNotAllowedException(HttpRequestMethodNotSupportedException exception) {
+        return new ErrorResponse(
+                HttpStatus.METHOD_NOT_ALLOWED.value(),
+                exception.getMessage(),
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpMessageNotReadableException() {
+        return new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Malformed JSON request",
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
 }
