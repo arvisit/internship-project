@@ -131,12 +131,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         if (!curriculumVitaeRequestDto.city().equals(curriculumVitae.getCity())) {
             curriculumVitae.setCity(curriculumVitaeRequestDto.city());
         }
-        if (!curriculumVitaeRequestDto.isReadyToRelocate().equals(curriculumVitae.getIsReadyToRelocate())) {
             curriculumVitae.setIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate());
-        }
-        if (!curriculumVitaeRequestDto.isReadyForRemoteWork().equals(curriculumVitae.getIsReadyForRemoteWork())) {
             curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
-        }
     }
 
     @Override
