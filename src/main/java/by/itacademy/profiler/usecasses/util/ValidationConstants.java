@@ -15,7 +15,7 @@ public final class ValidationConstants {
 
     public static final String REGEXP_VALIDATE_SURNAME = "^(?=.{1,}$)[a-zA-Z]+(?:[-' ][a-zA-Z]+)*$";
 
-    public static final String REGEXP_VALIDATE_CELL_PHONE = "^(?=.{1,}$)[0-9]*$";
+    public static final String REGEXP_VALIDATE_CELL_PHONE = "^(?=.{0,}$)[0-9]*$";
 
     private ValidationConstants() {
         throw new IllegalStateException("Utility class");
