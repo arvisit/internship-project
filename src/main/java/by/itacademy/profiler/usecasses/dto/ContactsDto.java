@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-import static by.itacademy.profiler.usecasses.util.ValidationConstants.*;
+import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_CELL_PHONE;
+import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_EMAIL;
+import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_NOT_BLANK_BUT_NULL;
 
 public record ContactsDto(@PhoneCodeValidation
                           @NotNull(message = "Field must not be empty")
@@ -18,7 +20,7 @@ public record ContactsDto(@PhoneCodeValidation
                           String phoneNumber,
                           @Length(max = 50, message = "The email is too long, the max number of symbols is 50")
                           @Pattern(regexp = REGEXP_VALIDATE_EMAIL, message = "Invalid email. Example of the correct variant: example@example.com")
-                          @NotBlank(message = "Field must not be empty")
+                          @NotNull(message = "Field must not be null")
                           String email,
                           @Length(max = 50, message = "The Skype address is too long, the max number of symbols is 50")
                           @Pattern(regexp = REGEXP_VALIDATE_NOT_BLANK_BUT_NULL, message = "Field must be filled or null")
