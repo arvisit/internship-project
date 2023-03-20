@@ -1,10 +1,12 @@
 package by.itacademy.profiler.api.controllers;
 
 
+import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.api.exception.UserProfileNotFoundException;
 import by.itacademy.profiler.usecasses.UserProfileService;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
+import by.itacademy.profiler.usecasses.util.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserProfileApiController {
 
     private final UserProfileService userProfileService;
+    private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<UserProfileDto> saveUserProfile(@RequestBody @Valid UserProfileDto userProfile) {
+    public ResponseEntity<UserProfileResponseDto> saveUserProfile(@RequestBody @Valid UserProfileDto userProfile) {
+        if (userProfileService.getUserProfile() != null) {
+            String username = authService.getUsername();
+            throw new BadRequestException(String.format("The %s already has a profile", username));
+        }
         log.debug("Input data for creating profile: {} ", userProfile);
-        UserProfileDto profile = userProfileService.saveUserProfile(userProfile);
+        UserProfileResponseDto profile = userProfileService.saveUserProfile(userProfile);
         return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
 

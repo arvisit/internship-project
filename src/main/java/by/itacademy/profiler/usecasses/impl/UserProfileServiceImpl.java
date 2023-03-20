@@ -41,14 +41,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     @Transactional
-    public UserProfileDto saveUserProfile(UserProfileDto userProfileDto) {
+    public UserProfileResponseDto saveUserProfile(UserProfileDto userProfileDto) {
         String username = authService.getUsername();
         User user = userRepository.findByEmail(username);
         UserProfile userProfile = userProfileMapper.userProfileDtoToUserProfile(userProfileDto);
         userProfile.setId(user.getId());
         imageRepository.findByUuid(userProfileDto.profileImageUuid()).ifPresent(userProfile::setProfileImage);
         userProfileRepository.save(userProfile);
-        return userProfileDto;
+        return userProfileMapper.userProfileToUserProfileResponseDto(userProfile);
     }
 
     @Override
@@ -80,26 +80,14 @@ public class UserProfileServiceImpl implements UserProfileService {
             Image image = imageRepository.findByUuid(imageUuid).orElse(null);
             userProfile.setProfileImage(image);
         }
-        if (isNull(userProfileDto.name())) {
-            userProfile.setName(null);
-        } else userProfile.setName(userProfileDto.name());
-        if (isNull(userProfileDto.surname())) {
-            userProfile.setSurname(null);
-        } else userProfile.setSurname(userProfileDto.surname());
-        if (isNull(userProfileDto.cellPhone())) {
-            userProfile.setCellPhone(null);
-        } else userProfile.setCellPhone(userProfileDto.cellPhone());
-        if (isNull(userProfileDto.email())) {
-            userProfile.setEmail(null);
-        } else userProfile.setEmail(userProfileDto.email());
-        if (isNull(userProfileDto.countryId())) {
-            userProfile.setCountry(null);
-        } else countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
+        userProfile.setName(userProfileDto.name());
+        userProfile.setSurname(userProfileDto.surname());
+        userProfile.setCellPhone(userProfileDto.cellPhone());
+        userProfile.setEmail(userProfileDto.email());
+        countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
         if (isNull(userProfileDto.phoneCodeId())) {
             userProfile.setPhoneCode(phoneCodeRepository.findByCode(DEFAULT_PHONE_CODE));
         } else phoneCodeRepository.findById(userProfileDto.phoneCodeId()).ifPresent(userProfile::setPhoneCode);
-        if (isNull(userProfileDto.positionId())) {
-            userProfile.setPosition(null);
-        } else positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
+        positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
     }
 }

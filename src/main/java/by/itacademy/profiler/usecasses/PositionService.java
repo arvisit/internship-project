@@ -7,4 +7,6 @@ import java.util.List;
 public interface PositionService {
 
     List<PositionDto> getPositions();
+
+    boolean isPositionExist(Long id);
 }

@@ -26,4 +26,9 @@ public class PhoneCodeServiceImpl implements PhoneCodeService {
         log.debug("Getting {} phone codes from database", phoneCodeDtos.size());
         return phoneCodeDtos;
     }
+
+    @Override
+    public boolean isPhoneCodeExist(Long id) {
+        return phoneCodeRepository.existsById(id);
+    }
 }

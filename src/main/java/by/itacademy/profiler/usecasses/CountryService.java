@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CountryService {
     List<CountryDto> getCountries();
+    boolean isCountryExist(Long id);
 }
