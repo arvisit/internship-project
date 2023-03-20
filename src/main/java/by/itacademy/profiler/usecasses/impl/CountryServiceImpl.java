@@ -27,4 +27,9 @@ public class CountryServiceImpl implements CountryService {
         log.debug("Getting {} countries from Database", countries.size());
         return countryMapper.toDto(countries);
     }
+
+    @Override
+    public boolean isCountryExist(Long id) {
+        return countryRepository.existsById(id);
+    }
 }

@@ -17,6 +17,7 @@ public interface UserProfileMapper {
     @Mapping(target = "position", expression = "java(idToPosition(userProfileDto.positionId()))")
     @Mapping(target = "phoneCode.id", source = "phoneCodeId")
     @Mapping(target = "country", expression = "java(idToCountry(userProfileDto.countryId()))")
+    @Mapping(target = "profileImage.uuid", source = "profileImageUuid")
     UserProfile userProfileDtoToUserProfile(UserProfileDto userProfileDto);
 
     @Mapping(target = "profileImageUuid", source = "profileImage.uuid")

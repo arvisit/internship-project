@@ -24,4 +24,9 @@ public class PositionServiceImpl implements PositionService {
         List<Position> positions = positionRepository.findAll(Sort.by(Sort.Order.asc(SORTING_PROPERTY)));
         return positionMapper.toListDto(positions);
     }
+
+    @Override
+    public boolean isPositionExist(Long id) {
+        return positionRepository.existsById(id);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface PhoneCodeService {
 
     List<PhoneCodeDto> getPhoneCodes();
+
+    boolean isPhoneCodeExist(Long id);
 }

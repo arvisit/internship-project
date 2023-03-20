@@ -1,14 +1,14 @@
 package by.itacademy.profiler.usecasses;
 
 
-import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
+import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
 
 import java.util.Optional;
 
 public interface UserProfileService {
 
-    UserProfileDto saveUserProfile(UserProfileDto userProfileDto);
+    UserProfileResponseDto saveUserProfile(UserProfileDto userProfileDto);
 
     UserProfileResponseDto getUserProfile();
 
