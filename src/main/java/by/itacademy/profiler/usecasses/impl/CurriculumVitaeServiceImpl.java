@@ -49,8 +49,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         User user = userRepository.findByEmail(username);
         curriculumVitae.setUser(user);
         curriculumVitae.setUuid(UUID.randomUUID().toString());
-        curriculumVitaeRepository.save(curriculumVitae);
-        return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+        CurriculumVitae savedCurriculumVitae = curriculumVitaeRepository.save(curriculumVitae);
+        return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(savedCurriculumVitae);
     }
 
     @Override

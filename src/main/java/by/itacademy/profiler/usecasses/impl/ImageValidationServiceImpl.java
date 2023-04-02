@@ -22,12 +22,12 @@ public class ImageValidationServiceImpl implements ImageValidationService {
 
     @Override
     public boolean validateImageForCv(String imageUuid) {
-        return imageRepository.isImageBelongUserProfile(imageUuid);
+        return !imageRepository.isImageBelongUserProfile(imageUuid);
     }
 
     @Override
     public boolean validateImageForProfile(String imageUuid) {
-        return imageRepository.isImageBelongCurriculumVitae(imageUuid);
+        return !imageRepository.isImageBelongCurriculumVitae(imageUuid);
     }
 
     @Override

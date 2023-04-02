@@ -34,9 +34,9 @@ public class UserImageValidator implements ConstraintValidator<UserImageValidati
             return false;
         }
         if (dtoToValidate.equals(CV_DTO.name())) {
-            return !imageValidationService.validateImageForCv(imageUuid);
+            return imageValidationService.validateImageForCv(imageUuid);
         } else if (dtoToValidate.equals(PROFILE_DTO.name())) {
-            return !imageValidationService.validateImageForProfile(imageUuid);
+            return imageValidationService.validateImageForProfile(imageUuid);
         }
         return false;
     }
