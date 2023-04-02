@@ -234,6 +234,7 @@ class SaveUserProfileApiControllerTest {
         when(authService.getUsername()).thenReturn(USERNAME);
         when(countryService.isCountryExist(userProfileDto.countryId())).thenReturn(true);
         when(imageValidationService.isImageBelongsToUser(userProfileDto.profileImageUuid())).thenReturn(true);
+        when(imageValidationService.validateImageForProfile(userProfileDto.profileImageUuid())).thenReturn(true);
         when(positionService.isPositionExist(userProfileDto.positionId())).thenReturn(true);
         when(phoneCodeService.isPhoneCodeExist(userProfileDto.phoneCodeId())).thenReturn(true);
     }
