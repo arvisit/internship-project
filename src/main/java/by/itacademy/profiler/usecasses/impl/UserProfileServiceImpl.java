@@ -84,10 +84,18 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setSurname(userProfileDto.surname());
         userProfile.setCellPhone(userProfileDto.cellPhone());
         userProfile.setEmail(userProfileDto.email());
-        countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
+        if (userProfileDto.countryId() == null) {
+            userProfile.setCountry(null);
+        } else {
+            countryRepository.findById(userProfileDto.countryId()).ifPresent(userProfile::setCountry);
+        }
         if (isNull(userProfileDto.phoneCodeId())) {
             userProfile.setPhoneCode(phoneCodeRepository.findByCode(DEFAULT_PHONE_CODE));
         } else phoneCodeRepository.findById(userProfileDto.phoneCodeId()).ifPresent(userProfile::setPhoneCode);
-        positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
+        if (userProfileDto.positionId() == null) {
+            userProfile.setPosition(null);
+        } else {
+            positionRepository.findById(userProfileDto.positionId()).ifPresent(userProfile::setPosition);
+        }
     }
 }
