@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-1876" author="sitko.ar@gmail.com">
+        <comment>Add data for available languages on cv's 4th page</comment>
+
+        <createTable tableName="languages">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="language_name" type="varchar(20)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="is_top" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addDefaultValue tableName="languages"
+                     columnName="is_top"
+                     defaultValueBoolean="false"/>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Belarusian"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Russian"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Polish"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="English"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="German"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="French"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Italian"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Spanish"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Turkish"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Chinese"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Arabic"/>
+            <column name="is_top" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Abkhazian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Afar"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Afrikaans"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Akan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Albanian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Amharic"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Aragonese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Armenian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Assamese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Avaric"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Avestan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Aymara"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Azerbaijani"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bambara"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bangla"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bashkir"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Basque"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bihari"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bislama"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bosnian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Breton"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Bulgarian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Burmese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Catalan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Chamorro"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Chechen"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Church Slavic"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Chuvash"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Cornish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Corsican"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Cree"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Croatian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Czech"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Danish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Divehi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Dutch"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Dzongkha"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Esperanto"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Estonian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ewe"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Faroese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Fijian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Finnish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Fulah"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Galician"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ganda"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Georgian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Greek"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Guarani"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Gujarati"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Haitian Creole"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Hausa"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Hebrew"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Herero"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Hindi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Hiri Motu"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Hungarian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Icelandic"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ido"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Igbo"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Indonesian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Interlingua"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Interlingue"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Inuktitut"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Inupiaq"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Irish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Japanese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Javanese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kalaallisut"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kannada"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kanuri"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kashmiri"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kazakh"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Khmer"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kikuyu"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kinyarwanda"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Komi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kongo"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Korean"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kuanyama"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kurdish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Kyrgyz"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Lao"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Latin"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Latvian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Limburgish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Lingala"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Lithuanian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Luba-Katanga"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Luxembourgish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Macedonian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Malagasy"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Malay"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Malayalam"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Maltese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Manx"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Maori"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Marathi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Marshallese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Moldavian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Mongolian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Nauru"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Navajo"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ndonga"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Nepali"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="North Ndebele"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Northern Sami"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Norwegian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Norwegian Bokmål"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Norwegian Nynorsk"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Nyanja"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Occitan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Odia"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ojibwa"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Oromo"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ossetic"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Pali"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Pashto"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Persian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Portuguese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Punjabi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Quechua"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Romanian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Romansh"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Rundi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Samoan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sango"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sanskrit"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sardinian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Scottish Gaelic"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Serbian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Shona"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sichuan Yi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sindhi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sinhala"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Slovak"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Slovenian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Somali"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="South Ndebele"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Southern Sotho"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Sundanese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Swahili"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Swati"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Swedish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tagalog"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tahitian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tajik"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tamil"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tatar"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Telugu"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Thai"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tibetan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tigrinya"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tongan"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tsonga"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Tswana"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Turkmen"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Twi"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Ukrainian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Urdu"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Uyghur"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Uzbek"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Venda"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Vietnamese"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Volapük"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Walloon"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Welsh"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Western Frisian"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Wolof"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Xhosa"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Yiddish"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Yoruba"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Zhuang"/>
+        </insert>
+
+        <insert tableName="languages">
+            <column name="language_name" value="Zulu"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
