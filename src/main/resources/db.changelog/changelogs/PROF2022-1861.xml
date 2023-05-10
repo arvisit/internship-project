@@ -1,0 +1,2527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-1861" author="sitko.ar@gmail.com">
+        <comment>Add data for Skills of cv's 4th page</comment>
+
+        <createTable tableName="skills">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column name="skill_name" type="varchar(40)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="positions_skills">
+            <column name="position_id" type="bigint">
+            </column>
+            <column name="skill_id" type="bigint">
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                columnNames="position_id, skill_id"
+                constraintName="pk_positions_skills"
+                tableName="positions_skills"
+        />
+        <addForeignKeyConstraint
+                baseTableName="positions_skills"
+                baseColumnNames="position_id"
+                constraintName="fk_positions_skills_position_id"
+                referencedTableName="positions"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="positions_skills"
+                baseColumnNames="skill_id"
+                constraintName="fk_positions_skills_skill_id"
+                referencedTableName="skills"
+                referencedColumnNames="id"
+        />
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET Back-End Development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET Data Access Development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET Development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET Framework"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET RESTful services"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value=".NET Web Development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Access Specifiers"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adaptation"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adaptive Slicing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adobe After Effects"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adobe Illustrator"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adobe InDesign"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adobe Photoshop"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Adobe Premiere Pro"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Agile"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ahrefs"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="AJAX"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Analytical skills"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Analyzing Requirements"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Android API"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Android SDK"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Android studio"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Angular"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ansible"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Apache"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="API"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="API/web services testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Architecture Components"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Architecture knowledge"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ASP.NET MVC Development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ASP.NET MVC"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Auto Layout"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Automation"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Axure"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Azure"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Babel"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Backbone.js"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Basics DBMS knowledge"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Black Box testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Blocks knowledge"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Boolean search"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Boost"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Bootstrap"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Bottle"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="BPMN"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Budget Management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Budget planning"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Business planning"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ButterKnife"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="C#"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="C++"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Cash Flow and P&amp;L reports"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Change Management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CI"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CI/CD"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Clean coding principles"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Client-server architecture"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CMake"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Cocoa Touch"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Codeception"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Collections"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CollectionViews"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Communication skills"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Compilation of semantic cores"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Composer"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Configuration management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Confluence"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Constructors"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Content creation and copywriting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Content planning"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Core Data"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CorelDRAW"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Couchbase"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Creating a customer profile"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Creation of first emails"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Creation of follow-ups"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="CSS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Customer journey map"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Dagger 2"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Data analysis"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Data analysis and forecasting methods"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Database"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="DBMS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Debugging"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Defects hunting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Dependency"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Design patterns"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Developer relations"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Diagramming"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Django"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Docker"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Documenting requirements"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Draw.io"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Drupal"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="EasyMock"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Eclipse"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="EclipseLink"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ECMAScript"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Elicitation techniques"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ember.js"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Entity frameworks"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Estimations"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Figma"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Financial analysis"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Flask"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Flux"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Forecasting methods"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="FTP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Functional testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="GanttPro"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Generics"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Gin"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Git"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="GitLab"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Glassfish"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Golang"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Google Analytics"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Google Docs"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Grid"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Groovy"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="GSON"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="GUI testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Gulp"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Hibernate"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="HSQLDB"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="HTML"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="HTTP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Hyper-V"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="IDEA"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Injection"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Interaction design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Interface Builder"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Invision"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="iOS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Java"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Java Beans"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Java Core"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Java Servlets"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JavaScript"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JBoss"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JDBC"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Jenkins"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Jira"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="jQuery"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JS MVC framework"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JSON"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JSP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="JUnit"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Kanban"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Keras"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Knockout.js"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Kotlin"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Laravel"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Lead generation"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="LESS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="LINQ to Entities"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="LINQ to Objects"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="LINQ to SQL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Linux"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Liquibase"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="LLBLGen"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Lucene"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Magento"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Magento 2"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Management reporting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Manual testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MapStruct"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Market Research"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Marketing strategy development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Marvel"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Maven"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Memcache"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Mercurial"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Miro"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MkDocs"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Mobile design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Mobile technologies"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Mockito"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Modelling tools"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MongoDB"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MS Office"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MS Visio"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MultiThread programming"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MVC"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MVP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MVVM"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="MySQL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Negotiation"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Networking"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Nginx"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="NHibernate"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ninjamock"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Nose"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="NoSQL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Npm"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Numpy"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="NUnit"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="OAuth"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Objective-C"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Onboarding"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="On-page and off-page optimization"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="OOP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="OpenCV"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="OpenGL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Oracle"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ORM tools"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="OS Linux"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Pandas"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="PHP"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="PI testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Pip"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Playwright"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="PostgreSQL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Postman"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="PowerMock"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="PR plan"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Preparation of commercial offers"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Preprocessors"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Presentation techniques"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Prioritizing requirements"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Problem solving"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Product development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Project Planning and Scheduling"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Prototyping"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Py.test"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Python"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Qt"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Qt framework"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Quality Management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Quartz"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="QWS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="RabbitMQ"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Rational analysis"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="React"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="React Native"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ReactJS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Realm"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Recruitment"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Redis"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Redux"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Regression testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Reporting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Requirements management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Requirements testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Responsive design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="REST"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="REST API"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="RESTful API"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Retargeting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Retrofit"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Risk management"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Robot framework"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Room Persistence"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ruby"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Ruby on rails"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="RxAndroid"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="RxJava"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SASS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SciPy"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Scrum"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SDLC"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Segues"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Selenium Webdriver"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Semrush"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Serpstat"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Serverless"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Service oriented architecture"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Servlets"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Setup-tools"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Sketch"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SOAP UI"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Social Networking"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Software Development methodologies"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Software Development models"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Software Development processes"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Software Requirements"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Software requirements specification"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SOLID"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Spring"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Spring Boot"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SQL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SQL basics"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SQL fundamentals"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SQLAlchemy"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SQLite"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SRS"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="STL"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Storyboards"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Struts"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Stylus"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Subversion"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="SVN"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Swift"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Symfony"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Tablet design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="TableViews"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Targeted advertising and retargeting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="TechPR"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Tensorflow"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Test case"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Test plan"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Test results analysis"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Test results reporting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Test strategy development"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Testing techniques"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Testing tools"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Testlink"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="TestRail"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Tomcat"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Topvisor"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Tornado"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Tox"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Troubleshooting"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Twisted"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="TypeScript"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UI"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UI design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UIKit"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UML"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Understanding frameworks"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Understanding of SDLC"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Unit testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UnitTest"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Unity"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UNIX"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Usability"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="User centred design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="User story"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UX"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="UX testing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Velocity"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Vision &amp; Scope"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Visual studio"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="VMware"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Vue.js"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Waterfall"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="WEB builder"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Web design"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Web services"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Web technologies"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Web2py"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="WebAPI"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="WEBDav"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Webpack"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="WebSockets"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Wireframing"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Xcode"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Xib's"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="XML"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="X-Ray search"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="XSLT"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Yandex Metrika"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Yii"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="YouTrack"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Zend"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="Zeplin"/>
+        </insert>
+
+        <insert tableName="skills">
+            <column name="skill_name" value="ZeroMQ"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Creating a customer profile')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Content planning')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Data analysis')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Targeted advertising and retargeting')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Retargeting')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SMM manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Content creation and copywriting')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Digital marketing manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Marketing strategy development')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Digital marketing manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Budget planning')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Digital marketing manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Lead generation')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Digital marketing manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Content creation and copywriting')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'TechPR')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Developer relations')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'PR plan')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Vision &amp; Scope')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SRS')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'UML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'BPMN')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Prototyping')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Diagramming')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Jira')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Confluence')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Draw.io')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Agile')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Business Analyst')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Scrum')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Java Core')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Spring')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Spring Boot')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Hibernate')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'HTTP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'REST')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Java developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'JavaScript')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'HTML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CSS')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'jQuery')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Bootstrap')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'React')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Angular')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'JavaScript developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Vue.js')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Python')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Django')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'HTML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CSS')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'PostgreSQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Python developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Technical Writer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MS Office')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Technical Writer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Google Docs')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Technical Writer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MkDocs')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Technical Writer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Confluence')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Technical Writer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Jira')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'NET developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'C#')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'NET developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'ASP.NET MVC')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'NET developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SOLID')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'NET developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'NET developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'RESTful API')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Java Core')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Kotlin')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Android SDK')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'RxJava')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'RxAndroid')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Android developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Python')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Tensorflow')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Keras')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Pandas')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Numpy')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Data Science')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OpenCV')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Motion Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe After Effects')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Motion Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Photoshop')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Motion Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Illustrator')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Motion Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Premiere Pro')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'On-page and off-page optimization')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Compilation of semantic cores')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Ahrefs')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Semrush')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Serpstat')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Topvisor')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Google Analytics')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'SEO specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Yandex Metrika')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'HR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Boolean search')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'HR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'X-Ray search')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'HR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Recruitment')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'HR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Onboarding')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'HR manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adaptation')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Sales manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Negotiation')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Sales manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Preparation of commercial offers')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Sales manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Creation of first emails')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Sales manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Creation of follow-ups')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Sales manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Understanding of SDLC')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Python')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Python')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Python')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Linux')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Python')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Automation')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Figma')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Sketch')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Photoshop')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Illustrator')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe After Effects')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'UI/UX designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Axure')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Agile')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Waterfall')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Scrum')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Kanban')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SDLC')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Jira')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Confluence')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Miro')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'GanttPro')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Change Management')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Project Planning and Scheduling')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Budget Management')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Risk Management')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Reporting')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Quality Management')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Project Manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Software Requirements')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Ruby on Rails developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Ruby on rails')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Ruby on Rails developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Ruby')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Ruby on Rails developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'PostgreSQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Ruby on Rails developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Git')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'iOS developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Swift')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'iOS developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'UIKit')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'iOS developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SOLID')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'iOS developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Xcode')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'iOS developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Unity developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'C#')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Unity developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Unity')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'C++')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Qt')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Boost')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'STL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'JavaScript')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'TypeScript')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Git')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Selenium Webdriver')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Playwright')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Postman')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation JavaScript')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SQL basics')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'JavaScript')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'HTML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CSS')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'jQuery')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Bootstrap')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'React')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Angular')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'React developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Vue.js')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Functional testing')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'API/web services testing')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'TestRail')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'SQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'PostgreSQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Postman')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'YouTrack')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA specialist')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Jira')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Data analysis')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Forecasting methods')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Risk management')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Financial analysis')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Business planning')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Management reporting')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'IT Finance manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Cash Flow and P&amp;L reports')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OS Linux')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Docker')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CI/CD')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'GitLab')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MySQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'DevOps engineer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Ansible')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Graphic Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Figma')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Graphic Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Photoshop')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Graphic Designer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Adobe Illustrator')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = '.NET Framework')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'C#')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CI')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Git')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation C#')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Postman')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Java')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Java')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Java')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Selenium Webdriver')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Java')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'XML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Java')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'HTML')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'QA automation Java')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CSS')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Product manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Product development')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Product manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Market Research')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Product manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'UX testing')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Product manager')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Customer journey map')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ game developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'C++')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ game developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OpenGL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'C++ game developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'CMake')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'PHP')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MySQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Laravel')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Symfony')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Yii')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Magento 2')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'PHP developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'OOP')"/>
+        </insert>
+
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Go developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Golang')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Go developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'Gin')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Go developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MySQL')"/>
+        </insert>
+
+        <insert tableName="positions_skills">
+            <column name="position_id" valueComputed="(select p.id from positions p where p.position_name = 'Go developer')"/>
+            <column name="skill_id" valueComputed="(select s.id from skills s where s.skill_name = 'MongoDB')"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

@@ -10,6 +10,7 @@ import by.itacademy.profiler.api.exception.ImageNotFoundException;
 import by.itacademy.profiler.api.exception.ImageStorageException;
 import by.itacademy.profiler.api.exception.UserProfileNotFoundException;
 import by.itacademy.profiler.api.exception.WrongMediaTypeException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -148,6 +149,18 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Malformed JSON request",
+                ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationErrors(ConstraintViolationException exception) {
+        Map<String, String> errors = new HashMap<>();
+        exception.getConstraintViolations().forEach(constraintViolation -> constraintViolation.getPropertyPath()
+                .forEach(error -> errors.put(constraintViolation.getMessage(), error.getName())));
+        return new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                errors.toString(),
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of(EUROPE_MINSK)));
     }
 }

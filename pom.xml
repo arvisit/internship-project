@@ -18,6 +18,8 @@
         <spring.boot.maven.plugin.version>3.0.1</spring.boot.maven.plugin.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <org.testcontainers.mysql.version>1.17.6</org.testcontainers.mysql.version>
+
     </properties>
 
     <dependencyManagement>
@@ -90,6 +92,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${org.testcontainers.mysql.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
