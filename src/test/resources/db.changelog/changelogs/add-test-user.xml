@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+    <changeSet id="1" author="nata">
+        <insert tableName="roles">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="uuid" value="123e4567-e89b-12d3-a456-426614174000"/>
+            <column name="email" value="admin@mail.ru"/>
+            <column name="password" value="$2a$12$QVKIjBwYU1revPLOblmVyelQ9YlzJljKof/H.59q0QNaeZTbLPuYO"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

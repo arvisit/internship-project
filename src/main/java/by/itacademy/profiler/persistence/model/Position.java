@@ -31,7 +31,7 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return Objects.equals(id, position.id) && Objects.equals(position, position.name);
+        return Objects.equals(id, position.id) && Objects.equals(name, position.name);
     }
 
     @Override
