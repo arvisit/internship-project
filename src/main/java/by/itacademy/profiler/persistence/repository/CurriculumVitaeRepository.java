@@ -20,4 +20,6 @@ public interface CurriculumVitaeRepository extends JpaRepository<CurriculumVitae
 
     @Query("select (count(c) > 0) from CurriculumVitae c where c.uuid = :uuid and c.user.email = :email")
     boolean existsByUuidAndUsername(@Param("uuid") String uuid, @Param("email") String email);
+
+    CurriculumVitae getReferenceByUuid(String uuid);
 }

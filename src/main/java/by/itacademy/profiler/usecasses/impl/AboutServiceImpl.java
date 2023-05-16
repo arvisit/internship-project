@@ -9,7 +9,7 @@ import by.itacademy.profiler.usecasses.AboutService;
 import by.itacademy.profiler.usecasses.dto.AboutDto;
 import by.itacademy.profiler.usecasses.mapper.AboutMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -13,7 +13,7 @@ class SkillMapperTest {
     private final SkillMapper skillMapper = Mappers.getMapper(SkillMapper.class);
 
     @Test
-    void testEntityToDtoShouldMapEntitySkillToSkillResponseDto() {
+    void shouldMapCorrectlyAllFieldWhenInvokeFromEntityToDto() {
         Skill skill = createSkill();
         SkillResponseDto skillResponseDto = skillMapper.fromEntityToDto(skill);
         assertEquals(skill.getName(),skillResponseDto.name());

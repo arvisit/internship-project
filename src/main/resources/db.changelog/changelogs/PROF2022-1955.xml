@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-1955" author="sitko.ar@gmail.com">
+        <comment>Customize DB to work with selected skills and languages from cv's 4th page</comment>
+
+        <createTable tableName="cvs_skills">
+            <column name="cv_id" type="bigint">
+            </column>
+            <column name="skill_id" type="bigint">
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                columnNames="cv_id, skill_id"
+                constraintName="pk_cvs_skills"
+                tableName="cvs_skills"
+        />
+        <addForeignKeyConstraint
+                baseTableName="cvs_skills"
+                baseColumnNames="cv_id"
+                constraintName="fk_cvs_skills_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="cvs_skills"
+                baseColumnNames="skill_id"
+                constraintName="fk_cvs_skills_skill_id"
+                referencedTableName="skills"
+                referencedColumnNames="id"
+        />
+
+        <createTable tableName="cvs_languages">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cv_id" type="bigint">
+            </column>
+            <column name="language_id" type="bigint">
+            </column>
+            <column name="proficiency" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="certificate_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="cvs_languages"
+                baseColumnNames="cv_id"
+                constraintName="fk_cvs_languages_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="cvs_languages"
+                baseColumnNames="language_id"
+                constraintName="fk_cvs_languages_language_id"
+                referencedTableName="languages"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>

@@ -18,7 +18,7 @@ import static by.itacademy.profiler.util.LanguageTestData.createLanguageResponse
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class LanguageServiceTest {
+class LanguageServiceImplTest {
 
     @InjectMocks
     private LanguageServiceImpl languageService;

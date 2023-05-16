@@ -55,4 +55,13 @@ public class Skill {
     public int hashCode() {
         return Objects.hash(id, name, positions);
     }
+
+    @Override
+    public String toString() {
+        return "Skill{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", positions=" + positions +
+                '}';
+    }
 }
