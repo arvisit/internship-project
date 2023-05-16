@@ -1,6 +1,8 @@
 package by.itacademy.profiler.usecasses;
 
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
+import by.itacademy.profiler.persistence.model.CvLanguage;
+import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
 import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
@@ -18,11 +20,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 import java.util.Optional;
 
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.*;
+import static by.itacademy.profiler.util.CvLanguageTestData.createCvLanguage;
+import static by.itacademy.profiler.util.SkillTestData.createSkill;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,6 +56,7 @@ class CurriculumVitaeServiceTest {
     private CurriculumVitaeRepository curriculumVitaeRepository;
     @Mock
     private AuthService authService;
+
     @InjectMocks
     private CurriculumVitaeServiceImpl curriculumVitaeService;
 
@@ -205,6 +213,28 @@ class CurriculumVitaeServiceTest {
         verify(authService, times(1)).getUsername();
         verify(curriculumVitaeRepository, times(1)).findByUuidAndUsername(curriculumVitae.getUuid(), getUser().getEmail());
         verify(curriculumVitaeMapper, times(1)).curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    void testSaveSkillsToCvShouldSave() {
+        CurriculumVitae curriculumVitae = getValidCurriculumVitae();
+        List<Skill> skills = List.of(createSkill());
+
+        when(curriculumVitaeRepository.getReferenceByUuid(CV_UUID)).thenReturn(curriculumVitae);
+
+        assertDoesNotThrow(() -> curriculumVitaeService.saveSkillsToCv(CV_UUID, skills));
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    void testSaveLanguagesToCvShouldSave() {
+        CurriculumVitae curriculumVitae = getValidCurriculumVitae();
+        List<CvLanguage> languages = List.of(createCvLanguage().build());
+
+        when(curriculumVitaeRepository.getReferenceByUuid(CV_UUID)).thenReturn(curriculumVitae);
+
+        assertDoesNotThrow(() -> curriculumVitaeService.saveLanguagesToCv(CV_UUID, languages));
     }
 
     private void stubbingForGet(CurriculumVitae curriculumVitae, CurriculumVitaeResponseDto curriculumVitaeResponseDto) {

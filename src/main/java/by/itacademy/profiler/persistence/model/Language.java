@@ -46,4 +46,13 @@ public class Language {
     public int hashCode() {
         return Objects.hash(id, name, isTop);
     }
+
+    @Override
+    public String toString() {
+        return "Language{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isTop=" + isTop +
+                '}';
+    }
 }

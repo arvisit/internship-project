@@ -14,7 +14,7 @@ class LanguageMapperTest {
     private final LanguageMapper languageMapper = Mappers.getMapper(LanguageMapper.class);
 
     @Test
-    void testFromEntityToDtoShouldMapEntityToDto() {
+    void shouldMapCorrectlyAllFieldWhenInvokeFromEntityToDto() {
         Language language = createLanguage().withId(1L).build();
         LanguageResponseDto languageResponseDto = languageMapper.fromEntityToDto(language);
         assertEquals(language.getId(),languageResponseDto.id());

@@ -2,7 +2,9 @@ package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
+import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Image;
+import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
 import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
@@ -15,10 +17,10 @@ import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import by.itacademy.profiler.usecasses.mapper.CurriculumVitaeMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -76,6 +78,24 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         String username = authService.getUsername();
         CurriculumVitae curriculumVitae = curriculumVitaeRepository.findByUuidAndUsername(uuid, username);
         return curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+    }
+
+    @Override
+    @Transactional
+    public void saveSkillsToCv(String cvUuid, List<Skill> skills) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        curriculumVitae.setSkills(skills);
+        curriculumVitaeRepository.save(curriculumVitae);
+    }
+
+    @Override
+    @Transactional
+    public void saveLanguagesToCv(String cvUuid, List<CvLanguage> languages) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        List<CvLanguage> cvLanguages = curriculumVitae.getLanguages();
+        cvLanguages.clear();
+        cvLanguages.addAll(languages);
+        curriculumVitaeRepository.save(curriculumVitae);
     }
 
     public Long getAllCvByUser() {

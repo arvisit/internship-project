@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SkillServiceTest {
+class SkillServiceImplTest {
 
     @InjectMocks
     private SkillServiceImpl skillService;
@@ -30,7 +30,7 @@ class SkillServiceTest {
     private SkillRepository skillRepository;
 
     @Test
-    void testGetSkillsWithPositionIdEqualsNullShouldReturnAllSkills() {
+    void shouldReturnAllSkillsWithoutPositionIdWhenInvokeGetSkills() {
         Skill skill = createSkill();
         SkillResponseDto skillResponseDto = createSkillResponseDto().build();
 
@@ -42,7 +42,7 @@ class SkillServiceTest {
     }
 
     @Test
-    void testGetSkillsWithPositionIdShouldReturnSkillsByPosition() {
+    void shouldReturnSkillsByPositionIdWhenInvokeGetSkills() {
         Skill skill = createSkill();
         SkillResponseDto skillResponseDto = createSkillResponseDto().build();
         Long positionId = 1L;

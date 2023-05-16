@@ -16,7 +16,7 @@ import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
 import by.itacademy.profiler.usecasses.mapper.UserProfileMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

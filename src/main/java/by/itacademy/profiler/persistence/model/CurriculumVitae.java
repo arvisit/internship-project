@@ -10,13 +10,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -76,6 +81,16 @@ public class CurriculumVitae {
     @Column(name = "status")
     private CvStatus status = CvStatus.DRAFT;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cv_id")
+    private List<CvLanguage> languages = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "cvs_skills",
+            joinColumns = @JoinColumn (name = "cv_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private List<Skill> skills = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,12 +99,14 @@ public class CurriculumVitae {
                 Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
                 Objects.equals(position, that.position) && Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
                 Objects.equals(isReadyToRelocate, that.isReadyToRelocate) && Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork) &&
-                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about) && Objects.equals(status,that.status);
+                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about) && Objects.equals(status,that.status) &&
+                Objects.equals(languages, that.languages) && Objects.equals(skills, that.skills);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate, isReadyForRemoteWork, contacts, about, status);
+        return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate,
+                isReadyForRemoteWork, contacts, about, status, languages, skills);
     }
 
     @Override
@@ -108,6 +125,8 @@ public class CurriculumVitae {
                 ", isReadyForRemoteWork=" + isReadyForRemoteWork +
                 ", contacts=" + contacts +
                 ", about=" + about +
+                ", languages=" + languages +
+                ", skills=" + skills +
                 ", status=" + status +
                 '}';
     }

@@ -35,4 +35,16 @@ public class SkillServiceImpl implements SkillService {
                 .map(skillMapper::fromEntityToDto)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isSkillsExistByIds(List<Long> skillIds) {
+        return skillRepository.existsAllByIds(skillIds, skillIds.size());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Skill> getListOfSkillsByIds(List<Long> skillIds) {
+        return skillRepository.findAllById(skillIds);
+    }
 }
