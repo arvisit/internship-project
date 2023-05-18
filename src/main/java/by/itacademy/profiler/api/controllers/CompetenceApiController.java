@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,5 +41,16 @@ public class CompetenceApiController {
         log.debug("Input data for creating CV languages and skills: {}", request);
         CompetenceResponseDto response = competenceService.save(request, uuid);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get skills and languages in the user's cv")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "NOT_FOUND")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
+    @GetMapping
+    public ResponseEntity<CompetenceResponseDto> get(@PathVariable(name = "uuid") @IsCvExists String uuid) {
+        CompetenceResponseDto response = competenceService.getCompetenceByCvUuid(uuid);
+        log.debug("Getting competence section of CV {} from database: {} ", uuid, response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

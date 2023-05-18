@@ -68,8 +68,8 @@ class CurriculumVitaeServiceTest {
     @Test
     void shouldReturnSavedCvResponseDtoWhenSendCvRequestDtoTo_Save() {
 
-        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto);
+        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto().build();
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto).build();
         CurriculumVitae curriculumVitae = getCvByCvRequestDto(curriculumVitaeRequestDto);
         stubbingForSave(curriculumVitaeRequestDto, curriculumVitaeResponseDto, curriculumVitae);
 
@@ -94,8 +94,8 @@ class CurriculumVitaeServiceTest {
     @Test
     void shouldCallRepositoryLevelAndMapperWhenSendCvRequestDtoTo_Save() {
 
-        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto);
+        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto().build();
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto).build();
         CurriculumVitae curriculumVitae = getCvByCvRequestDto(curriculumVitaeRequestDto);
         stubbingForSave(curriculumVitaeRequestDto, curriculumVitaeResponseDto, curriculumVitae);
 
@@ -138,8 +138,8 @@ class CurriculumVitaeServiceTest {
 
     @Test
     void shouldReturnUpdatedCvResponseDtoWhenSendCvRequestDtoTo_Update() {
-        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto);
+        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto().build();
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto).build();
         CurriculumVitae curriculumVitae = getCvByCvRequestDto(curriculumVitaeRequestDto);
         stubbingForUpdate(curriculumVitaeResponseDto, curriculumVitae);
 
@@ -163,8 +163,8 @@ class CurriculumVitaeServiceTest {
 
     @Test
     void shouldReturnUpdatedCvResponseDtoWhenSendCvRequestDtoTo_Update_AndCallRepositoryAndMapper() {
-        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto);
+        CurriculumVitaeRequestDto curriculumVitaeRequestDto = getValidCvRequestDto().build();
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCvRequestDto(curriculumVitaeRequestDto).build();
         CurriculumVitae curriculumVitae = getCvByCvRequestDto(curriculumVitaeRequestDto);
         stubbingForUpdate(curriculumVitaeResponseDto, curriculumVitae);
 
@@ -180,7 +180,7 @@ class CurriculumVitaeServiceTest {
     @Test
     void shouldReturnCvResponseDtoWhen_GetCvOfUser_Invoke() {
         CurriculumVitae curriculumVitae = getValidCurriculumVitae();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCurriculumVitae(curriculumVitae);
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCurriculumVitae(curriculumVitae).build();
 
         stubbingForGet(curriculumVitae, curriculumVitaeResponseDto);
 
@@ -204,7 +204,7 @@ class CurriculumVitaeServiceTest {
     @Test
     void shouldReturnCvResponseDtoWhen_GetCvOfUser_InvokeAndCallRepositoryAndMapper() {
         CurriculumVitae curriculumVitae = getValidCurriculumVitae();
-        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCurriculumVitae(curriculumVitae);
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = getCvResponseDtoByCurriculumVitae(curriculumVitae).build();
 
         stubbingForGet(curriculumVitae, curriculumVitaeResponseDto);
 

@@ -40,4 +40,13 @@ public class CompetenceServiceImpl implements CompetenceService {
 
         return competenceMapper.fromEntitiesToDto(skills, cvLanguages);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CompetenceResponseDto getCompetenceByCvUuid(String cvUuid) {
+        List<CvLanguage> cvLanguages = curriculumVitaeService.getCvLanguagesByCvUuid(cvUuid);
+        List<Skill> skills = curriculumVitaeService.getCvSkillsByCvUuid(cvUuid);
+
+        return competenceMapper.fromEntitiesToDto(skills, cvLanguages);
+    }
 }

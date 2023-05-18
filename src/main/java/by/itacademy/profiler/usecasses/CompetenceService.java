@@ -7,4 +7,6 @@ public interface CompetenceService {
 
     CompetenceResponseDto save(CompetenceRequestDto competenceRequestDto, String cvUuid);
 
+    CompetenceResponseDto getCompetenceByCvUuid(String cvUuid);
+
 }

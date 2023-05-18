@@ -20,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.SqlMergeMode;
+import org.springframework.test.context.jdbc.SqlMergeMode.MergeMode;
 
 import java.util.Map;
 
@@ -38,6 +40,9 @@ class CompetenceApiControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    private static final int EXPECTED_NUMBER_OF_SKILLS = 4;
+    private static final int EXPECTED_NUMBER_OF_LANGUAGES = 2;
 
     @Test
     void shouldReturn201AndJsonContentTypeWhenCreateSuccessful() {
@@ -71,6 +76,40 @@ class CompetenceApiControllerIntegrationTest {
 
         assertThat(actualResponse.skills()).hasSize(expectedSkillsSize);
         assertThat(actualResponse.languages()).hasSize(expectedLanguagesSize);
+    }
+
+    @SqlMergeMode(MergeMode.MERGE)
+    @Sql(scripts = "classpath:testdata/add_competences.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Test
+    void shouldReturn200AndJsonContentTypeWhenGetCompetencesForValidCurriculumVitaeUuid() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                CV_COMPETENCE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                String.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+    }
+
+    @SqlMergeMode(MergeMode.MERGE)
+    @Sql(scripts = "classpath:testdata/add_competences.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Test
+    void shouldReturnExpectedResponseJsonWhenGetCompetencesForValidCurriculumVitaeUuid() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<CompetenceResponseDto> responseEntity = restTemplate.exchange(
+                CV_COMPETENCE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                CompetenceResponseDto.class);
+
+        CompetenceResponseDto actualResponse = responseEntity.getBody();
+
+        assertThat(actualResponse.skills()).hasSize(EXPECTED_NUMBER_OF_SKILLS);
+        assertThat(actualResponse.languages()).hasSize(EXPECTED_NUMBER_OF_LANGUAGES);
     }
 
     @SneakyThrows
