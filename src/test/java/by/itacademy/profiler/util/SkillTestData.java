@@ -39,7 +39,7 @@ public final class SkillTestData {
                         .withName("Java Core")
                         .build(),
                 SkillResponseDto.builder()
-                        .withId(1L)
+                        .withId(3L)
                         .withName("JavaScript")
                         .build()
         );

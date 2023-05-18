@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.CV_UUID;
 import static by.itacademy.profiler.util.CvLanguageTestData.createCvLanguageRequestDto;
 import static by.itacademy.profiler.util.CvLanguageTestData.createCvLanguageRequestList;
 import static by.itacademy.profiler.util.CvLanguageTestData.createCvLanguageResponseList;
@@ -19,7 +20,9 @@ public final class CompetenceTestData {
     private CompetenceTestData() {
     }
 
-    public static final String CV_COMPETENCE_URL_TEMPLATE = "/api/v1/cvs/0a5a28ca-e960-420c-af53-50e6f6e80bf2/competences";
+    public static final String CV_COMPETENCE_URL_TEMPLATE = String.format("/api/v1/cvs/%s/competences", CV_UUID);
+    public static final String INVALID_CV_UUID = "80bf2";
+    public static final String INVALID_CV_COMPETENCE_URL_TEMPLATE = String.format("/api/v1/cvs/%s/competences", INVALID_CV_UUID);
 
     public static CompetenceRequestDto createCompetenceRequestDto(Long skillListSize, Long languageListSize) {
         List<Long> skillIds = LongStream.rangeClosed(1, skillListSize)

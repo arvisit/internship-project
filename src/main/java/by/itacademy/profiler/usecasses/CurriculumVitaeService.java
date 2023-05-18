@@ -24,4 +24,8 @@ public interface CurriculumVitaeService {
     void saveSkillsToCv(String cvUuid, List<Skill> skills);
 
     void saveLanguagesToCv(String cvUuid, List<CvLanguage> languages);
+
+    List<CvLanguage> getCvLanguagesByCvUuid(String cvUuid);
+
+    List<Skill> getCvSkillsByCvUuid(String cvUuid);
 }

@@ -22,9 +22,9 @@ public class CurriculumVitaeTestData {
     public static final String IMAGE_UUID = "95f5f3cf-ac52-4638-aad1-12d1e836fdd1";
     private static final String NAME = "Name";
     private static final String SURNAME = "Surname";
-    private static final long POSITION_ID = 1L;
+    public static final long POSITION_ID = 1L;
     private static final String POSITION_NAME = "Some position";
-    private static final long COUNTRY_ID = 1L;
+    public static final long COUNTRY_ID = 1L;
     private static final String COUNTRY_NAME = "Some-country";
     private static final String CITY = "City";
     private static final boolean IS_READY_TO_RELOCATE = true;
@@ -37,52 +37,52 @@ public class CurriculumVitaeTestData {
     private static final String USER_MAIL_COM = "user@mail.com";
     private static final long CV_ID = 1L;
 
-    public static CurriculumVitaeRequestDto getValidCvRequestDto() {
-        return new CurriculumVitaeRequestDto(
-                IMAGE_UUID,
-                NAME,
-                SURNAME,
-                POSITION_ID,
-                COUNTRY_ID,
-                CITY,
-                IS_READY_TO_RELOCATE,
-                IS_READY_FOR_REMOTE_WORK);
+    public static CurriculumVitaeRequestDto.CurriculumVitaeRequestDtoBuilder getValidCvRequestDto() {
+        return CurriculumVitaeRequestDto.builder()
+                .withImageUuid(IMAGE_UUID)
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withPositionId(POSITION_ID)
+                .withCountryId(COUNTRY_ID)
+                .withCity(CITY)
+                .withIsReadyToRelocate(IS_READY_TO_RELOCATE)
+                .withIsReadyForRemoteWork(IS_READY_FOR_REMOTE_WORK);
     }
 
-    public static CurriculumVitaeResponseDto getCvResponseDtoByCvRequestDto(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
-        return new CurriculumVitaeResponseDto(
-                CV_UUID,
-                curriculumVitaeRequestDto.imageUuid(),
-                curriculumVitaeRequestDto.name(),
-                curriculumVitaeRequestDto.surname(),
-                curriculumVitaeRequestDto.positionId(),
-                POSITIONS.get(curriculumVitaeRequestDto.positionId()),
-                curriculumVitaeRequestDto.countryId(),
-                COUNTRIES.get(curriculumVitaeRequestDto.countryId()),
-                curriculumVitaeRequestDto.city(),
-                curriculumVitaeRequestDto.isReadyToRelocate(),
-                curriculumVitaeRequestDto.isReadyForRemoteWork(),
-                IS_CONTACTS_EXISTS,
-                IS_ABOUT_EXISTS,
-                STATUS);
+    public static CurriculumVitaeResponseDto.CurriculumVitaeResponseDtoBuilder getCvResponseDtoByCvRequestDto(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
+        return CurriculumVitaeResponseDto.builder()
+                .withUuid(CV_UUID)
+                .withImageUuid(curriculumVitaeRequestDto.imageUuid())
+                .withName(curriculumVitaeRequestDto.name())
+                .withSurname(curriculumVitaeRequestDto.surname())
+                .withPositionId(curriculumVitaeRequestDto.positionId())
+                .withPosition(POSITIONS.get(curriculumVitaeRequestDto.positionId()))
+                .withCountryId(curriculumVitaeRequestDto.countryId())
+                .withCountry(COUNTRIES.get(curriculumVitaeRequestDto.countryId()))
+                .withCity(curriculumVitaeRequestDto.city())
+                .withIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate())
+                .withIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork())
+                .withIsContactsExists(IS_CONTACTS_EXISTS)
+                .withIsAboutExists(IS_ABOUT_EXISTS)
+                .withStatus(STATUS);
     }
 
-    public static CurriculumVitaeResponseDto getCvResponseDtoByCurriculumVitae(CurriculumVitae curriculumVitae) {
-        return new CurriculumVitaeResponseDto(
-                curriculumVitae.getUuid(),
-                curriculumVitae.getImage().getUuid(),
-                curriculumVitae.getName(),
-                curriculumVitae.getSurname(),
-                curriculumVitae.getPosition().getId(),
-                curriculumVitae.getPosition().getName(),
-                curriculumVitae.getCountry().getId(),
-                curriculumVitae.getCountry().getCountryName(),
-                curriculumVitae.getCity(),
-                curriculumVitae.getIsReadyToRelocate(),
-                curriculumVitae.getIsReadyForRemoteWork(),
-                curriculumVitae.getContacts() != null,
-                curriculumVitae.getAbout() != null,
-                curriculumVitae.getStatus().toString());
+    public static CurriculumVitaeResponseDto.CurriculumVitaeResponseDtoBuilder getCvResponseDtoByCurriculumVitae(CurriculumVitae curriculumVitae) {
+        return CurriculumVitaeResponseDto.builder()
+                .withUuid(CV_UUID)
+                .withImageUuid(curriculumVitae.getImage().getUuid())
+                .withName(curriculumVitae.getName())
+                .withSurname(curriculumVitae.getSurname())
+                .withPositionId(curriculumVitae.getPosition().getId())
+                .withPosition(curriculumVitae.getPosition().getName())
+                .withCountryId(curriculumVitae.getCountry().getId())
+                .withCountry(curriculumVitae.getCountry().getCountryName())
+                .withCity(curriculumVitae.getCity())
+                .withIsReadyToRelocate(curriculumVitae.getIsReadyToRelocate())
+                .withIsReadyForRemoteWork(curriculumVitae.getIsReadyForRemoteWork())
+                .withIsContactsExists(curriculumVitae.getContacts() != null)
+                .withIsAboutExists(curriculumVitae.getAbout() != null)
+                .withStatus(curriculumVitae.getStatus().toString());
     }
 
     public static CurriculumVitae getCvByCvRequestDto(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
@@ -128,7 +128,7 @@ public class CurriculumVitaeTestData {
 
     public static List<CurriculumVitaeResponseDto> getListOfCvResponseDtoFromCvList(List<CurriculumVitae> curriculumVitaeList) {
         return curriculumVitaeList.stream()
-                .map(CurriculumVitaeTestData::getCvResponseDtoByCurriculumVitae)
+                .map(curriculumVitae -> getCvResponseDtoByCurriculumVitae(curriculumVitae).build())
                 .toList();
     }
 

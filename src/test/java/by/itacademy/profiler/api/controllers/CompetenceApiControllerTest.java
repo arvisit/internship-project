@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 
 import static by.itacademy.profiler.util.CompetenceTestData.CV_COMPETENCE_URL_TEMPLATE;
+import static by.itacademy.profiler.util.CompetenceTestData.INVALID_CV_UUID;
+import static by.itacademy.profiler.util.CompetenceTestData.INVALID_CV_COMPETENCE_URL_TEMPLATE;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.CV_UUID;
 import static by.itacademy.profiler.util.CvLanguageTestData.getInvalidJsonCompetencesRequestDto;
 import static org.hamcrest.Matchers.containsString;
@@ -34,6 +36,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -245,6 +248,63 @@ class CompetenceApiControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(expectedContent));
+    }
+
+    @Test
+    void shouldReturn200AndContentTypeJsonWhenGetListOfCompetences() throws Exception {
+        CompetenceResponseDto responseDto = CompetenceTestData.createCompetenceResponseDto();
+
+        when(competenceService.getCompetenceByCvUuid(CV_UUID)).thenReturn(responseDto);
+        setupCommonMockBehavior();
+
+        mockMvc.perform(get(CV_COMPETENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    void shouldReturn200AndInvokeBusinessLogicWhenGetListOfCompetences() throws Exception {
+        setupCommonMockBehavior();
+
+        mockMvc.perform(get(CV_COMPETENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(competenceService, times(1)).getCompetenceByCvUuid(CV_UUID);
+        verify(curriculumVitaeService, times(1)).isCurriculumVitaeExists(CV_UUID);
+    }
+
+    @Test
+    void shouldReturn200AndCorrectJsonWhenGetListOfCompetences() throws Exception {
+        CompetenceResponseDto responseDto = CompetenceTestData.createCompetenceResponseDto();
+        String expectedJson = objectMapper.writeValueAsString(responseDto);
+
+        when(competenceService.getCompetenceByCvUuid(CV_UUID)).thenReturn(responseDto);
+        setupCommonMockBehavior();
+
+        MvcResult mvcResult = mockMvc.perform(get(CV_COMPETENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        String actualResult = mvcResult.getResponse().getContentAsString();
+
+        assertEquals(expectedJson, actualResult);
+    }
+
+    @Test
+    void shouldReturn404WhenGetListOfCompetencesWithInvalidUuid() throws Exception {
+        String expectedContent = String.format("\"CV with UUID %s not found!!!\"", INVALID_CV_UUID);
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(INVALID_CV_UUID)).thenReturn(false);
+
+        mockMvc.perform(get(INVALID_CV_COMPETENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString(expectedContent)));
     }
 
     private void setupCommonMockBehavior() {

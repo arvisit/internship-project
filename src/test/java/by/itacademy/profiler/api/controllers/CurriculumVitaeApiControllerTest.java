@@ -1,6 +1,5 @@
 package by.itacademy.profiler.api.controllers;
 
-import by.itacademy.profiler.persistence.model.CvStatus;
 import by.itacademy.profiler.usecasses.CountryService;
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
 import by.itacademy.profiler.usecasses.ImageValidationService;
@@ -19,6 +18,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.COUNTRY_ID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.CV_UUID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.IMAGE_UUID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.POSITION_ID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getCvResponseDtoByCvRequestDto;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getValidCvRequestDto;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,29 +60,16 @@ class CurriculumVitaeApiControllerTest {
 
     private static final String API_V1_CVS_UUID = "/api/v1/cvs/{uuid}";
     private static final String API_V1_CVS = "/api/v1/cvs";
-    private static final String CV_UUID = "0a5a28ca-e960-420c-af53-50e6f6e80bf2";
-    private static final String IMAGE_UUID = "95f5f3cf-ac52-4638-aad1-12d1e836fdd1";
-    private static final long COUNTRY_ID = 1L;
-    private static final long POSITION_ID = 1L;
-    private static final String NAME = "Name";
     private static final String INVALID_NAME = "Invalid Namenamenamenamenamenamenamenamenamenamename";
-    private static final String SURNAME = "Surname";
     private static final String INVALID_SURNAME = "Invalid Surnamenamenamenamenamenamenamenamenamename";
-    private static final String CITY = "City";
     private static final String INVALID_CITY = "Invalid City-citycitycitycitycitycitycitycitycitycity";
-    private static final boolean IS_READY_TO_RELOCATE = true;
-    private static final boolean IS_READY_FOR_REMOTE_WORK = true;
-    private static final CurriculumVitaeRequestDto CURRICULUM_VITAE_REQUEST_DTO = new CurriculumVitaeRequestDto(IMAGE_UUID, NAME, SURNAME, POSITION_ID, COUNTRY_ID, CITY, IS_READY_TO_RELOCATE, IS_READY_FOR_REMOTE_WORK);
-    private static final String POSITION = "Some position";
-    private static final String COUNTRY = "Some-country";
-    private static final boolean IS_CONTACTS_EXISTS = false;
-    private static final boolean IS_ABOUT_EXISTS = false;
-    private static final String STATUS = CvStatus.DRAFT.name();
-    private static final CurriculumVitaeResponseDto CURRICULUM_VITAE_RESPONSE_DTO = new CurriculumVitaeResponseDto(CV_UUID, IMAGE_UUID, NAME, SURNAME, POSITION_ID, POSITION, COUNTRY_ID, COUNTRY, CITY, IS_READY_TO_RELOCATE, IS_READY_FOR_REMOTE_WORK, IS_CONTACTS_EXISTS, IS_ABOUT_EXISTS, STATUS);
+    private static final CurriculumVitaeRequestDto CURRICULUM_VITAE_REQUEST_DTO =
+            getValidCvRequestDto().build();
+    private static final CurriculumVitaeResponseDto CURRICULUM_VITAE_RESPONSE_DTO =
+            getCvResponseDtoByCvRequestDto(CURRICULUM_VITAE_REQUEST_DTO).build();
 
     @Test
     void shouldReturn400WhenSavePersonalInfoSectionIfImageUuidNotBelongsToUser() throws Exception {
-
         when(imageValidationService.isImageBelongsToUser(IMAGE_UUID)).thenReturn(false);
         when(countryService.isCountryExist(COUNTRY_ID)).thenReturn(true);
         when(positionService.isPositionExist(POSITION_ID)).thenReturn(true);
@@ -100,7 +92,6 @@ class CurriculumVitaeApiControllerTest {
         when(imageValidationService.validateImageForCv(IMAGE_UUID)).thenReturn(false);
         when(countryService.isCountryExist(COUNTRY_ID)).thenReturn(true);
         when(positionService.isPositionExist(POSITION_ID)).thenReturn(true);
-
 
         mockMvc.perform(
                         post(
@@ -224,7 +215,7 @@ class CurriculumVitaeApiControllerTest {
     void shouldReturn400WhenSaveCvRequestWithInvalidNameField() throws Exception {
 
         CurriculumVitaeRequestDto CvRequestDtoWithInvalidName =
-                new CurriculumVitaeRequestDto(IMAGE_UUID, INVALID_NAME, SURNAME, POSITION_ID, COUNTRY_ID, CITY, true, true);
+                getValidCvRequestDto().withName(INVALID_NAME).build();
 
         when(imageValidationService.isImageBelongsToUser(IMAGE_UUID)).thenReturn(true);
         when(imageValidationService.validateImageForCv(IMAGE_UUID)).thenReturn(true);
@@ -245,7 +236,7 @@ class CurriculumVitaeApiControllerTest {
     void shouldReturn400WhenSaveCvRequestWithInvalidSurnameField() throws Exception {
 
         CurriculumVitaeRequestDto CvRequestDtoWithInvalidSurname =
-                new CurriculumVitaeRequestDto(IMAGE_UUID, NAME, INVALID_SURNAME, POSITION_ID, COUNTRY_ID, CITY, true, true);
+                getValidCvRequestDto().withSurname(INVALID_SURNAME).build();
 
         when(imageValidationService.isImageBelongsToUser(IMAGE_UUID)).thenReturn(true);
         when(imageValidationService.validateImageForCv(IMAGE_UUID)).thenReturn(true);
@@ -266,7 +257,7 @@ class CurriculumVitaeApiControllerTest {
     void shouldReturn400WhenSaveCvRequestWithInvalidCityField() throws Exception {
 
         CurriculumVitaeRequestDto CvRequestDtoWithInvalidCity =
-                new CurriculumVitaeRequestDto(IMAGE_UUID, NAME, SURNAME, POSITION_ID, COUNTRY_ID, INVALID_CITY, true, true);
+                getValidCvRequestDto().withCity(INVALID_CITY).build();
 
         when(imageValidationService.isImageBelongsToUser(IMAGE_UUID)).thenReturn(true);
         when(imageValidationService.validateImageForCv(IMAGE_UUID)).thenReturn(true);
