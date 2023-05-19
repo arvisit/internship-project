@@ -237,7 +237,7 @@ class CompetenceApiControllerTest {
         Long skillListSize = 15L;
         Long languageListSize = 10L;
         CompetenceRequestDto competenceRequestDto = CompetenceTestData.createCompetenceRequestDto(skillListSize, languageListSize);
-        String expectedContent = "{\"languages\":\"Amount of languages should not be more than 5\"}";
+        String expectedContent = "{\"languages\":\"Amount of languages should not be more than 6\"}";
 
         when(competenceService.save(competenceRequestDto, CV_UUID)).thenReturn(any());
         setupCommonMockBehavior();

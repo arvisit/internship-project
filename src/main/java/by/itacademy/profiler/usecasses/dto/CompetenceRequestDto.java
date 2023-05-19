@@ -14,7 +14,7 @@ import java.util.List;
 public record CompetenceRequestDto(
         @LanguageListValidation
         @NotEmpty(message = "List of languages must have at least 1 language")
-        @Size(max = 5, message = "Amount of languages should not be more than 5")
+        @Size(max = 6, message = "Amount of languages should not be more than 6")
         @Valid
         List<@NotNull(message = "Language must not be null") CvLanguageRequestDto> languages,
         @SkillsListValidation
