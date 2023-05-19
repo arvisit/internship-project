@@ -1,5 +1,6 @@
 package by.itacademy.profiler.usecasses.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
@@ -16,9 +17,11 @@ import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VA
 public record AboutDto(@Length(max = 450, message = "Description is too long, the max number of symbols is 450")
                        @NotNull(message = "Required field")
                        @Pattern(regexp = REGEXP_VALIDATE_DESCRIPTION, message = "Invalid  data")
+                       @Schema(defaultValue = "Hi everyone! My name is Kate. I'm a beginner UX", description = "Description")
                        String description,
                        @Length(max = 255)
                        @Pattern(regexp = REGEXP_VALIDATE_NOT_BLANK_BUT_NULL, message = "Field must be filled or null")
+                       @Schema(defaultValue = "https://docs.google.com/rndm", description = "Self-presentation link")
                        String selfPresentation) implements Serializable {
     @Override
     public boolean equals(Object o) {

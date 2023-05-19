@@ -5,6 +5,8 @@ import by.itacademy.profiler.usecasses.ImageService;
 import by.itacademy.profiler.usecasses.dto.ImageDto;
 import by.itacademy.profiler.usecasses.util.AuthService;
 import by.itacademy.profiler.usecasses.util.ValidateImage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +18,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+
+@Tag(name = "Image Controller", description = "API for working with images")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -31,8 +37,9 @@ public class ImageApiController {
 
     private final AuthService authService;
 
-    @PostMapping
-    public ResponseEntity<ImageDto> uploadImage(@NotNull MultipartFile image) {
+    @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload image")
+    public ResponseEntity<ImageDto> uploadImage(@NotNull @RequestPart("image") MultipartFile image) {
         ValidateImage.validate(image);
         String username = authService.getUsername();
         log.debug("Received file with contentType: {}, file name is: {}, file size is: {}, from user: {}",
@@ -49,8 +56,9 @@ public class ImageApiController {
         }
     }
 
-    @PutMapping("/{uuid}")
-    public ResponseEntity<ImageDto> replaceImage(@NotNull MultipartFile image, @PathVariable String uuid) {
+    @PutMapping(value = "/{uuid}", consumes = MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Replace image", description = "Replace image by uuid")
+    public ResponseEntity<ImageDto> replaceImage(@NotNull @RequestPart("image") MultipartFile image, @PathVariable(name = "uuid") String uuid) {
         ValidateImage.validate(image);
         String username = authService.getUsername();
         log.debug("Received file with contentType: {}, file name is: {}, file size is: {}, from user: {}",
@@ -66,8 +74,9 @@ public class ImageApiController {
         }
     }
 
+    @Operation(summary = "Get image", description = "Get image by uuid")
     @GetMapping(value = "/{uuid}", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable String uuid) {
+    public ResponseEntity<byte[]> getImage(@PathVariable(name = "uuid") String uuid) {
         String username = authService.getUsername();
         try {
             byte[] image = imageService.getImage(uuid);

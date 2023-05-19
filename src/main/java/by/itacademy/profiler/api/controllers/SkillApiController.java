@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "skills", description = "Skills list API")
+@Tag(name = "Skill Controller", description = "API for working with skills")
 @RestController
 @RequestMapping("/api/v1/skills")
 @RequiredArgsConstructor
