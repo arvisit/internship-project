@@ -25,28 +25,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/cvs/{uuid}/contacts")
 @Slf4j
 @Validated
-@Tag(name = "contact", description = "the Contact API")
+@Tag(name = "Contact Controller", description = "API for working with contacts")
 public class ContactsApiController {
 
     private final ContactsService contactsService;
 
     @PostMapping
-    public ResponseEntity<ContactsResponseDto> saveContacts(@PathVariable @IsCvExists String uuid, @RequestBody @Valid ContactsDto contacts) {
+    @Operation(summary = "Save Contacts", description = "Save contact by UUID of CV")
+    public ResponseEntity<ContactsResponseDto> saveContacts(@PathVariable(name = "uuid") @IsCvExists String uuid, @RequestBody @Valid ContactsDto contacts) {
         log.debug("Input data for creating contact information section of CV with UUID {}: {}", uuid, contacts);
         ContactsResponseDto cvContacts = contactsService.saveContacts(uuid, contacts);
         return new ResponseEntity<>(cvContacts, HttpStatus.CREATED);
     }
 
     @GetMapping
-    @Operation(summary = "Find Contacts by cv uuid", description = "Name search by %name% format", tags = {"contact"})
-    public ResponseEntity<ContactsResponseDto> getContacts(@PathVariable @IsCvExists String uuid) {
+    @Operation(summary = "Get Contacts", description = "Get contact by UUID of CV")
+    public ResponseEntity<ContactsResponseDto> getContacts(@PathVariable(name = "uuid") @IsCvExists String uuid) {
         ContactsResponseDto contacts = contactsService.getContacts(uuid);
         log.debug("Getting contacts information section of CV {} from database: {} ", uuid, contacts);
         return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<ContactsResponseDto> updateContacts(@PathVariable @IsCvExists String uuid, @RequestBody @Valid ContactsDto contacts) {
+    @Operation(summary = "Update Contacts", description = "Update contact by UUID of CV")
+    public ResponseEntity<ContactsResponseDto> updateContacts(@PathVariable(name = "uuid") @IsCvExists String uuid, @RequestBody @Valid ContactsDto contacts) {
         ContactsResponseDto contactsDto = contactsService.updateContacts(uuid, contacts);
         log.debug("Update contacts information section of CV {} by the data: {}", uuid, contactsDto);
         return new ResponseEntity<>(contactsDto, HttpStatus.OK);

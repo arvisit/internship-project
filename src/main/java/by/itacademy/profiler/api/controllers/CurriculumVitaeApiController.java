@@ -6,6 +6,8 @@ import by.itacademy.profiler.usecasses.annotation.IsCvExists;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import by.itacademy.profiler.usecasses.util.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "CurriculumVitae Controller", description = "API for working with CV's")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cvs")
@@ -34,6 +37,7 @@ public class CurriculumVitaeApiController {
     private final AuthService authService;
 
     @PostMapping
+    @Operation(summary = "Save CurriculumVitae")
     public ResponseEntity<CurriculumVitaeResponseDto> save(@RequestBody @Valid CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
         if (curriculumVitaeService.isCreationCvAvailable()) {
             log.debug("Input data for creating CV: {} ", curriculumVitaeRequestDto);
@@ -44,6 +48,7 @@ public class CurriculumVitaeApiController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all CurriculumVitae of user")
     public ResponseEntity<List<CurriculumVitaeResponseDto>> getAllCvOfUser() {
         List<CurriculumVitaeResponseDto> curriculumVitaeList = curriculumVitaeService.getAllCvOfUser();
         String username = authService.getUsername();
@@ -56,7 +61,8 @@ public class CurriculumVitaeApiController {
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<CurriculumVitaeResponseDto> getCvOfUser(@PathVariable @IsCvExists String uuid) {
+    @Operation(summary = "Get CurriculumVitae", description = "Get CurriculumVitae by uuid")
+    public ResponseEntity<CurriculumVitaeResponseDto> getCvOfUser(@PathVariable(name = "uuid") @IsCvExists String uuid) {
         log.debug("Input UUID of CV: {} ", uuid);
         CurriculumVitaeResponseDto curriculumVitae = curriculumVitaeService.getCvOfUser(uuid);
         log.debug("Getting CV from database: {} ", curriculumVitae);
@@ -64,8 +70,9 @@ public class CurriculumVitaeApiController {
     }
 
     @PutMapping("/{uuid}")
+    @Operation(summary = "Update CurriculumVitae", description = "Update CurriculumVitae by UUID")
     public ResponseEntity<CurriculumVitaeResponseDto> update(@RequestBody @Valid CurriculumVitaeRequestDto curriculumVitaeRequestDto,
-                                                             @PathVariable @IsCvExists String uuid) {
+                                                             @PathVariable(name = "uuid") @IsCvExists String uuid) {
         log.debug("Updating CV with UUID {} by the data: {} ", uuid, curriculumVitaeRequestDto);
         CurriculumVitaeResponseDto responseCurriculumVitae = curriculumVitaeService.update(uuid, curriculumVitaeRequestDto);
         return new ResponseEntity<>(responseCurriculumVitae, HttpStatus.OK);
