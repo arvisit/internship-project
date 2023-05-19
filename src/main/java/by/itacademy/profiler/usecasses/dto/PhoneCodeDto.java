@@ -1,8 +1,8 @@
 package by.itacademy.profiler.usecasses.dto;
 
 import by.itacademy.profiler.persistence.model.Country;
+import lombok.Builder;
 
-import java.io.Serializable;
-
-public record PhoneCodeDto(Long id, Integer code, Country country) implements Serializable {
+@Builder(setterPrefix = "with")
+public record PhoneCodeDto(Long id, Integer code, Country country) {
 }
