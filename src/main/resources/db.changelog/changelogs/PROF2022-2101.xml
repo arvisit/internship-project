@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2101" author="ilya.vatsevich@gmail.com">
+        <comment>Create table for working spheres - spheres, and fill it with data</comment>
+            <createTable tableName="spheres">
+                <column name="id" type="bigint" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="name" type="varchar(30)">
+                    <constraints nullable="false" unique="true"/>
+                </column>
+            </createTable>
+
+        <insert tableName="spheres">
+            <column name="name" value="IT"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Engineering"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Financial"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Medicine and healthcare"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Transport logistics"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Energy"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Sales"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Management"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Education and science"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Culture and art"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Construction and real estate"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Media and advertising"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Entertainment"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Agriculture"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Restaurant business"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Sport"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Tourism"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Military sphere"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Individual entrepreneur"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="International relationships"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Industry"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Ecology"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Energy and oil and gas sector"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Public administration"/>
+        </insert>
+
+        <insert tableName="spheres">
+            <column name="name" value="Other"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
