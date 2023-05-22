@@ -1,5 +1,6 @@
 package by.itacademy.profiler.util;
 
+import by.itacademy.profiler.persistence.model.Sphere;
 import by.itacademy.profiler.usecasses.dto.SphereResponseDto;
 
 public final class SphereTestData {
@@ -12,6 +13,10 @@ public final class SphereTestData {
 
     public static SphereResponseDto.SphereResponseDtoBuilder createSphereResponseDto() {
         return SphereResponseDto.builder().withId(1L).withName("IT");
+    }
+
+    public static Sphere.SphereBuilder createSphere(){
+        return Sphere.builder().withId(1L).withName("IT");
     }
 
 }

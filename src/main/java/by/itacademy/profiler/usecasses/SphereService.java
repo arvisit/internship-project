@@ -1,5 +1,6 @@
 package by.itacademy.profiler.usecasses;
 
+import by.itacademy.profiler.persistence.model.Sphere;
 import by.itacademy.profiler.usecasses.dto.SphereResponseDto;
 
 import java.util.List;
@@ -7,5 +8,9 @@ import java.util.List;
 public interface SphereService {
 
     List<SphereResponseDto> getSpheres();
+
+    Sphere getSphereById(Long id);
+
+    boolean isSphereExist(Long id);
 
 }

@@ -27,4 +27,16 @@ public class SphereServiceImpl implements SphereService {
                 .map(sphereMapper::fromEntityToDto)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Sphere getSphereById(Long id) {
+        return sphereRepository.getSphereById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isSphereExist(Long id) {
+        return sphereRepository.existsById(id);
+    }
 }

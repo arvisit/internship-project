@@ -1,6 +1,7 @@
 package by.itacademy.profiler.usecasses;
 
 import by.itacademy.profiler.persistence.model.CvLanguage;
+import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
@@ -28,4 +29,6 @@ public interface CurriculumVitaeService {
     List<CvLanguage> getCvLanguagesByCvUuid(String cvUuid);
 
     List<Skill> getCvSkillsByCvUuid(String cvUuid);
+
+    List<Experience> saveExperienceToCv(String cvUuid, List<Experience> experience);
 }

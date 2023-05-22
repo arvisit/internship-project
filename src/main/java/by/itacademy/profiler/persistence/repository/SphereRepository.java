@@ -9,4 +9,6 @@ public interface SphereRepository extends JpaRepository<Sphere, Long> {
 
     List<Sphere> findAllByOrderById();
 
+    Sphere getSphereById(Long sphereId);
+
 }
