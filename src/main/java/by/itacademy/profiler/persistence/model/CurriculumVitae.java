@@ -87,26 +87,44 @@ public class CurriculumVitae {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cvs_skills",
-            joinColumns = @JoinColumn (name = "cv_id"),
+            joinColumns = @JoinColumn(name = "cv_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cv_id")
+    private List<Experience> experience = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CurriculumVitae that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(uuid, that.uuid) && Objects.equals(user, that.user) &&
-                Objects.equals(image, that.image) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) &&
-                Objects.equals(position, that.position) && Objects.equals(country, that.country) && Objects.equals(city, that.city) &&
-                Objects.equals(isReadyToRelocate, that.isReadyToRelocate) && Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork) &&
-                Objects.equals(contacts, that.contacts) && Objects.equals(about, that.about) && Objects.equals(status,that.status) &&
-                Objects.equals(languages, that.languages) && Objects.equals(skills, that.skills);
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CurriculumVitae that = (CurriculumVitae) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!uuid.equals(that.uuid)) return false;
+        if (!user.equals(that.user)) return false;
+        if (!Objects.equals(image, that.image)) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(surname, that.surname)) return false;
+        if (!Objects.equals(position, that.position)) return false;
+        if (!Objects.equals(country, that.country)) return false;
+        if (!Objects.equals(city, that.city)) return false;
+        if (!Objects.equals(isReadyToRelocate, that.isReadyToRelocate)) return false;
+        if (!Objects.equals(isReadyForRemoteWork, that.isReadyForRemoteWork)) return false;
+        if (!Objects.equals(contacts, that.contacts)) return false;
+        if (!Objects.equals(about, that.about)) return false;
+        if (status != that.status) return false;
+        if (!Objects.equals(languages, that.languages)) return false;
+        if (!Objects.equals(skills, that.skills)) return false;
+        return Objects.equals(experience, that.experience);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate,
-                isReadyForRemoteWork, contacts, about, status, languages, skills);
+                isReadyForRemoteWork, contacts, about, status, languages, skills, experience);
     }
 
     @Override
@@ -118,15 +136,16 @@ public class CurriculumVitae {
                 ", image=" + image +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", position=" + position +
+                ", position=" + position.toString() +
                 ", country=" + country +
                 ", city='" + city + '\'' +
                 ", isReadyToRelocate=" + isReadyToRelocate +
                 ", isReadyForRemoteWork=" + isReadyForRemoteWork +
                 ", contacts=" + contacts +
                 ", about=" + about +
-                ", languages=" + languages +
-                ", skills=" + skills +
+                ", languages=" + languages.toString() +
+                ", skills=" + skills.toString() +
+                ", experience=" + experience.toString() +
                 ", status=" + status +
                 '}';
     }

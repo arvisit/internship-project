@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2102" author="natalapetracenko@gmail.com">
+        <comment>Create table for working experience - experience</comment>
+        <createTable tableName="experience">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sequence_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_to" type="date"/>
+            <column name="present_time" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sphere_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="achievements" type="varchar(200)"/>
+            <column name="link" type="varchar(255)"/>
+            <column name="cv_id" type="bigint"/>
+        </createTable>
+        <createTable tableName="duties">
+            <column name="experience_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duty_name" type="varchar(120)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="duties"
+                baseColumnNames="experience_id"
+                constraintName="fk_duties_experience_id"
+                referencedTableName="experience"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="experience"
+                baseColumnNames="cv_id"
+                constraintName="fk_experience_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="experience"
+                baseColumnNames="sphere_id"
+                constraintName="fk_experience_sphere_id"
+                referencedTableName="spheres"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

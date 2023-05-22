@@ -3,6 +3,7 @@ package by.itacademy.profiler.usecasses.impl;
 import by.itacademy.profiler.api.exception.BadRequestException;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvLanguage;
+import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
@@ -106,6 +107,17 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     @Override
     public List<Skill> getCvSkillsByCvUuid(String cvUuid) {
         return curriculumVitaeRepository.findAllCvSkillsByCvUuid(cvUuid);
+    }
+
+    @Override
+    @Transactional
+    public List<Experience> saveExperienceToCv(String cvUuid, List<Experience> experience) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        List<Experience> curriculumVitaeExperience = curriculumVitae.getExperience();
+        curriculumVitaeExperience.clear();
+        curriculumVitaeExperience.addAll(experience);
+        CurriculumVitae savedCv = curriculumVitaeRepository.save(curriculumVitae);
+        return savedCv.getExperience();
     }
 
     public Long getAllCvByUser() {
