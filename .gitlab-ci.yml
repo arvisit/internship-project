@@ -1,0 +1,4 @@
+include:
+  - project: 'bootcamp/profiler-backend-pipeline'
+    ref: develop                                      # Git branch
+    file: 'profiler-backend-pipeline.yml'
