@@ -514,11 +514,17 @@ class ExperienceApiControllerTest {
     @Test
     void shouldReturn400WhenAchievementsIsTooLong() throws Exception {
         List<ExperienceRequestDto> request =
-                List.of(createExperienceRequestDto().withAchievements(new StringBuilder().append("Very long achievements " +
-                        "Very long achievementsVery long achievementsVery long achievementsVery " +
-                        "long achievementsVery long achievementsVery long achievementsVery long " +
-                        "achievementsVery long achievementsVery long achievementsVery long achievementsVery" +
-                        " long achievementsVery long achievements").toString()).build());
+                List.of(createExperienceRequestDto().withAchievements(new StringBuilder().append("Very long achievements ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("Very long achievementsVery long achievementsVery long achievementsVery ")
+                        .append("long achievementsVery long achievementsVery long achievementsVery long ")
+                        .append("long achievementsVery long achievementsVery long achievementsVery long ")
+                        .append("long achievementsVery long achievementsVery long achievementsVery long ")
+                        .toString()).build());
         String expectedContent = "Achievements name is too long, the max number of symbols is 200";
 
         setupCommonMockBehaviorWithUuidAndSphere(request);

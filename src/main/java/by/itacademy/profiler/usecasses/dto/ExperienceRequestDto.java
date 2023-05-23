@@ -71,6 +71,10 @@ public record ExperienceRequestDto(
         String link
 ) implements Serializable {
 
+    private static final Integer MAX_DUTY_SIZE = 2;
+    private static final Integer SEQUENCE_NUMBER_FROM = 2;
+    private static final Integer SEQUENCE_NUMBER_TO = 6;
+
     @AssertTrue(message = "Field `periodTo` should be later than `periodFrom`")
     private boolean isPeriodToAfterPeriodFrom() {
         if (periodTo != null) {
@@ -90,8 +94,8 @@ public record ExperienceRequestDto(
 
     @AssertTrue(message = "Amount of duties should not be more than 2 for 3-5 job`s positions in the list")
     private boolean isCorrectCountOfDuties() {
-        if (sequenceNumber != null && (sequenceNumber > 2 && sequenceNumber < 6)) {
-            return duties.size() <= 2;
+        if (sequenceNumber != null && (sequenceNumber > SEQUENCE_NUMBER_FROM && sequenceNumber < SEQUENCE_NUMBER_TO)) {
+            return duties.size() <= MAX_DUTY_SIZE;
         }
         return true;
     }
