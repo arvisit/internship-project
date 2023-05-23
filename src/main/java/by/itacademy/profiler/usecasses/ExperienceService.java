@@ -8,4 +8,6 @@ import java.util.List;
 public interface ExperienceService {
     List<ExperienceResponseDto> save(List<ExperienceRequestDto> listOfExperience, String cvUuid);
 
+    List<ExperienceResponseDto> getExperienceByCvUuid(String cvUuid);
+
 }

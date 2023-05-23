@@ -1,8 +1,6 @@
 package by.itacademy.profiler.usecasses.mapper;
 
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
-import by.itacademy.profiler.persistence.model.CvLanguage;
-import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -21,6 +19,7 @@ public interface CurriculumVitaeMapper {
     @Mapping(target = "isCompetencesExists", expression = "java(mapList(curriculumVitae.getLanguages(), curriculumVitae.getSkills()))")
     @Mapping(target = "isAboutExists", expression = "java(map(curriculumVitae.getAbout()))")
     @Mapping(target = "isContactsExists", expression = "java(map(curriculumVitae.getContacts()))")
+    @Mapping(target = "isExperienceExists", expression = "java(mapList(curriculumVitae.getExperience()))")
     @Mapping(target = "imageUuid", source = "image.uuid")
     @Mapping(target = "positionId", source = "position.id")
     @Mapping(target = "position", source = "position.name")
@@ -34,7 +33,7 @@ public interface CurriculumVitaeMapper {
         return nonNull(partsOfCv);
     }
 
-    default boolean mapList(List<CvLanguage> languages, List<Skill> skills) {
-        return Stream.of(languages, skills).noneMatch(List::isEmpty);
+    default boolean mapList(List<?>... lists) {
+        return Stream.of(lists).noneMatch(List::isEmpty);
     }
 }

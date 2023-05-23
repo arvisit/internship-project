@@ -1,6 +1,7 @@
 package by.itacademy.profiler.api.controllers;
 
 import by.itacademy.profiler.MysqlSQLTestContainerExtension;
+import by.itacademy.profiler.persistence.repository.ExperienceRepository;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
 import by.itacademy.profiler.util.AuthenticationTestData;
@@ -17,6 +18,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,13 @@ class ExperienceApiControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private ExperienceRepository experienceRepository;
+
+    private static final Integer EXPECTED_EXPERIENCE_SIZE = 1;
+    private static final String EXPECTED_EXPERIENCE_COMPANY = "Something";
+    private static final String EXPECTED_EXPERIENCE_POSITION = "Someone";
+
     @Test
     void shouldReturn201AndJsonContentTypeWhenCreateSuccessful() {
         List<ExperienceRequestDto> request = createListOfExperienceRequestDto();
@@ -49,6 +59,8 @@ class ExperienceApiControllerIntegrationTest {
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+
+        experienceRepository.deleteAll();
     }
 
     @Test
@@ -64,6 +76,49 @@ class ExperienceApiControllerIntegrationTest {
 
         List<ExperienceResponseDto> actualResponse = responseEntity.getBody();
         assertThat(actualResponse).hasSize(EXPECTED_SIZE_OF_EXPERIENCE_LIST);
+
+        experienceRepository.deleteAll();
+    }
+
+    @Sql(scripts = "classpath:testdata/add_experience.sql",
+            config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.ISOLATED))
+    @Test
+    void shouldReturn200AndJsonContentTypeWhenGetExperienceByCvUuidForValidCurriculumVitaeUuid() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                CV_EXPERIENCE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                String.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+
+        experienceRepository.deleteAll();
+    }
+
+    @Sql(scripts = "classpath:testdata/add_experience.sql",
+            config = @SqlConfig(transactionMode = SqlConfig.TransactionMode.ISOLATED))
+    @Test
+    void shouldReturnExpectedResponseJsonWhenGetExperienceByCvUuidForValidCurriculumVitaeUuid() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<List<ExperienceResponseDto>> response = restTemplate.exchange(
+                CV_EXPERIENCE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        List<ExperienceResponseDto> body = response.getBody();
+        ExperienceResponseDto experienceResponseDto = body.get(0);
+
+        assertEquals(EXPECTED_EXPERIENCE_SIZE, body.size());
+        assertEquals(EXPECTED_EXPERIENCE_COMPANY, experienceResponseDto.company());
+        assertEquals(EXPECTED_EXPERIENCE_POSITION, experienceResponseDto.position());
+
+        experienceRepository.deleteAll();
     }
 
     @SneakyThrows

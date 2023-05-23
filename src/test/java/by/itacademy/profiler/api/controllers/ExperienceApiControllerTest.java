@@ -562,6 +562,51 @@ class ExperienceApiControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldReturn200AndContentTypeJsonWhenGetExperienceByCvUuid() throws Exception {
+        List<ExperienceResponseDto> experienceResponseDto = createListExperienceResponseDto();
+
+        when(experienceService.getExperienceByCvUuid(CV_UUID_FOR_EXPERIENCE)).thenReturn(experienceResponseDto);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
+
+        mockMvc.perform(get(CV_EXPERIENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void shouldReturn200AndInvokeBusinessLogicWhenGetExperienceByCvUuid() throws Exception {
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
+
+        mockMvc.perform(get(CV_EXPERIENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(experienceService, times(1)).getExperienceByCvUuid(CV_UUID_FOR_EXPERIENCE);
+        verify(curriculumVitaeService, times(1)).isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE);
+    }
+
+    @Test
+    void shouldReturn200AndCorrectJsonWhenGetExperienceByCvUuid() throws Exception {
+        List<ExperienceResponseDto> experienceResponseDto = createListExperienceResponseDto();
+        String expectedJson = objectMapper.writeValueAsString(experienceResponseDto);
+
+        when(experienceService.getExperienceByCvUuid(CV_UUID_FOR_EXPERIENCE)).thenReturn(experienceResponseDto);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
+
+        MvcResult mvcResult = mockMvc.perform(get(CV_EXPERIENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        String actualResult = mvcResult.getResponse().getContentAsString();
+
+        assertEquals(expectedJson, actualResult);
+    }
+
     private void setupCommonMockBehaviorWithUuidAndSphereAndExperience(List<ExperienceRequestDto> request) {
         when(experienceService.save(request, CV_UUID_FOR_EXPERIENCE)).thenReturn(any());
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
