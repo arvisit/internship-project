@@ -32,4 +32,13 @@ public class ExperienceServiceImpl implements ExperienceService {
                 .toList();
         return experienceResponse;
     }
+
+    @Override
+    public List<ExperienceResponseDto> getExperienceByCvUuid(String cvUuid) {
+        List<Experience> experience = curriculumVitaeService.getCvExperienceByCvUuid(cvUuid);
+
+        return experience.stream()
+                .map(experienceMapper::fromEntityToDto)
+                .toList();
+    }
 }

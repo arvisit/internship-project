@@ -31,4 +31,6 @@ public interface CurriculumVitaeService {
     List<Skill> getCvSkillsByCvUuid(String cvUuid);
 
     List<Experience> saveExperienceToCv(String cvUuid, List<Experience> experience);
+
+    List<Experience> getCvExperienceByCvUuid(String cvUuid);
 }

@@ -120,6 +120,11 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         return savedCv.getExperience();
     }
 
+    @Override
+    public List<Experience> getCvExperienceByCvUuid(String cvUuid) {
+        return curriculumVitaeRepository.findAllCvExperienceByCvUuid(cvUuid);
+    }
+
     public Long getAllCvByUser() {
         String username = authService.getUsername();
         return curriculumVitaeRepository.findCountByUsername(username);

@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,5 +56,14 @@ public class ExperienceApiController {
         log.debug("Input data for creating list of experience: {}", request);
         List<ExperienceResponseDto> response = experienceService.save(request, uuid);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get list of user experience by CV uuid")
+    @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
+            array = @ArraySchema(schema = @Schema(implementation = ExperienceResponseDto.class))))
+    @GetMapping
+    public ResponseEntity<List<ExperienceResponseDto>> getExperienceByCvUuid(@PathVariable(name = "uuid") @IsCvExists String cvUuid) {
+        List<ExperienceResponseDto> experienceResponseDtos = experienceService.getExperienceByCvUuid(cvUuid);
+        return ResponseEntity.ok(experienceResponseDtos);
     }
 }

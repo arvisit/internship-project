@@ -2,6 +2,7 @@ package by.itacademy.profiler.usecasses.mapper;
 
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvStatus;
+import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -12,10 +13,29 @@ import java.util.stream.IntStream;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.getListOfCvsOfUser;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.getValidCurriculumVitae;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CurriculumVitaeMapperTest {
     private final CurriculumVitaeMapper curriculumVitaeMapper = Mappers.getMapper(CurriculumVitaeMapper.class);
+
+    @Test
+    void shouldMapIsExperienceExistsCorrectlyWhenExperienceListIsEmptyWhenInvokeFromDtoToEntity() {
+        CurriculumVitae curriculumVitae = new CurriculumVitae();
+
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+        assertFalse(curriculumVitaeResponseDto.isExperienceExists());
+    }
+
+    @Test
+    void shouldMapIsExperienceExistsCorrectlyWhenExperienceListIsNotEmptyWhenInvokeFromDtoToEntity() {
+        CurriculumVitae curriculumVitae = new CurriculumVitae();
+        curriculumVitae.setExperience(List.of(new Experience()));
+
+        CurriculumVitaeResponseDto curriculumVitaeResponseDto = curriculumVitaeMapper.curriculumVitaeToCurriculumVitaeResponseDto(curriculumVitae);
+        assertTrue(curriculumVitaeResponseDto.isExperienceExists());
+    }
 
     @Test
     void givenCvStatusDraftToCvStatusDraftDto_whenMaps_thenCorrect() {
