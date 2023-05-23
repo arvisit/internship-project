@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_CELL_PHONE;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_EMAIL;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_NOT_BLANK_BUT_NULL;
 
+@Builder(setterPrefix = "with")
 public record ContactsDto(@PhoneCodeValidation
                           @NotNull(message = "Field must not be empty")
                           @Schema(defaultValue = "1", description = "Phone code id")

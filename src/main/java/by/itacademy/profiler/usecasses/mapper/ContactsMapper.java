@@ -3,10 +3,12 @@ package by.itacademy.profiler.usecasses.mapper;
 import by.itacademy.profiler.persistence.model.Contacts;
 import by.itacademy.profiler.usecasses.dto.ContactsDto;
 import by.itacademy.profiler.usecasses.dto.ContactsResponseDto;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        builder = @Builder(disableBuilder = true))
 public interface ContactsMapper {
 
     @Mapping(target = "id", ignore = true)
