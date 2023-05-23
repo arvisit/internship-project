@@ -92,7 +92,7 @@ public class CurriculumVitae {
     private List<Skill> skills = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cv_id")
+    @JoinColumn(name = "cv_id", nullable = false)
     private List<Experience> experience = new ArrayList<>();
 
     @Override

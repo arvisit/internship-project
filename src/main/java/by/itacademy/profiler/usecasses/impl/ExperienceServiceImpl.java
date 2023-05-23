@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     public List<ExperienceResponseDto> save(List<ExperienceRequestDto> listOfExperience, String cvUuid) {
         List<Experience> experience = listOfExperience.stream()
                 .map(experienceMapper::fromDtoToEntity)
-                .collect(Collectors.toList());
+                .toList();
         List<Experience> experienceList = curriculumVitaeService.saveExperienceToCv(cvUuid, experience);
         List<ExperienceResponseDto> experienceResponse = experienceList.stream()
                 .map(experienceMapper::fromEntityToDto)
