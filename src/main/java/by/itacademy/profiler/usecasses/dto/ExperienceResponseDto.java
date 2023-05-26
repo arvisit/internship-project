@@ -11,7 +11,7 @@ public record ExperienceResponseDto(
         Long id, Integer sequenceNumber,
         YearMonth periodFrom, YearMonth periodTo,
         Boolean presentTime,
-        Long sphereId, String sphereName,
+        Long industryId, String industryName,
         String company, String position,
         List<String> duties,
         String achievements, String link

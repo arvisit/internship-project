@@ -1,6 +1,6 @@
 package by.itacademy.profiler.usecasses.dto;
 
-import by.itacademy.profiler.usecasses.annotation.SphereValidation;
+import by.itacademy.profiler.usecasses.annotation.IndustryValidation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
@@ -40,10 +40,10 @@ public record ExperienceRequestDto(
         @NotNull(message = "Must be specified")
         @Schema(defaultValue = "false", description = "Is work up to now")
         Boolean presentTime,
-        @NotNull(message = "Sphere id must not be null")
-        @SphereValidation
-        @Schema(defaultValue = "1", description = "Sphere id")
-        Long sphereId,
+        @NotNull(message = "Industry id must not be null")
+        @IndustryValidation
+        @Schema(defaultValue = "1", description = "Industry id")
+        Long industryId,
         @NotNull(message = "Company name must not be null")
         @Pattern(regexp = REGEXP_VALIDATE_COMPANY_NAME, message = "Invalid company name")
         @Length(max = 40, message = "Company name is too long, the max number of symbols is 40")

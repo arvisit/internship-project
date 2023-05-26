@@ -8,7 +8,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 import static by.itacademy.profiler.util.CompetenceTestData.INVALID_CV_UUID;
-import static by.itacademy.profiler.util.SphereTestData.createSphere;
+import static by.itacademy.profiler.util.IndustryTestData.createIndustry;
 
 public class ExperienceTestData {
 
@@ -24,7 +24,7 @@ public class ExperienceTestData {
                 .withPeriodFrom(YearMonth.parse("2020-10"))
                 .withPeriodTo(YearMonth.parse("2022-01"))
                 .withPresentTime(false)
-                .withSphereId(1L)
+                .withIndustryId(1L)
                 .withCompany("Some Company")
                 .withPosition("Some Position")
                 .withDuties(List.of("duty1", "duty2"))
@@ -39,8 +39,8 @@ public class ExperienceTestData {
                 .withPeriodFrom(YearMonth.parse("2020-10"))
                 .withPeriodTo(YearMonth.parse("2022-01"))
                 .withPresentTime(false)
-                .withSphereId(1L)
-                .withSphereName("IT")
+                .withIndustryId(1L)
+                .withIndustryName("IT")
                 .withCompany("Some Company")
                 .withPosition("Some Position")
                 .withDuties(List.of("duty1", "duty2"))
@@ -55,7 +55,7 @@ public class ExperienceTestData {
                 .withPeriodFrom(YearMonth.parse("2020-10"))
                 .withPeriodTo(YearMonth.parse("2022-01"))
                 .withPresentTime(false)
-                .withSphere(createSphere().build())
+                .withIndustry(createIndustry().build())
                 .withCompany("Some Company")
                 .withPosition("Some Position")
                 .withDuties(List.of("duty1", "duty2"))
@@ -81,23 +81,23 @@ public class ExperienceTestData {
     public static String getValidExperienceRequestJson() {
         return "[" +
                 "{\"sequenceNumber\":1,\"periodFrom\":\"2020-10\",\"periodTo\":\"2022-01\",\"presentTime\":false," +
-                "\"sphereId\":1,\"company\":\"Some Company\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
+                "\"industryId\":1,\"company\":\"Some Company\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
                 "\"achievements\":\"Some achievement\",\"link\":\"http://url\"}," +
                 "{\"sequenceNumber\":2,\"periodFrom\":\"2020-10\",\"periodTo\":\"2022-01\",\"presentTime\":false," +
-                "\"sphereId\":1,\"company\":\"ABC\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
+                "\"industryId\":1,\"company\":\"ABC\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
                 "\"achievements\":\"Some achievement\",\"link\":\"http://url\"}," +
                 "{\"sequenceNumber\":3,\"periodFrom\":\"2020-10\",\"periodTo\":\"2022-01\",\"presentTime\":false," +
-                "\"sphereId\":1,\"company\":\"Some Company\",\"position\":\"Spy\",\"duties\":[\"duty1\",\"duty2\"]," +
+                "\"industryId\":1,\"company\":\"Some Company\",\"position\":\"Spy\",\"duties\":[\"duty1\",\"duty2\"]," +
                 "\"achievements\":\"Some achievement\",\"link\":\"http://url\"}]";
     }
 
     public static String getInvalidExperienceRequestJsonWithInvalidPeriod() {
         return "[" +
                 "{\"sequenceNumber\":1,\"periodFrom\":\"2020-1\",\"periodTo\":\"2022-01\",\"presentTime\":false," +
-                "\"sphereId\":1,\"company\":\"Some Company\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
+                "\"industryId\":1,\"company\":\"Some Company\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
                 "\"achievements\":\"Some achievement\",\"link\":\"http://url\"}," +
                 "{\"sequenceNumber\":2,\"periodFrom\":\"20-10\",\"periodTo\":\"2022-01\",\"presentTime\":false," +
-                "\"sphereId\":1,\"company\":\"ABC\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
+                "\"industryId\":1,\"company\":\"ABC\",\"position\":\"Some Position\",\"duties\":[\"duty1\",\"duty2\"]," +
                 "\"achievements\":\"Some achievement\",\"link\":\"http://url\"},";
     }
 }

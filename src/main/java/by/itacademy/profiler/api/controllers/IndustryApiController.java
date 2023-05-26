@@ -1,7 +1,7 @@
 package by.itacademy.profiler.api.controllers;
 
-import by.itacademy.profiler.usecasses.SphereService;
-import by.itacademy.profiler.usecasses.dto.SphereResponseDto;
+import by.itacademy.profiler.usecasses.IndustryService;
+import by.itacademy.profiler.usecasses.dto.IndustryResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,23 +18,23 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Tag(name = "Sphere Controller", description = "API for working with spheres")
+@Tag(name = "Industry Controller", description = "API for working with industries")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/spheres")
-public class SphereApiController {
+@RequestMapping("/api/v1/industries")
+public class IndustryApiController {
 
-    private final SphereService sphereService;
+    private final IndustryService industryService;
 
-    @Operation(summary = "Get all spheres")
+    @Operation(summary = "Get all industries")
     @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = APPLICATION_JSON_VALUE,
-                    array = @ArraySchema(schema = @Schema(implementation = SphereResponseDto.class))))
+                    array = @ArraySchema(schema = @Schema(implementation = IndustryResponseDto.class))))
     @ApiResponse(responseCode = "401", description = "UNAUTHORIZED")
     @GetMapping
-    public ResponseEntity<List<SphereResponseDto>> get() {
-        List<SphereResponseDto> spheres = sphereService.getSpheres();
-        return ResponseEntity.ok(spheres);
+    public ResponseEntity<List<IndustryResponseDto>> get() {
+        List<IndustryResponseDto> industries = industryService.getIndustries();
+        return ResponseEntity.ok(industries);
     }
 
 }

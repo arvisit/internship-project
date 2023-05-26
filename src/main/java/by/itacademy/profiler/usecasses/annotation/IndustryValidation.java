@@ -14,10 +14,10 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Target({FIELD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = SphereValidator.class)
-public @interface SphereValidation {
+@Constraint(validatedBy = IndustryValidator.class)
+public @interface IndustryValidation {
 
-    String message() default "Invalid id: sphere not found";
+    String message() default "Invalid id: industry not found";
 
     Class<?>[] groups() default {};
 
