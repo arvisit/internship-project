@@ -3,6 +3,7 @@ package by.itacademy.profiler.usecasses.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VA
 /**
  * A DTO for the {@link by.itacademy.profiler.persistence.model.About} entity
  */
+@Builder(setterPrefix = "with")
 public record AboutDto(@Length(max = 450, message = "Description is too long, the max number of symbols is 450")
                        @NotNull(message = "Required field")
                        @Pattern(regexp = REGEXP_VALIDATE_DESCRIPTION, message = "Invalid  data")

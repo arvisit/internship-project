@@ -1,4 +1,4 @@
-package by.itacademy.profiler.usecasses;
+package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.AboutNotFoundException;
 import by.itacademy.profiler.persistence.model.About;
@@ -7,7 +7,6 @@ import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.AboutRepository;
 import by.itacademy.profiler.persistence.repository.CurriculumVitaeRepository;
 import by.itacademy.profiler.usecasses.dto.AboutDto;
-import by.itacademy.profiler.usecasses.impl.AboutServiceImpl;
 import by.itacademy.profiler.usecasses.mapper.AboutMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
 import org.junit.jupiter.api.BeforeAll;
