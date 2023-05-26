@@ -1,20 +1,20 @@
 package by.itacademy.profiler.usecasses.annotation;
 
-import by.itacademy.profiler.usecasses.SphereService;
+import by.itacademy.profiler.usecasses.IndustryService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class SphereValidator implements ConstraintValidator<SphereValidation, Long> {
+public class IndustryValidator implements ConstraintValidator<IndustryValidation, Long> {
 
-    private final SphereService sphereService;
+    private final IndustryService industryService;
 
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext context) {
         if (id == null) {
             return true;
         }
-        return sphereService.isSphereExist(id);
+        return industryService.isIndustryExist(id);
     }
 }

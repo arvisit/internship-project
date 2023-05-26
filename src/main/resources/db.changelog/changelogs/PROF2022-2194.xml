@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2194" author="natalapetracenko@gmail.com">
+        <sql>
+            RENAME TABLE spheres TO industries;
+        </sql>
+
+        <dropForeignKeyConstraint
+                baseTableName="experience"
+                constraintName="fk_experience_sphere_id"
+        />
+
+        <sql>
+            ALTER TABLE experience
+                CHANGE COLUMN sphere_id industry_id BIGINT NOT NULL;
+        </sql>
+
+        <addForeignKeyConstraint
+                baseTableName="experience"
+                baseColumnNames="industry_id"
+                constraintName="fk_experience_industry_id"
+                referencedTableName="industries"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

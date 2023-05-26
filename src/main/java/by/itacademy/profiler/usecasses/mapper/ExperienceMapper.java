@@ -1,7 +1,7 @@
 package by.itacademy.profiler.usecasses.mapper;
 
 import by.itacademy.profiler.persistence.model.Experience;
-import by.itacademy.profiler.usecasses.SphereService;
+import by.itacademy.profiler.usecasses.IndustryService;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
 import org.mapstruct.Builder;
@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class ExperienceMapper {
 
     @Autowired
-    protected SphereService sphereService;
+    protected IndustryService industryService;
 
-    @Mapping(target = "sphereId", source = "experience.sphere.id")
-    @Mapping(target = "sphereName", source = "experience.sphere.name")
+    @Mapping(target = "industryId", source = "experience.industry.id")
+    @Mapping(target = "industryName", source = "experience.industry.name")
     public abstract ExperienceResponseDto fromEntityToDto(Experience experience);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "sphere", expression = "java(sphereService.getSphereById(experienceRequestDto.sphereId()))")
+    @Mapping(target = "industry", expression = "java(industryService.getIndustryById(experienceRequestDto.industryId()))")
     public abstract Experience fromDtoToEntity(ExperienceRequestDto experienceRequestDto);
 }

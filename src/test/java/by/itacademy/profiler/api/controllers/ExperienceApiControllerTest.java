@@ -2,7 +2,7 @@ package by.itacademy.profiler.api.controllers;
 
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
 import by.itacademy.profiler.usecasses.ExperienceService;
-import by.itacademy.profiler.usecasses.SphereService;
+import by.itacademy.profiler.usecasses.IndustryService;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -60,13 +60,13 @@ class ExperienceApiControllerTest {
     private ExperienceService experienceService;
 
     @MockBean
-    private SphereService sphereService;
+    private IndustryService industryService;
 
     @Test
     void shouldReturn201WhenCreateExperienceIsSuccessful() throws Exception {
         List<ExperienceRequestDto> request = createListOfExperienceRequestDto();
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ class ExperienceApiControllerTest {
         List<ExperienceRequestDto> request = createListOfExperienceRequestDto();
         List<ExperienceResponseDto> response = createListExperienceResponseDto();
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
         when(experienceService.save(request, CV_UUID_FOR_EXPERIENCE)).thenReturn(response);
 
         MvcResult mvcResult = mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
@@ -100,7 +100,7 @@ class ExperienceApiControllerTest {
     void shouldInvokeExperienceBusinessLogicWhenCreateExperienceIsSuccessful() throws Exception {
         List<ExperienceRequestDto> request = createListOfExperienceRequestDto();
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -116,7 +116,7 @@ class ExperienceApiControllerTest {
         String validJson = getValidExperienceRequestJson();
         List<ExperienceRequestDto> request = objectMapper.readValue(validJson, new TypeReference<>() {});
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -131,7 +131,7 @@ class ExperienceApiControllerTest {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto().withPeriodFrom(YearMonth.parse(periodFrom)).build());
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -160,7 +160,7 @@ class ExperienceApiControllerTest {
                         .withPeriodTo(YearMonth.parse("2021-02"))
                         .build());
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -178,7 +178,7 @@ class ExperienceApiControllerTest {
                         .build());
         String expectedContent = "Field `periodTo` should be later than `periodFrom";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -194,7 +194,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withSequenceNumber(null).build());
         String expectedContent = "Sequence number must not be null";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -211,7 +211,7 @@ class ExperienceApiControllerTest {
                         createExperienceRequestDto().withSequenceNumber(1).build());
         String expectedContent = "Invalid sequence number: must be unique";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -227,7 +227,7 @@ class ExperienceApiControllerTest {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto().withSequenceNumber(sequenceNumber).build());
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -243,7 +243,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withSequenceNumber(sequenceNumber).build());
         String expectedContent = "Sequence number must not be less than 1";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -260,7 +260,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withSequenceNumber(sequenceNumber).build());
         String expectedContent = "Sequence number must not be more than 5";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -276,7 +276,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withPresentTime(null).build());
         String expectedContent = "Must be specified";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -292,7 +292,7 @@ class ExperienceApiControllerTest {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto().withPeriodTo(date).withPresentTime(presentTime).build());
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -308,7 +308,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withPeriodTo(date).withPresentTime(presentTime).build());
         String expectedContent = "If field `presentTime` is true, then field `periodTo` should be null, otherwise should not be";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -323,7 +323,7 @@ class ExperienceApiControllerTest {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto().withPeriodTo(null).withPresentTime(true).build());
 
-        setupCommonMockBehaviorWithUuidAndSphereAndExperience(request);
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -338,7 +338,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withPeriodTo(YearMonth.parse("2022-10")).withPresentTime(true).build());
         String expectedContent = "If field `presentTime` is true, then field `periodTo` should be null, otherwise should not be";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -349,12 +349,12 @@ class ExperienceApiControllerTest {
     }
 
     @Test
-    void shouldReturn400WhenInvalidSphereId() throws Exception {
+    void shouldReturn400WhenInvalidIndustryId() throws Exception {
         List<ExperienceRequestDto> request =
-                List.of(createExperienceRequestDto().withSphereId(5464L).build());
+                List.of(createExperienceRequestDto().withIndustryId(5464L).build());
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
-        when(sphereService.isSphereExist(request.get(0).sphereId())).thenReturn(false);
+        when(industryService.isIndustryExist(request.get(0).industryId())).thenReturn(false);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -364,13 +364,13 @@ class ExperienceApiControllerTest {
     }
 
     @Test
-    void shouldReturn400WhenSphereIdIsNull() throws Exception {
+    void shouldReturn400WhenIndustryIdIsNull() throws Exception {
         List<ExperienceRequestDto> request =
-                List.of(createExperienceRequestDto().withSphereId(null).build());
-        String expectedContent = "Sphere id must not be null";
+                List.of(createExperienceRequestDto().withIndustryId(null).build());
+        String expectedContent = "Industry id must not be null";
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
-        when(sphereService.isSphereExist(request.get(0).sphereId())).thenReturn(false);
+        when(industryService.isIndustryExist(request.get(0).industryId())).thenReturn(false);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -387,7 +387,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withCompany(company).build());
         String expectedContent = "Invalid company name";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -403,7 +403,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withCompany("Invalid Invalid Invalid Invalid Invalid Invalid Invalid").build());
         String expectedContent = "Company name is too long, the max number of symbols is 40";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -420,7 +420,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withPosition(position).build());
         String expectedContent = "Invalid position name";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -436,7 +436,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withPosition("Invalid Invalid Invalid Invalid Invalid Invalid Invalid").build());
         String expectedContent = "Position name is too long, the max number of symbols is 40";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -452,7 +452,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withDuties(List.of()).build());
         String expectedContent = "Duties must not be empty";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -468,7 +468,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withDuties(List.of("1", "2", "3", "4", "5", "6")).build());
         String expectedContent = "Amount of duties should not be more than 5";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -485,7 +485,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withDuties(List.of("1", "2", "3")).withSequenceNumber(sequenceNumber).build());
         String expectedContent = "Amount of duties should not be more than 2 for 3-5 job`s positions in the list";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -501,7 +501,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withDuties(List.of("Invalid duty ^%$*~")).build());
         String expectedContent = "Invalid duty";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -527,7 +527,7 @@ class ExperienceApiControllerTest {
                         .toString()).build());
         String expectedContent = "Achievements name is too long, the max number of symbols is 200";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -543,7 +543,7 @@ class ExperienceApiControllerTest {
                 List.of(createExperienceRequestDto().withAchievements("achievements $%&").build());
         String expectedContent = "Invalid achievements";
 
-        setupCommonMockBehaviorWithUuidAndSphere(request);
+        setupCommonMockBehaviorWithUuidAndIndustry(request);
 
         mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -607,14 +607,14 @@ class ExperienceApiControllerTest {
         assertEquals(expectedJson, actualResult);
     }
 
-    private void setupCommonMockBehaviorWithUuidAndSphereAndExperience(List<ExperienceRequestDto> request) {
+    private void setupCommonMockBehaviorWithUuidAndIndustryAndExperience(List<ExperienceRequestDto> request) {
         when(experienceService.save(request, CV_UUID_FOR_EXPERIENCE)).thenReturn(any());
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
-        when(sphereService.isSphereExist(request.get(0).sphereId())).thenReturn(true);
+        when(industryService.isIndustryExist(request.get(0).industryId())).thenReturn(true);
     }
 
-    private void setupCommonMockBehaviorWithUuidAndSphere(List<ExperienceRequestDto> request) {
+    private void setupCommonMockBehaviorWithUuidAndIndustry(List<ExperienceRequestDto> request) {
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EXPERIENCE)).thenReturn(true);
-        when(sphereService.isSphereExist(request.get(0).sphereId())).thenReturn(true);
+        when(industryService.isIndustryExist(request.get(0).industryId())).thenReturn(true);
     }
 }

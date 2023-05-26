@@ -20,8 +20,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "spheres")
-public class Sphere {
+@Table(name = "industries")
+public class Industry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +36,10 @@ public class Sphere {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sphere sphere = (Sphere) o;
+        Industry industry = (Industry) o;
 
-        if (!Objects.equals(id, sphere.id)) return false;
-        return Objects.equals(name, sphere.name);
+        if (!Objects.equals(id, industry.id)) return false;
+        return Objects.equals(name, industry.name);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Sphere {
 
     @Override
     public String toString() {
-        return "Sphere{" +
+        return "Industry{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

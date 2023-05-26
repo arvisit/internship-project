@@ -1,7 +1,7 @@
 package by.itacademy.profiler.api.controllers;
 
 import by.itacademy.profiler.MysqlSQLTestContainerExtension;
-import by.itacademy.profiler.usecasses.dto.SphereResponseDto;
+import by.itacademy.profiler.usecasses.dto.IndustryResponseDto;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -23,14 +23,14 @@ import java.util.Map;
 
 import static by.itacademy.profiler.util.AuthenticationTestData.AUTH_URL_TEMPLATE;
 import static by.itacademy.profiler.util.AuthenticationTestData.createLoginRequestHttpEntity;
-import static by.itacademy.profiler.util.SphereTestData.EXPECTED_NUMBER_OF_SPHERES;
-import static by.itacademy.profiler.util.SphereTestData.SPHERE_URL_TEMPLATE;
+import static by.itacademy.profiler.util.IndustryTestData.EXPECTED_NUMBER_OF_INDUSTRIES;
+import static by.itacademy.profiler.util.IndustryTestData.INDUSTRY_URL_TEMPLATE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(MysqlSQLTestContainerExtension.class)
-class SphereApiControllerIntegrationTest {
+class IndustryApiControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -39,18 +39,18 @@ class SphereApiControllerIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void shouldReturnExpectedSphereResponseJsonAnd200WhenGetListOfSpheres() throws Exception {
+    void shouldReturnExpectedIndustryResponseJsonAnd200WhenGetListOfIndustries() throws Exception {
         ResponseEntity<String> response = restTemplate.exchange(
-                SPHERE_URL_TEMPLATE,
+                INDUSTRY_URL_TEMPLATE,
                 HttpMethod.GET,
                 getAuthHttpEntity(),
                 String.class);
 
-        List<SphereResponseDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        List<IndustryResponseDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
-        assertEquals(EXPECTED_NUMBER_OF_SPHERES, result.size());
+        assertEquals(EXPECTED_NUMBER_OF_INDUSTRIES, result.size());
     }
 
     @SneakyThrows

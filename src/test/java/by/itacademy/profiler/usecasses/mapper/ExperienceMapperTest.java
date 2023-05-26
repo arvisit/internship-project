@@ -1,8 +1,8 @@
 package by.itacademy.profiler.usecasses.mapper;
 
 import by.itacademy.profiler.persistence.model.Experience;
-import by.itacademy.profiler.persistence.model.Sphere;
-import by.itacademy.profiler.usecasses.SphereService;
+import by.itacademy.profiler.persistence.model.Industry;
+import by.itacademy.profiler.usecasses.IndustryService;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static by.itacademy.profiler.util.ExperienceTestData.createExperience;
 import static by.itacademy.profiler.util.ExperienceTestData.createExperienceRequestDto;
-import static by.itacademy.profiler.util.SphereTestData.createSphere;
+import static by.itacademy.profiler.util.IndustryTestData.createIndustry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -29,11 +29,11 @@ class ExperienceMapperTest {
     private final ExperienceMapper experienceMapper = Mappers.getMapper(ExperienceMapper.class);
 
     @Mock
-    private SphereService sphereService;
+    private IndustryService industryService;
 
     @Before
     public void before() {
-        when(sphereService.getSphereById(1L)).thenReturn(createSphere().build());
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
     }
 
     @Test
@@ -55,15 +55,15 @@ class ExperienceMapperTest {
     }
 
     @Test
-    void shouldMapSphereCorrectlyWhenInvokeFromDtoToEntity() {
+    void shouldMapIndustryCorrectlyWhenInvokeFromDtoToEntity() {
         Long sphereId = 2L;
-        Sphere sphere = createSphere().withId(sphereId).withName("Engineering").build();
-        ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withSphereId(sphereId).build();
+        Industry industry = createIndustry().withId(sphereId).withName("Engineering").build();
+        ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withIndustryId(sphereId).build();
 
-        when(sphereService.getSphereById(sphereId)).thenReturn(sphere);
+        when(industryService.getIndustryById(sphereId)).thenReturn(industry);
 
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
-        assertEquals(sphere, experience.getSphere());
+        assertEquals(industry, experience.getIndustry());
     }
 
     @Test
@@ -95,19 +95,19 @@ class ExperienceMapperTest {
     }
 
     @Test
-    void shouldMapSphereNameCorrectlyWhenInvokeFromEntityToDto() {
+    void shouldMapIndustryNameCorrectlyWhenInvokeFromEntityToDto() {
         Experience experience = createExperience().build();
 
         ExperienceResponseDto experienceResponseDto = experienceMapper.fromEntityToDto(experience);
-        assertEquals(experienceResponseDto.sphereName(), experience.getSphere().getName());
+        assertEquals(experienceResponseDto.industryName(), experience.getIndustry().getName());
     }
 
     @Test
-    void shouldMapSphereIdCorrectlyWhenInvokeFromEntityToDto() {
+    void shouldMapIndustryIdCorrectlyWhenInvokeFromEntityToDto() {
         Experience experience = createExperience().build();
 
         ExperienceResponseDto experienceResponseDto = experienceMapper.fromEntityToDto(experience);
-        assertEquals(experienceResponseDto.sphereId(), experience.getSphere().getId());
+        assertEquals(experienceResponseDto.industryId(), experience.getIndustry().getId());
     }
 
     @Test

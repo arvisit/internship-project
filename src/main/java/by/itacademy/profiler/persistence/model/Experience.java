@@ -52,8 +52,8 @@ public class Experience {
     private Boolean presentTime;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sphere_id", nullable = false)
-    private Sphere sphere;
+    @JoinColumn(name = "industry_id", nullable = false)
+    private Industry industry;
 
     @Column(name = "company", nullable = false, length = 40)
     private String company;
@@ -84,7 +84,7 @@ public class Experience {
         if (!periodFrom.equals(that.periodFrom)) return false;
         if (!Objects.equals(periodTo, that.periodTo)) return false;
         if (!presentTime.equals(that.presentTime)) return false;
-        if (!sphere.equals(that.sphere)) return false;
+        if (!industry.equals(that.industry)) return false;
         if (!company.equals(that.company)) return false;
         if (!position.equals(that.position)) return false;
         if (!duties.equals(that.duties)) return false;
@@ -95,7 +95,7 @@ public class Experience {
     @Override
     public int hashCode() {
         return Objects.hash(id, sequenceNumber, periodFrom, periodTo, presentTime,
-                sphere, company, position, duties, achievements, link);
+                industry, company, position, duties, achievements, link);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Experience {
         sb.append(", periodFrom=").append(periodFrom);
         sb.append(", periodTo=").append(periodTo);
         sb.append(", presentTime=").append(presentTime);
-        sb.append(", sphere=").append(sphere);
+        sb.append(", industry=").append(industry);
         sb.append(", company='").append(company).append('\'');
         sb.append(", position='").append(position).append('\'');
         sb.append(", duties=").append(duties.toString());
