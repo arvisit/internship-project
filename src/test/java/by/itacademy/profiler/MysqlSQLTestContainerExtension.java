@@ -14,7 +14,7 @@ public class MysqlSQLTestContainerExtension implements BeforeAllCallback, AfterA
         System.setProperty("spring.security.cors.allowedOrigins", "none");
         System.setProperty("spring.security.cors.allowedMethods", "none");
         System.setProperty("spring.security.jwt.secret", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
-        System.setProperty("image.storage-dir", "./src/test/resources/image-folder");
+        System.setProperty("image.storage-dir", "./target/test-classes/image-folder");
     }
 
     @Override
