@@ -8,6 +8,7 @@ import by.itacademy.profiler.usecasses.annotation.UserImageValidation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_CELL_PHONE;
@@ -15,6 +16,7 @@ import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VA
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_NAME;
 import static by.itacademy.profiler.usecasses.util.ValidationConstants.REGEXP_VALIDATE_SURNAME;
 
+@Builder(setterPrefix = "with")
 public record UserProfileDto(@Length(max = 50, message = "The name is too long, the max number of symbols is 50")
                              @Pattern(regexp = REGEXP_VALIDATE_NAME, message = "Invalid name")
                              @Schema(defaultValue = "Jeffrey", description = "User name")

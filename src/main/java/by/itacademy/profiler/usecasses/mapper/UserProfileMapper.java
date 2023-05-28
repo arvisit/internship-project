@@ -6,10 +6,12 @@ import by.itacademy.profiler.persistence.model.Position;
 import by.itacademy.profiler.persistence.model.UserProfile;
 import by.itacademy.profiler.usecasses.dto.UserProfileDto;
 import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        builder = @Builder(disableBuilder = true))
 public interface UserProfileMapper {
 
     @Mapping(target = "id", ignore = true)

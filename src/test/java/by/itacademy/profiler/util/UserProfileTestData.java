@@ -12,7 +12,10 @@ import by.itacademy.profiler.usecasses.dto.UserProfileResponseDto;
 import java.util.Collections;
 import java.util.Map;
 
+
 public class UserProfileTestData {
+
+    public static final String USER_PROFILE_URL_TEMPLATE = "/api/v1/profile";
     private static final String USER_NAME = "user@mail.com";
     private static final String NAME = "Tim";
     private static final String SURNAME = "Roth";
@@ -29,6 +32,18 @@ public class UserProfileTestData {
     private static final Map<Long, String> COUNTRY_MAP = Collections.singletonMap(COUNTRY_ID, COUNTRY);
     private static final Map<Long, Integer> PHONE_CODE_MAP = Collections.singletonMap(PHONE_CODE_ID, PHONE_CODE);
     private static final Map<Long, String> POSITION_MAP = Collections.singletonMap(POSITION_ID, POSITION);
+
+    public static UserProfileDto.UserProfileDtoBuilder createUserProfileDto(){
+        return UserProfileDto.builder()
+                .withName(NAME)
+                .withSurname(SURNAME)
+                .withEmail(EMAIL)
+                .withPhoneCodeId(PHONE_CODE_ID)
+                .withCountryId(COUNTRY_ID)
+                .withCellPhone(CELL_PHONE)
+                .withProfileImageUuid(PROFILE_IMAGE_UUID);
+
+    }
 
     public static UserProfileDto getValideUserProfileDto() {
         return  new UserProfileDto(
