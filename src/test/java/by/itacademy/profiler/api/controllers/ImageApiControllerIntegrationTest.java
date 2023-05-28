@@ -5,8 +5,9 @@ import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.repository.ImageRepository;
 import by.itacademy.profiler.usecasses.dto.ImageDto;
 import by.itacademy.profiler.util.AuthenticationTestData;
-import by.itacademy.profiler.util.ImageTestData;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +22,38 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Map;
 
 import static by.itacademy.profiler.util.AuthenticationTestData.AUTH_URL_TEMPLATE;
+import static by.itacademy.profiler.util.ImageTestData.ACTUAL_IMAGE_BYTE_SOURCE;
+import static by.itacademy.profiler.util.ImageTestData.BYTE_SOURCE;
+import static by.itacademy.profiler.util.ImageTestData.IMAGES_URL_TEMPLATE;
+import static by.itacademy.profiler.util.ImageTestData.IMAGE_FOLDER;
+import static by.itacademy.profiler.util.ImageTestData.IMAGE_UUID;
+import static by.itacademy.profiler.util.ImageTestData.ORIGINAL_FILENAME;
+import static by.itacademy.profiler.util.ImageTestData.REQUEST_PART_NAME;
+import static by.itacademy.profiler.util.ImageTestData.SPECIFIED_IMAGE_URL_TEMPLATE;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+@SqlGroup({
+        @Sql(scripts = "classpath:testdata/add_images_test_data.sql",
+                executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:testdata/clear_images_test_data.sql",
+                executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD) })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(MysqlSQLTestContainerExtension.class)
 class ImageApiControllerIntegrationTest {
@@ -50,19 +69,42 @@ class ImageApiControllerIntegrationTest {
 
     private static final int IMAGE_UUID_LENGTH = 36;
 
+    @BeforeEach
+    void prepareImageFolder() throws IOException {
+        Path location = Paths.get(imageStorageLocation);
+        if (!Files.exists(location)) {
+            Files.createDirectories(location);
+        }
+        ClassLoader classLoader = getClass().getClassLoader();
+        File imageSource = new File(classLoader.getResource(IMAGE_FOLDER + '/' + ORIGINAL_FILENAME).getFile());
+        Path imageTarget = Paths.get(imageStorageLocation, IMAGE_UUID);
+        Files.copy(imageSource.toPath(), imageTarget);
+    }
+
+    @AfterEach
+    void clearImageFolder() throws IOException {
+        Path location = Paths.get(imageStorageLocation);
+        if (Files.exists(location)) {
+            Files.walk(location)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
+    }
+
     @Test
     void shouldReturn201AndJsonContentTypeWhenUploadImage() throws Exception {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
 
         ByteArrayResource contentsAsResource = getFileToUpload();
-        body.add(ImageTestData.REQUEST_PART_NAME, contentsAsResource);
+        body.add(REQUEST_PART_NAME, contentsAsResource);
 
         HttpHeaders headers = getAuthHeader();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         ResponseEntity<ImageDto> responseEntity = restTemplate.exchange(
-                ImageTestData.IMAGES_URL_TEMPLATE,
+                IMAGES_URL_TEMPLATE,
                 HttpMethod.POST,
                 requestEntity,
                 ImageDto.class);
@@ -73,7 +115,6 @@ class ImageApiControllerIntegrationTest {
         ImageDto responseDto = responseEntity.getBody();
         Image img = imageRepository.findByUuid(responseDto.uuid()).get();
         imageRepository.delete(img);
-        deleteFile(img.getUuid());
     }
 
     @Test
@@ -81,14 +122,14 @@ class ImageApiControllerIntegrationTest {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
 
         ByteArrayResource contentsAsResource = getFileToUpload();
-        body.add(ImageTestData.REQUEST_PART_NAME, contentsAsResource);
+        body.add(REQUEST_PART_NAME, contentsAsResource);
 
         HttpHeaders headers = getAuthHeader();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         ResponseEntity<ImageDto> responseEntity = restTemplate.exchange(
-                ImageTestData.IMAGES_URL_TEMPLATE,
+                IMAGES_URL_TEMPLATE,
                 HttpMethod.POST,
                 requestEntity,
                 ImageDto.class);
@@ -100,22 +141,93 @@ class ImageApiControllerIntegrationTest {
 
         Image img = imageRepository.findByUuid(responseDto.uuid()).get();
         imageRepository.delete(img);
-        deleteFile(img.getUuid());
+    }
+
+    @Test
+    void shouldReturn200AndImagePngContentTypeWhenGetImage() throws Exception {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
+                SPECIFIED_IMAGE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                byte[].class,
+                IMAGE_UUID);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.IMAGE_PNG, responseEntity.getHeaders().getContentType());
+    }
+
+    @Test
+    void shouldReturn200AndRightByteArrayWhenGetImage() throws Exception {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
+                SPECIFIED_IMAGE_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                byte[].class,
+                IMAGE_UUID);
+
+        byte[] result = responseEntity.getBody();
+        byte[] expected = ACTUAL_IMAGE_BYTE_SOURCE;
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.IMAGE_PNG, responseEntity.getHeaders().getContentType());
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    void shouldReturn200AndJsonContentTypeWhenReplaceImage() throws Exception {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
+
+        ByteArrayResource contentsAsResource = getFileToUpload();
+        body.add(REQUEST_PART_NAME, contentsAsResource);
+
+        HttpHeaders headers = getAuthHeader();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        ResponseEntity<ImageDto> responseEntity = restTemplate.exchange(
+                SPECIFIED_IMAGE_URL_TEMPLATE,
+                HttpMethod.PUT,
+                requestEntity,
+                ImageDto.class,
+                IMAGE_UUID);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+    }
+
+    @Test
+    void shouldReturn200AndRightLengthImageUuidWhenReplaceImage() throws Exception {
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
+
+        ByteArrayResource contentsAsResource = getFileToUpload();
+        body.add(REQUEST_PART_NAME, contentsAsResource);
+
+        HttpHeaders headers = getAuthHeader();
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        ResponseEntity<ImageDto> responseEntity = restTemplate.exchange(
+                SPECIFIED_IMAGE_URL_TEMPLATE,
+                HttpMethod.PUT,
+                requestEntity,
+                ImageDto.class,
+                IMAGE_UUID);
+
+        ImageDto responseDto = responseEntity.getBody();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(IMAGE_UUID_LENGTH, responseDto.uuid().length());
     }
 
     private ByteArrayResource getFileToUpload() {
-        ByteArrayResource contentsAsResource = new ByteArrayResource(ImageTestData.BYTE_SOURCE) {
+        ByteArrayResource contentsAsResource = new ByteArrayResource(BYTE_SOURCE) {
             @Override
             public String getFilename() {
-                return ImageTestData.ORIGINAL_FILENAME;
+                return ORIGINAL_FILENAME;
             }
         };
         return contentsAsResource;
-    }
-
-    private void deleteFile(String imageName) throws IOException {
-        Path imageLocation = Paths.get(imageStorageLocation, imageName);
-        Files.delete(imageLocation);
     }
 
     private HttpHeaders getAuthHeader() {
