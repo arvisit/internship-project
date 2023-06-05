@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+<changeSet id="PROF2022-2260" author="zagvladimir88@gmail.com">
+        <createTable tableName="institutions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="institutions">
+            <column name="name" value="Agricultural College in Gorodok"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Baranavichy State University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Barysau State Politechnic College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian Commercial Institute of Management"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian Institute of Law"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian National Technical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Academy of Arts"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Academy of Aviation"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Academy of Communications"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Academy of Music"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Agrarian Technical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Agricultural Academy"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State College of Building Materials Industry"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Economic University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Medical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Pedagogical University named after Maxim Tank"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Physical Culture University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State Technological University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State University of Culture and Arts"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State University of Informatics and Radioelectronics"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian State University of Transport"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian Trade-Economic University of Consumer Cooperation"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Belarusian-Russian University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Bobruisk State Motor Transport College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Borisov State Medical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Brest State Technical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Brest State University named after A.S. Pushkin"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="College of Business and Law"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Educational Establishment Ilya State Agrarian College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Educational Establishment Kopyl State College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name"
+                    value="Emergency Control Ministry Homiel Engineering Institute of the Republic of Belarus"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name"
+                    value="Emergency Control Ministry Military Engineering Institute of the Republic of Belarus"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Francisk Skorina Gomel State University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Gomel state road-building College Lenin Komsomol of Belarus"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Grodno College of Economics and Management of Belcoopsoyuz"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Grodno State Agrarian University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Grodno State College of Engineering, Technology and Design"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Grodno State Medical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Higher State Communications College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Homiel State Medical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Institute of Entrepreneurial Activity"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Institute of Modern Knowledge named after A.M. Shirokov"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="International Humanities and Economics Institute"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="International Institute of Labour and Social Relations"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="International Sakharov Environmental University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Klimovichi State Agricultural College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Law College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Mazyr State Pedagogical University named after I.P. Šamiakin"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Military Academy of Belarus"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Ministry of the Interior Academy of the Republic of Belarus"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk College of Entrepreneurship"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk Innovation University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Auto-Mechanical College named after academician М.S. Vysotski"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State College of Architecture and Civil Engineering"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Engineering College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Higher Aviation College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Higher Radiotechnical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Linguistic University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Polytechnic College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Technological College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk State Trade College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Minsk Suvorov Military School"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Mogilev State A. Kuleshov University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Mogilev State Polytechnic College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Mogilev State University of Food Technologies"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Molodechno State Medical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Molodechno Trade-Economic College of Belcoopsoyuz"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Novogrudok State College of Technology and Security"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Novogrudsk College of Trade and Economics"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Novopolotsk State Musical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Palessie State University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Pavel Sukhoi State Technical University of Gomel"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Pinsk College of Brest State University named after A.S.Pushkin"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Polotsk college Vitebsk State University named after P. M. Masherov"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Polotsk State University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Private Institute of Management and Business"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Pruzhany State Agro-Technical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Slonim State Medical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Slutsk State Medical College named after S.I. Shklyarevsky"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Smilovichi State agrarian college"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name"
+                    value="Social and Humanitarian College Uo Mogilev State University named after A. A. Kuleshov"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Soligorsk State Mining and Chemical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="The Institute of Palimentarism and Business"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Vitebsk state technological College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Vitebsk State Technological University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Vitsebsk State Academy of Veterinary Medicine"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Vitsebsk State Medical University"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Vitsebsk State University named after P.M. Masherov"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Yanka Kupala State University of Grodno"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Zhlobin State Metallurgical College"/>
+        </insert>
+        <insert tableName="institutions">
+            <column name="name" value="Zhodino State Polytechnic College"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
