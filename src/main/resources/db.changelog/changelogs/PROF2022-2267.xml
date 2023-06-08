@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2267" author="zagvladimir88@gmail.com">
+        <update tableName="institutions">
+            <column name="name">Polotsk college &quot;Vitebsk State University named after P. M. Masherov&quot;</column>
+            <where> name='Polotsk college Vitebsk State University named after P. M. Masherov'</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>
