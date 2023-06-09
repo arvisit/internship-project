@@ -1,6 +1,8 @@
 package by.itacademy.profiler.usecasses.dto;
 
 import by.itacademy.profiler.usecasses.annotation.IndustryValidation;
+import by.itacademy.profiler.usecasses.util.Sequencable;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Max;
@@ -69,7 +71,7 @@ public record ExperienceRequestDto(
         @Length(max = 255, message = "Duty name is too long, the max number of symbols is 255")
         @Schema(defaultValue = "http://example.com/link", description = "Link to a portfolio or project page")
         String link
-) implements Serializable {
+) implements Serializable, Sequencable {
 
     private static final Integer MAX_DUTY_SIZE = 2;
     private static final Integer SEQUENCE_NUMBER_FROM = 2;

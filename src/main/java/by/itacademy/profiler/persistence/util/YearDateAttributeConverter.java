@@ -4,32 +4,31 @@ import jakarta.persistence.AttributeConverter;
 
 import java.sql.Date;
 import java.time.Instant;
-import java.time.YearMonth;
+import java.time.MonthDay;
+import java.time.Year;
 import java.time.ZoneId;
 
 import static by.itacademy.profiler.persistence.util.PersistenceConstants.EUROPE_MINSK;
 
-public class YearMonthDateAttributeConverter implements AttributeConverter<YearMonth, Date> {
+public class YearDateAttributeConverter implements AttributeConverter<Year, Date> {
 
     @Override
-    public Date convertToDatabaseColumn(YearMonth attribute) {
+    public Date convertToDatabaseColumn(Year attribute) {
         if (attribute != null) {
             return Date.valueOf(
-                    attribute.atDay(1)
-            );
+                    attribute.atMonthDay(MonthDay.of(1, 1)));
         }
         return null;
     }
 
     @Override
-    public YearMonth convertToEntityAttribute(Date dbData) {
+    public Year convertToEntityAttribute(Date dbData) {
         if (dbData != null) {
-            return YearMonth.from(
+            return Year.from(
                     Instant
                             .ofEpochMilli(dbData.getTime())
                             .atZone(ZoneId.of(EUROPE_MINSK))
-                            .toLocalDate()
-            );
+                            .toLocalDate());
         }
         return null;
     }

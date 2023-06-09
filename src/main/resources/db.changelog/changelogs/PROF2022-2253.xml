@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2253" author="sitko.ar@gmail.com">
+        <comment>Customize DB to handle info about user's education from cv's 6th page</comment>
+
+        <createTable tableName="main_educations">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cv_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_to" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="present_time" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="institution" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="faculty" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="specialty" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="main_educations"
+                baseColumnNames="cv_id"
+                constraintName="fk_main_educations_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+
+        <createTable tableName="courses">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cv_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="period_to" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="present_time" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="school" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_name" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(130)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="certificate_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="courses"
+                baseColumnNames="cv_id"
+                constraintName="fk_courses_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>

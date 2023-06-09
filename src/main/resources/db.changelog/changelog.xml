@@ -32,4 +32,7 @@
     <include file="changelogs/PROF2022-2194.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-2260.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-2267.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/PROF2022-2253.xml" relativeToChangelogFile="true"/>
+  
+
 </databaseChangeLog>
