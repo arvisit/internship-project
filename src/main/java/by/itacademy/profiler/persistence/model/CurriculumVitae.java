@@ -94,6 +94,14 @@ public class CurriculumVitae {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "cv_id", nullable = false)
     private List<Experience> experience = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cv_id", nullable = false)
+    private List<MainEducation> mainEducations = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cv_id", nullable = false)
+    private List<Course> courses = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -118,13 +126,15 @@ public class CurriculumVitae {
         if (status != that.status) return false;
         if (!Objects.equals(languages, that.languages)) return false;
         if (!Objects.equals(skills, that.skills)) return false;
+        if (!Objects.equals(mainEducations, that.mainEducations)) return false;
+        if (!Objects.equals(courses, that.courses)) return false;
         return Objects.equals(experience, that.experience);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate,
-                isReadyForRemoteWork, contacts, about, status, languages, skills, experience);
+                isReadyForRemoteWork, contacts, about, status, languages, skills, experience, mainEducations, courses);
     }
 
     @Override
@@ -146,6 +156,8 @@ public class CurriculumVitae {
                 ", languages=" + languages.toString() +
                 ", skills=" + skills.toString() +
                 ", experience=" + experience.toString() +
+                ", mainEducations=" + mainEducations.toString() +
+                ", courses=" + courses.toString() +
                 ", status=" + status +
                 '}';
     }

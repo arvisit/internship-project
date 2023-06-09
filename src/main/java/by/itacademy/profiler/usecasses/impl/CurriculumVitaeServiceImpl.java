@@ -1,10 +1,12 @@
 package by.itacademy.profiler.usecasses.impl;
 
 import by.itacademy.profiler.api.exception.BadRequestException;
+import by.itacademy.profiler.persistence.model.Course;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.Image;
+import by.itacademy.profiler.persistence.model.MainEducation;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -123,6 +125,28 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
     @Override
     public List<Experience> getCvExperienceByCvUuid(String cvUuid) {
         return curriculumVitaeRepository.findAllCvExperienceByCvUuid(cvUuid);
+    }
+
+    @Override
+    @Transactional
+    public List<MainEducation> saveMainEducationsToCv(String cvUuid, List<MainEducation> mainEducations) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        List<MainEducation> curriculumVitaeMainEducations = curriculumVitae.getMainEducations();
+        curriculumVitaeMainEducations.clear();
+        curriculumVitaeMainEducations.addAll(mainEducations);
+        CurriculumVitae savedCv = curriculumVitaeRepository.save(curriculumVitae);
+        return savedCv.getMainEducations();
+    }
+
+    @Override
+    @Transactional
+    public List<Course> saveCoursesToCv(String cvUuid, List<Course> courses) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        List<Course> curriculumVitaeCourses = curriculumVitae.getCourses();
+        curriculumVitaeCourses.clear();
+        curriculumVitaeCourses.addAll(courses);
+        CurriculumVitae savedCv = curriculumVitaeRepository.save(curriculumVitae);
+        return savedCv.getCourses();
     }
 
     public Long getAllCvByUser() {

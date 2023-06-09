@@ -5,6 +5,7 @@ import by.itacademy.profiler.usecasses.ExperienceService;
 import by.itacademy.profiler.usecasses.IndustryService;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.YearMonth;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static by.itacademy.profiler.util.CompetenceTestData.INVALID_CV_UUID;
 import static by.itacademy.profiler.util.ExperienceTestData.CV_EXPERIENCE_URL_TEMPLATE;
@@ -223,9 +225,10 @@ class ExperienceApiControllerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
-    void shouldReturn201WhenSequenceNumberIsValid(Integer sequenceNumber) throws Exception {
-        List<ExperienceRequestDto> request =
-                List.of(createExperienceRequestDto().withSequenceNumber(sequenceNumber).build());
+    void shouldReturn201WhenSequenceNumberIsValid(Integer sequenceNumberLimit) throws Exception {
+        List<ExperienceRequestDto> request = IntStream.rangeClosed(1, sequenceNumberLimit)
+                .mapToObj(n -> createExperienceRequestDto().withSequenceNumber(n).build())
+                .toList();
 
         setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
 

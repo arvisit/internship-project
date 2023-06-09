@@ -31,4 +31,8 @@ public final class ValidationConstants {
     public static final String REGEXP_VALIDATE_POSITION_AND_DUTIES = "^[a-zA-Z0-9,-\\/:; ]+$";
 
     public static final String REGEXP_VALIDATE_ACHIEVEMENTS = "^[a-zA-Z0-9,-\\/:;$ ]+$";
+
+    public static final String REGEXP_VALIDATE_SIXTH_PAGE_TEXT_FIELDS = "^[\\p{IsLatin}0-9,\\.\\-\\/:;' ]+$";
+
+    public static final String REGEXP_VALIDATE_INSTITUTION = "^[\\p{IsLatin}0-9,\\.\\-\\/:;'\" ]+$";
 }

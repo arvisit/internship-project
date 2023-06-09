@@ -1,7 +1,9 @@
 package by.itacademy.profiler.usecasses;
 
+import by.itacademy.profiler.persistence.model.Course;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvLanguage;
+import by.itacademy.profiler.persistence.model.MainEducation;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -14,6 +16,8 @@ import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
 import by.itacademy.profiler.usecasses.impl.CurriculumVitaeServiceImpl;
 import by.itacademy.profiler.usecasses.mapper.CurriculumVitaeMapper;
 import by.itacademy.profiler.usecasses.util.AuthService;
+import by.itacademy.profiler.util.CourseTestData;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +30,22 @@ import org.mockito.quality.Strictness;
 import java.util.List;
 import java.util.Optional;
 
-import static by.itacademy.profiler.util.CurriculumVitaeTestData.*;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.CV_UUID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getCountryByCountyId;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getCvByCvRequestDto;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getCvResponseDtoByCurriculumVitae;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getCvResponseDtoByCvRequestDto;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getImageByImageUuid;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getListOfCvResponseDtoFromCvList;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getListOfCvsOfUser;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getPositionByPositionId;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getUser;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getValidCurriculumVitae;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.getValidCvRequestDto;
 import static by.itacademy.profiler.util.CvLanguageTestData.createCvLanguage;
+import static by.itacademy.profiler.util.MainEducationTestData.createMainEducation;
 import static by.itacademy.profiler.util.SkillTestData.createSkill;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -235,6 +252,30 @@ class CurriculumVitaeServiceTest {
         when(curriculumVitaeRepository.getReferenceByUuid(CV_UUID)).thenReturn(curriculumVitae);
 
         assertDoesNotThrow(() -> curriculumVitaeService.saveLanguagesToCv(CV_UUID, languages));
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    void shouldNotThrowWhenInvokeSaveMainEducationsToCv() {
+        CurriculumVitae curriculumVitae = getValidCurriculumVitae();
+        List<MainEducation> mainEducations = List.of(createMainEducation().build());
+
+        when(curriculumVitaeRepository.getReferenceByUuid(CV_UUID)).thenReturn(curriculumVitae);
+        when(curriculumVitaeRepository.save(any(CurriculumVitae.class))).thenReturn(curriculumVitae);
+
+        assertDoesNotThrow(() -> curriculumVitaeService.saveMainEducationsToCv(CV_UUID, mainEducations));
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    void shouldNotThrowWhenInvokeSaveCoursesToCv() {
+        CurriculumVitae curriculumVitae = getValidCurriculumVitae();
+        List<Course> courses = List.of(CourseTestData.createCourse().build());
+
+        when(curriculumVitaeRepository.getReferenceByUuid(CV_UUID)).thenReturn(curriculumVitae);
+        when(curriculumVitaeRepository.save(any(CurriculumVitae.class))).thenReturn(curriculumVitae);
+
+        assertDoesNotThrow(() -> curriculumVitaeService.saveCoursesToCv(CV_UUID, courses));
     }
 
     private void stubbingForGet(CurriculumVitae curriculumVitae, CurriculumVitaeResponseDto curriculumVitaeResponseDto) {

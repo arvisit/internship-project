@@ -17,7 +17,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Constraint(validatedBy = SequenceNumbersValidator.class)
 public @interface SequenceNumbersValidation {
 
-    String message() default "Invalid sequence number: must be unique";
+    String message() default "Invalid sequence number: must be unique and fit list size";
 
     Class<?>[] groups() default {};
 
