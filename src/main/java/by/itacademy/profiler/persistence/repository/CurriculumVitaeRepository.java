@@ -1,8 +1,10 @@
 package by.itacademy.profiler.persistence.repository;
 
+import by.itacademy.profiler.persistence.model.Course;
 import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Experience;
+import by.itacademy.profiler.persistence.model.MainEducation;
 import by.itacademy.profiler.persistence.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,4 +36,10 @@ public interface CurriculumVitaeRepository extends JpaRepository<CurriculumVitae
 
     @Query("SELECT c.experience FROM CurriculumVitae c WHERE c.uuid = ?1")
     List<Experience> findAllCvExperienceByCvUuid(String cvUuid);
+
+    @Query("SELECT c.mainEducations FROM CurriculumVitae c WHERE c.uuid = ?1")
+    List<MainEducation> findAllMainEducationsByCVUuid(String uuid);
+
+    @Query("SELECT c.courses FROM CurriculumVitae c WHERE c.uuid = ?1")
+    List<Course> findAllCoursesByCVUuid(String uuid);
 }

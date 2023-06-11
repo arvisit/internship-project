@@ -6,9 +6,8 @@ import by.itacademy.profiler.usecasses.dto.CourseRequestDto;
 import by.itacademy.profiler.usecasses.dto.EducationRequestDto;
 import by.itacademy.profiler.usecasses.dto.EducationResponseDto;
 import by.itacademy.profiler.usecasses.dto.MainEducationRequestDto;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.Year;
 import java.time.YearMonth;
@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static by.itacademy.profiler.util.CompetenceTestData.INVALID_CV_UUID;
 import static by.itacademy.profiler.util.CourseTestData.createCourseRequestDto;
 import static by.itacademy.profiler.util.EducationTestData.CV_EDUCATIONS_URL_TEMPLATE;
 import static by.itacademy.profiler.util.EducationTestData.CV_UUID_FOR_EDUCATIONS;
@@ -35,13 +36,14 @@ import static by.itacademy.profiler.util.EducationTestData.createEducationReques
 import static by.itacademy.profiler.util.EducationTestData.createEducationResponseDto;
 import static by.itacademy.profiler.util.MainEducationTestData.createMainEducationRequestDto;
 import static by.itacademy.profiler.util.StringTestData.createLowerCaseASCIIString;
-
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -1149,6 +1151,64 @@ class EducationApiControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn200AndContentTypeJsonWhenGetEducation() throws Exception {
+        EducationResponseDto responseDto = createEducationResponseDto().build();
+
+        when(educationService.getEducationByCvUuid(CV_UUID_FOR_EDUCATIONS)).thenReturn(responseDto);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(get(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void shouldReturn200AndInvokeBusinessLogicWhenGetEducation() throws Exception {
+        when(educationService.getEducationByCvUuid(CV_UUID_FOR_EDUCATIONS)).thenReturn(any());
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(get(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(educationService, times(1)).getEducationByCvUuid(CV_UUID_FOR_EDUCATIONS);
+        verify(curriculumVitaeService, times(1)).isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS);
+    }
+
+    @Test
+    void shouldReturn200AndCorrectJsonWhenGetEducation() throws Exception {
+        EducationResponseDto responseDto = createEducationResponseDto().build();
+        String expectedJson = objectMapper.writeValueAsString(responseDto);
+
+        when(educationService.getEducationByCvUuid(CV_UUID_FOR_EDUCATIONS)).thenReturn(responseDto);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        MvcResult mvcResult = mockMvc.perform(get(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        String actualResult = mvcResult.getResponse().getContentAsString();
+
+        assertEquals(expectedJson, actualResult);
+    }
+
+    @Test
+    void shouldReturn404WhenGetEducationWithInvalidUuid() throws Exception {
+        String expectedContent = String.format("\"CV with UUID %s not found!!!\"", INVALID_CV_UUID);
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(get(CV_EDUCATIONS_URL_TEMPLATE, INVALID_CV_UUID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(Matchers.containsString(expectedContent)));
+
     }
 
     static Stream<String> validStringsForSixthPageTextFieldsRegexp() {

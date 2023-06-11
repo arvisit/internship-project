@@ -39,4 +39,8 @@ public interface CurriculumVitaeService {
     List<MainEducation> saveMainEducationsToCv(String cvUuid, List<MainEducation> mainEducations);
 
     List<Course> saveCoursesToCv(String cvUuid, List<Course> courses);
+
+    List<MainEducation> getMainEducationsByCvUuid(String cvUuid);
+
+    List<Course> getCoursesByCvUuid(String cvUuid);
 }

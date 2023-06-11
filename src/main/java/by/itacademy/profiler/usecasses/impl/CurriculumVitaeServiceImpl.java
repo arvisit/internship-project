@@ -149,6 +149,16 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         return savedCv.getCourses();
     }
 
+    @Override
+    public List<MainEducation> getMainEducationsByCvUuid(String cvUuid) {
+        return curriculumVitaeRepository.findAllMainEducationsByCVUuid(cvUuid);
+    }
+
+    @Override
+    public List<Course> getCoursesByCvUuid(String cvUuid) {
+        return curriculumVitaeRepository.findAllCoursesByCVUuid(cvUuid);
+    }
+
     public Long getAllCvByUser() {
         String username = authService.getUsername();
         return curriculumVitaeRepository.findCountByUsername(username);
