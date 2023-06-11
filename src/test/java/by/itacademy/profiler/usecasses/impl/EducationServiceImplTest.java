@@ -26,9 +26,12 @@ import static by.itacademy.profiler.util.EducationTestData.createEducationRespon
 import static by.itacademy.profiler.util.MainEducationTestData.createMainEducation;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,5 +67,24 @@ class EducationServiceImplTest {
         when(educationMapper.fromEntitiesToDto(anyList(), anyList())).thenReturn(educationResponseDto);
 
         assertDoesNotThrow(() -> educationService.save(educationRequestDto, CV_UUID));
+    }
+
+    @Test
+    void shouldGetEducationAndInvokeBusinessLogicWhenInvokeGet() {
+        List<MainEducation> mainEducations = List.of(createMainEducation().build());
+        List<Course> courses = List.of(createCourse().build());
+        EducationResponseDto expectedResponse = createEducationResponseDto().build();
+
+        when(curriculumVitaeService.getMainEducationsByCvUuid(CV_UUID)).thenReturn(mainEducations);
+        when(curriculumVitaeService.getCoursesByCvUuid(CV_UUID)).thenReturn(courses);
+        when(educationMapper.fromEntitiesToDto(mainEducations, courses)).thenReturn(expectedResponse);
+
+        EducationResponseDto actualResponse = educationService.getEducationByCvUuid(CV_UUID);
+
+        verify(curriculumVitaeService, times(1)).getMainEducationsByCvUuid(CV_UUID);
+        verify(curriculumVitaeService, times(1)).getCoursesByCvUuid(CV_UUID);
+        verify(educationMapper, times(1)).fromEntitiesToDto(mainEducations, courses);
+
+        assertEquals(expectedResponse, actualResponse);
     }
 }

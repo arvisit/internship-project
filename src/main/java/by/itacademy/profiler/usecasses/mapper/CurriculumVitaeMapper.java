@@ -17,6 +17,7 @@ import static java.util.Objects.nonNull;
 public interface CurriculumVitaeMapper {
 
     @Mapping(target = "isCompetencesExists", expression = "java(mapList(curriculumVitae.getLanguages(), curriculumVitae.getSkills()))")
+    @Mapping(target = "isEducationsExists", expression = "java(mapList(curriculumVitae.getMainEducations(), curriculumVitae.getCourses()))")
     @Mapping(target = "isAboutExists", expression = "java(map(curriculumVitae.getAbout()))")
     @Mapping(target = "isContactsExists", expression = "java(map(curriculumVitae.getContacts()))")
     @Mapping(target = "isExperienceExists", expression = "java(mapList(curriculumVitae.getExperience()))")

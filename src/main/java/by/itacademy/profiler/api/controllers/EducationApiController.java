@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +46,13 @@ public class EducationApiController {
         log.debug("Input data for saving CV main educations and courses: {}", request);
         EducationResponseDto response = educationService.save(request, uuid);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get lists of main educations and courses from the user's cv")
+    @GetMapping
+    public ResponseEntity<EducationResponseDto> get(@PathVariable(name = "uuid") @IsCvExists String uuid) {
+        EducationResponseDto response = educationService.getEducationByCvUuid(uuid);
+        log.debug("Getting education section of CV {} from database: {} ", uuid, response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -42,4 +42,12 @@ public class EducationServiceImpl implements EducationService {
         return educationMapper.fromEntitiesToDto(savedMainEducations, savedCourses);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public EducationResponseDto getEducationByCvUuid(String cvUuid) {
+        List<MainEducation> mainEducations = curriculumVitaeService.getMainEducationsByCvUuid(cvUuid);
+        List<Course> courses = curriculumVitaeService.getCoursesByCvUuid(cvUuid);
+
+        return educationMapper.fromEntitiesToDto(mainEducations, courses);
+    }
 }

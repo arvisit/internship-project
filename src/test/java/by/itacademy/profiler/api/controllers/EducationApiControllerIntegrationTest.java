@@ -6,7 +6,6 @@ import by.itacademy.profiler.persistence.repository.MainEducationRepository;
 import by.itacademy.profiler.usecasses.dto.EducationRequestDto;
 import by.itacademy.profiler.usecasses.dto.EducationResponseDto;
 import by.itacademy.profiler.util.AuthenticationTestData;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,6 @@ import static by.itacademy.profiler.util.EducationTestData.CV_EDUCATIONS_URL_TEM
 import static by.itacademy.profiler.util.EducationTestData.CV_UUID_FOR_EDUCATIONS;
 import static by.itacademy.profiler.util.EducationTestData.createEducationRequestDto;
 import static by.itacademy.profiler.util.MainEducationTestData.createMainEducationRequestDto;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -134,6 +133,31 @@ class EducationApiControllerIntegrationTest {
         assertTrue(mainEducationsCountAfterFirstRequest > mainEducationsCountAfterSecondRequest);
         assertTrue(coursesCountAfterFirstRequest > coursesCountAfterSecondRequest);
 
+        mainEducationRepository.deleteAll();
+        courseRepository.deleteAll();
+    }
+
+    @Test
+    @Sql(scripts = "classpath:testdata/add_education_test_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    void shouldReturnExpectedResponseJsonWhenGetEducationSuccessful() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        String expectedInstitution = "GSU";
+        String expectedSchoolName = "IT-ACADEMY";
+
+        ResponseEntity<EducationResponseDto> responseEntity = restTemplate.exchange(
+                CV_EDUCATIONS_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                EducationResponseDto.class,
+                CV_UUID_FOR_EDUCATIONS);
+
+        EducationResponseDto actualResponse = responseEntity.getBody();
+
+        assertThat(actualResponse.courses()).hasSize(2);
+        assertThat(actualResponse.mainEducations()).hasSize(2);
+        assertEquals(actualResponse.courses().get(0).school(),expectedSchoolName);
+        assertEquals(actualResponse.mainEducations().get(0).institution(),expectedInstitution);
         mainEducationRepository.deleteAll();
         courseRepository.deleteAll();
     }
