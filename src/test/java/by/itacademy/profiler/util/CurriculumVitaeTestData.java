@@ -38,6 +38,7 @@ public class CurriculumVitaeTestData {
     private static final boolean IS_ABOUT_EXISTS = false;
     private static final boolean IS_COMPETENCES_EXISTS = false;
     private static final boolean IS_EXPERIENCE_EXISTS = false;
+    private static final boolean IS_EDUCATION_EXISTS = false;
     private static final String STATUS = CvStatus.DRAFT.name();
     private static final String USER_MAIL_COM = "user@mail.com";
     private static final long CV_ID = 1L;
@@ -71,6 +72,7 @@ public class CurriculumVitaeTestData {
                 .withIsAboutExists(false)
                 .withIsCompetencesExists(false)
                 .withIsExperienceExists(false)
+                .withIsEducationsExists(false)
                 .withStatus(STATUS)
                 .build();
     }
@@ -92,6 +94,7 @@ public class CurriculumVitaeTestData {
                 .withIsAboutExists(IS_ABOUT_EXISTS)
                 .withIsCompetencesExists(IS_COMPETENCES_EXISTS)
                 .withIsExperienceExists(IS_EXPERIENCE_EXISTS)
+                .withIsEducationsExists(IS_EDUCATION_EXISTS)
                 .withStatus(STATUS);
     }
 
