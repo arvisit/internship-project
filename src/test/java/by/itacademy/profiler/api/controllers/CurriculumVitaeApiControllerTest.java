@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.COUNTRY_ID;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.CVS_URL_TEMPLATE;
+import static by.itacademy.profiler.util.CurriculumVitaeTestData.CVS_UUID_URL_TEMPLATE;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.CV_UUID;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.IMAGE_UUID;
 import static by.itacademy.profiler.util.CurriculumVitaeTestData.POSITION_ID;
@@ -58,8 +60,6 @@ class CurriculumVitaeApiControllerTest {
     @MockBean
     private PositionService positionService;
 
-    private static final String API_V1_CVS_UUID = "/api/v1/cvs/{uuid}";
-    private static final String API_V1_CVS = "/api/v1/cvs";
     private static final String INVALID_NAME = "Invalid Namenamenamenamenamenamenamenamenamenamename";
     private static final String INVALID_SURNAME = "Invalid Surnamenamenamenamenamenamenamenamenamename";
     private static final String INVALID_CITY = "Invalid City-citycitycitycitycitycitycitycitycitycity";
@@ -76,7 +76,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isBadRequest())
@@ -95,7 +95,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isBadRequest())
@@ -115,7 +115,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isBadRequest())
@@ -134,7 +134,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isBadRequest())
@@ -154,7 +154,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isBadRequest())
@@ -176,7 +176,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                 post(
-                        API_V1_CVS
+                        CVS_URL_TEMPLATE
                 ).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
         ).andExpect(status().isCreated());
@@ -194,7 +194,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
                 ).andExpect(status().isCreated())
@@ -225,7 +225,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CvRequestDtoWithInvalidName))
                 ).andExpect(status().isBadRequest())
@@ -246,7 +246,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CvRequestDtoWithInvalidSurname))
                 ).andExpect(status().isBadRequest())
@@ -267,7 +267,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         post(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CvRequestDtoWithInvalidCity))
                 ).andExpect(status().isBadRequest())
@@ -281,7 +281,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -295,7 +295,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -324,7 +324,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -337,7 +337,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -349,7 +349,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
@@ -379,7 +379,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         get(
-                                API_V1_CVS
+                                CVS_URL_TEMPLATE
                         ).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -393,7 +393,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -414,7 +414,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -435,7 +435,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -455,7 +455,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -476,7 +476,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -499,7 +499,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                 put(
-                        API_V1_CVS_UUID,
+                        CVS_UUID_URL_TEMPLATE,
                         CV_UUID
                 ).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))
@@ -518,7 +518,7 @@ class CurriculumVitaeApiControllerTest {
 
         mockMvc.perform(
                         put(
-                                API_V1_CVS_UUID,
+                                CVS_UUID_URL_TEMPLATE,
                                 CV_UUID
                         ).contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsBytes(CURRICULUM_VITAE_REQUEST_DTO))

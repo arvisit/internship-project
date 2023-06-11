@@ -18,14 +18,17 @@ import java.util.stream.Stream;
 
 public class CurriculumVitaeTestData {
 
+    public static final String CVS_URL_TEMPLATE = "/api/v1/cvs";
+    public static final String CVS_UUID_URL_TEMPLATE = "/api/v1/cvs/{uuid}";
     public static final String CV_UUID = "0a5a28ca-e960-420c-af53-50e6f6e80bf2";
+    public static final String CV_UUID_FROM_DB = "123e4567-e89b-12d3-a456-426614174001";
     public static final String IMAGE_UUID = "95f5f3cf-ac52-4638-aad1-12d1e836fdd1";
     private static final String NAME = "Name";
     private static final String SURNAME = "Surname";
     public static final long POSITION_ID = 1L;
-    private static final String POSITION_NAME = "Some position";
+    private static final String POSITION_NAME = "Java developer";
     public static final long COUNTRY_ID = 1L;
-    private static final String COUNTRY_NAME = "Some-country";
+    private static final String COUNTRY_NAME = "Afghanistan";
     private static final String CITY = "City";
     private static final boolean IS_READY_TO_RELOCATE = true;
     private static final boolean IS_READY_FOR_REMOTE_WORK = true;
@@ -33,6 +36,8 @@ public class CurriculumVitaeTestData {
     private static final Map<Long, String> COUNTRIES = Collections.singletonMap(COUNTRY_ID, COUNTRY_NAME);
     private static final boolean IS_CONTACTS_EXISTS = false;
     private static final boolean IS_ABOUT_EXISTS = false;
+    private static final boolean IS_COMPETENCES_EXISTS = false;
+    private static final boolean IS_EXPERIENCE_EXISTS = false;
     private static final String STATUS = CvStatus.DRAFT.name();
     private static final String USER_MAIL_COM = "user@mail.com";
     private static final long CV_ID = 1L;
@@ -47,6 +52,27 @@ public class CurriculumVitaeTestData {
                 .withCity(CITY)
                 .withIsReadyToRelocate(IS_READY_TO_RELOCATE)
                 .withIsReadyForRemoteWork(IS_READY_FOR_REMOTE_WORK);
+    }
+
+    public static CurriculumVitaeResponseDto getCvResponseDtoForExistingUser() {
+        return CurriculumVitaeResponseDto.builder()
+                .withUuid(CV_UUID_FROM_DB)
+                .withImageUuid(null)
+                .withName("testName2")
+                .withSurname("testSurname2")
+                .withPositionId(1L)
+                .withPosition(POSITIONS.get(1L))
+                .withCountryId(1L)
+                .withCountry(COUNTRIES.get(1L))
+                .withCity("Gomel")
+                .withIsReadyToRelocate(true)
+                .withIsReadyForRemoteWork(true)
+                .withIsContactsExists(false)
+                .withIsAboutExists(false)
+                .withIsCompetencesExists(false)
+                .withIsExperienceExists(false)
+                .withStatus(STATUS)
+                .build();
     }
 
     public static CurriculumVitaeResponseDto.CurriculumVitaeResponseDtoBuilder getCvResponseDtoByCvRequestDto(CurriculumVitaeRequestDto curriculumVitaeRequestDto) {
@@ -64,6 +90,8 @@ public class CurriculumVitaeTestData {
                 .withIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork())
                 .withIsContactsExists(IS_CONTACTS_EXISTS)
                 .withIsAboutExists(IS_ABOUT_EXISTS)
+                .withIsCompetencesExists(IS_COMPETENCES_EXISTS)
+                .withIsExperienceExists(IS_EXPERIENCE_EXISTS)
                 .withStatus(STATUS);
     }
 
