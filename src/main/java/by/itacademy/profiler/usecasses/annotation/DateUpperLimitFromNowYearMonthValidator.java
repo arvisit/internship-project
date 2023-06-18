@@ -23,7 +23,7 @@ public class DateUpperLimitFromNowYearMonthValidator
         }
         Year maxYear = Year.now().plusYears(increment);
         YearMonth maxYearMonth = YearMonth.of(maxYear.getValue(), 12);
-        return value.isBefore(maxYearMonth);
+        return value.isBefore(maxYearMonth) || value.equals(maxYearMonth);
     }
 
 }

@@ -22,7 +22,7 @@ public class DateBottomLimitYearValidator implements ConstraintValidator<DateBot
         }
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy");
         Year minYear = Year.parse(min, dateTimeFormatter);
-        return value.isAfter(minYear);
+        return value.isAfter(minYear) || value.equals(minYear);
     }
 
 }

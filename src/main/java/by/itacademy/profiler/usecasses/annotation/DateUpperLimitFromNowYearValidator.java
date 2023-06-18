@@ -20,7 +20,7 @@ public class DateUpperLimitFromNowYearValidator implements ConstraintValidator<D
             return true;
         }
         Year maxYear = Year.now().plusYears(increment);
-        return value.isBefore(maxYear);
+        return value.isBefore(maxYear) || value.equals(maxYear);
     }
 
 }

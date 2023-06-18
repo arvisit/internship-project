@@ -22,7 +22,7 @@ public class DateBottomLimitYearMonthValidator implements ConstraintValidator<Da
         }
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM");
         YearMonth minYearMonth = YearMonth.parse(min, dateTimeFormatter);
-        return value.isAfter(minYearMonth);
+        return value.isAfter(minYearMonth) || value.equals(minYearMonth);
     }
 
 }

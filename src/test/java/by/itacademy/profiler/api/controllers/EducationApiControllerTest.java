@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -542,6 +543,25 @@ class EducationApiControllerTest {
     }
 
     @Test
+    void shouldReturn201WhenSaveEducationInfoWithMainEducationPeriodFromIsEqualToBottomLimit() throws Exception {
+        Year bottomLimit = Year.of(BOTTOM_LIMIT_YEAR_FOR_PERIOD_FROM);
+        List<MainEducationRequestDto> mainEducations = List
+                .of(createMainEducationRequestDto().withPeriodFrom(bottomLimit).withPeriodTo(bottomLimit.plusYears(1L))
+                        .build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withMainEducations(mainEducations)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
     void shouldReturn400WhenSaveEducationInfoWithMainEducationPeriodToIsBeforePeriodFrom() throws Exception {
         Year currentYear = Year.now();
         Year inTheFuture = currentYear.plusYears(1L);
@@ -599,6 +619,25 @@ class EducationApiControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn201WhenSaveEducationInfoWithMainEducationPeriodToIsEqualToUpperLimit() throws Exception {
+        Year currentYear = Year.now();
+        Year upperLimit = currentYear.plusYears(UPPER_LIMIT_INCREMENT_FOR_MAIN_EDUCATION_PERIOD_TO);
+        List<MainEducationRequestDto> mainEducations = List
+                .of(createMainEducationRequestDto().withPeriodFrom(currentYear).withPeriodTo(upperLimit).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withMainEducations(mainEducations)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -939,6 +978,24 @@ class EducationApiControllerTest {
     }
 
     @Test
+    void shouldReturn201WhenSaveEducationInfoWithCoursePeriodFromIsEqualToBottomLimit() throws Exception {
+        YearMonth bottomLimit = YearMonth.parse(BOTTOM_LIMIT_YEAR_MONTH_FOR_PERIOD_FROM);
+        List<CourseRequestDto> courses = List.of(
+                createCourseRequestDto().withPeriodFrom(bottomLimit).withPeriodTo(bottomLimit.plusYears(1L)).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withCourses(courses)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
     void shouldReturn400WhenSaveEducationInfoWithCoursePeriodToIsBeforePeriodFrom() throws Exception {
         YearMonth currentYear = YearMonth.now();
         YearMonth inTheFuture = currentYear.plusYears(1L);
@@ -998,6 +1055,26 @@ class EducationApiControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn201WhenSaveEducationInfoWithCoursePeriodToIsEqualToUpperLimit() throws Exception {
+        YearMonth currentYear = YearMonth.now();
+        YearMonth upperLimit = currentYear.plusYears(UPPER_LIMIT_INCREMENT_FOR_COURSE_PERIOD_TO)
+                .withMonth(Month.DECEMBER.getValue());
+        List<CourseRequestDto> courses = List
+                .of(createCourseRequestDto().withPeriodFrom(currentYear).withPeriodTo(upperLimit).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withCourses(courses)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
     @Test
