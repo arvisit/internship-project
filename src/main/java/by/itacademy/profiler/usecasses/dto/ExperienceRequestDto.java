@@ -1,5 +1,6 @@
 package by.itacademy.profiler.usecasses.dto;
 
+import by.itacademy.profiler.usecasses.annotation.DateBottomLimitValidation;
 import by.itacademy.profiler.usecasses.annotation.IndustryValidation;
 import by.itacademy.profiler.usecasses.util.Sequencable;
 
@@ -33,6 +34,7 @@ public record ExperienceRequestDto(
         @Schema(defaultValue = "1", description = "Sequence number")
         Integer sequenceNumber,
         @PastOrPresent(message = "Date is in the future")
+        @DateBottomLimitValidation(value = "1970-01")
         @NotNull(message = "Work period start must not be null")
         @Schema(defaultValue = "2020-02", description = "Working period from")
         YearMonth periodFrom,
@@ -68,7 +70,7 @@ public record ExperienceRequestDto(
         @Pattern(regexp = REGEXP_VALIDATE_ACHIEVEMENTS, message = "Invalid achievements")
         @Schema(defaultValue = "I am the best of the best", description = "Achievements")
         String achievements,
-        @Length(max = 255, message = "Duty name is too long, the max number of symbols is 255")
+        @Length(max = 255, message = "Link is too long, the max number of symbols is 255")
         @Schema(defaultValue = "http://example.com/link", description = "Link to a portfolio or project page")
         String link
 ) implements Serializable, Sequencable {

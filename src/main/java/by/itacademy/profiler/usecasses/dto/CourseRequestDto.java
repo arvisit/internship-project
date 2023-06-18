@@ -1,5 +1,7 @@
 package by.itacademy.profiler.usecasses.dto;
 
+import by.itacademy.profiler.usecasses.annotation.DateBottomLimitValidation;
+import by.itacademy.profiler.usecasses.annotation.DateUpperLimitFromNowValidation;
 import by.itacademy.profiler.usecasses.util.Periodic;
 import by.itacademy.profiler.usecasses.util.Sequencable;
 
@@ -26,9 +28,11 @@ public record CourseRequestDto(
         @Schema(defaultValue = "1", description = "Sequence number")
         Integer sequenceNumber,
         @PastOrPresent(message = "Date is in the future")
+        @DateBottomLimitValidation(value = "1970-01")
         @NotNull(message = "Course period start must not be null")
         @Schema(defaultValue = "2020-01", description = "Course period from")
         YearMonth periodFrom,
+        @DateUpperLimitFromNowValidation(value = 2L)
         @Schema(defaultValue = "2020-05", description = "Course period to")
         YearMonth periodTo,
         @NotNull(message = "Must be specified")

@@ -65,15 +65,22 @@ class EducationApiControllerTest {
     @MockBean
     private EducationService educationService;
 
+    private static final long UPPER_LIMIT_INCREMENT_FOR_COURSE_PERIOD_TO = 2L;
+    private static final long UPPER_LIMIT_INCREMENT_FOR_MAIN_EDUCATION_PERIOD_TO = 6L;
+    private static final int BOTTOM_LIMIT_YEAR_FOR_PERIOD_FROM = 1970;
+    private static final String BOTTOM_LIMIT_YEAR_MONTH_FOR_PERIOD_FROM = "1970-01";
     private static final int TWO_WHEN_SIZE_IS_ONE = 2;
     private static final int GREATER_THAN_ALLOWED_LIST_SIZE = 10;
     private static final int GREATER_THAN_ALLOWED_FIELD_LENGTH = 260;
     private static final String PRESENT_TIME_PERIOD_TO_VALIDATION_MESSAGE = "If field `presentTime` is true, then field `periodTo` should be null, otherwise should not be";
     private static final String PRESENT_TIME_NULL_MESSAGE = "Must be specified";
-    private static final String PERIOD_TO_PERIOD_FROM_VALIDATION_MESSAGE = "Field `periodTo` should be later than `periodFrom`";
+    private static final String PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE = "Field `periodTo` should be later than `periodFrom`";
+    private static final String PERIOD_TO_AFTER_OR_EQUAL_TO_PERIOD_FROM_VALIDATION_MESSAGE = "Field `periodTo` should be later than or equal to `periodFrom`";
     private static final String DATE_IS_IN_THE_FUTURE_MESSAGE = "Date is in the future";
     private static final String SEQUENCE_NUMBER_MUST_NOT_BE_NULL_MESSAGE = "Sequence number must not be null";
     private static final String INVALID_SEQUENCE_NUMBER_MESSAGE = "Invalid sequence number: must be unique and fit list size";
+    private static final String DATE_IS_BEFORE_BOTTOM_LIMIT_MESSAGE_TEMPLATE = "Date should not be earlier than ";
+    private static final String DATE_IS_AFTER_UPPER_LIMIT_MESSAGE_TEMPLATE = "Date should not be later than current year + ";
 
     @Test
     void shouldReturn201WhenSaveEducationInfoSuccessfully() throws Exception {
@@ -491,6 +498,29 @@ class EducationApiControllerTest {
     }
 
     @Test
+    void shouldReturn400WhenSaveEducationInfoWithMainEducationPeriodFromIsBeforeBottomLimit() throws Exception {
+        Year beforeBottomLimit = Year.of(BOTTOM_LIMIT_YEAR_FOR_PERIOD_FROM).minusYears(1L);
+        List<MainEducationRequestDto> mainEducations = List
+                .of(createMainEducationRequestDto().withPeriodFrom(beforeBottomLimit)
+                        .withPeriodTo(beforeBottomLimit.plusYears(1L))
+                        .build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withMainEducations(mainEducations)
+                .build();
+        
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+        
+        String expectedContent = DATE_IS_BEFORE_BOTTOM_LIMIT_MESSAGE_TEMPLATE + BOTTOM_LIMIT_YEAR_FOR_PERIOD_FROM;
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+        
+    }
+    
+    @Test
     void shouldReturn400WhenSaveEducationInfoWithMainEducationPeriodFromInTheFuture() throws Exception {
         Year inTheFuture = Year.now().plusYears(1L);
         List<MainEducationRequestDto> mainEducations = List
@@ -523,7 +553,46 @@ class EducationApiControllerTest {
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
 
-        String expectedContent = PERIOD_TO_PERIOD_FROM_VALIDATION_MESSAGE;
+        String expectedContent = PERIOD_TO_AFTER_OR_EQUAL_TO_PERIOD_FROM_VALIDATION_MESSAGE;
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn201WhenSaveEducationInfoWithMainEducationPeriodToIsEqualToPeriodFrom() throws Exception {
+        Year currentYear = Year.now();
+        List<MainEducationRequestDto> mainEducations = List
+                .of(createMainEducationRequestDto().withPeriodFrom(currentYear).withPeriodTo(currentYear).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withMainEducations(mainEducations)
+                .build();
+        
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+        
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldReturn400WhenSaveEducationInfoWithMainEducationPeriodToIsAfterUpperLimit() throws Exception {
+        Year currentYear = Year.now();
+        Year afterUpperLimit = currentYear.plusYears(UPPER_LIMIT_INCREMENT_FOR_MAIN_EDUCATION_PERIOD_TO).plusYears(1L);
+        List<MainEducationRequestDto> mainEducations = List
+                .of(createMainEducationRequestDto().withPeriodFrom(currentYear).withPeriodTo(afterUpperLimit).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withMainEducations(mainEducations)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        String expectedContent = DATE_IS_AFTER_UPPER_LIMIT_MESSAGE_TEMPLATE + UPPER_LIMIT_INCREMENT_FOR_MAIN_EDUCATION_PERIOD_TO;
         mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -849,6 +918,27 @@ class EducationApiControllerTest {
     }
 
     @Test
+    void shouldReturn400WhenSaveEducationInfoWithCoursePeriodFromIsBeforeBottomLimit() throws Exception {
+        YearMonth beforeBottomLimit = YearMonth.parse(BOTTOM_LIMIT_YEAR_MONTH_FOR_PERIOD_FROM).minusYears(1L);
+        List<CourseRequestDto> courses = List.of(
+                createCourseRequestDto().withPeriodFrom(beforeBottomLimit)
+                .withPeriodTo(beforeBottomLimit.plusYears(1L)).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withCourses(courses)
+                .build();
+        
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+        
+        String expectedContent = DATE_IS_BEFORE_BOTTOM_LIMIT_MESSAGE_TEMPLATE + BOTTOM_LIMIT_YEAR_MONTH_FOR_PERIOD_FROM;
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
     void shouldReturn400WhenSaveEducationInfoWithCoursePeriodToIsBeforePeriodFrom() throws Exception {
         YearMonth currentYear = YearMonth.now();
         YearMonth inTheFuture = currentYear.plusYears(1L);
@@ -860,7 +950,48 @@ class EducationApiControllerTest {
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
 
-        String expectedContent = PERIOD_TO_PERIOD_FROM_VALIDATION_MESSAGE;
+        String expectedContent = PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE;
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn400WhenSaveEducationInfoWithCoursePeriodToIsEqualToPeriodFrom() throws Exception {
+        YearMonth currentYear = YearMonth.now();
+        List<CourseRequestDto> courses = List
+                .of(createCourseRequestDto().withPeriodFrom(currentYear).withPeriodTo(currentYear).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withCourses(courses)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        String expectedContent = PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE;
+        mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn400WhenSaveEducationInfoWithCoursePeriodToIsAfterUpperLimit() throws Exception {
+        YearMonth currentYear = YearMonth.now();
+        YearMonth afterUpperLimit = currentYear.plusYears(UPPER_LIMIT_INCREMENT_FOR_COURSE_PERIOD_TO).plusYears(1L);
+        List<CourseRequestDto> courses = List
+                .of(createCourseRequestDto().withPeriodFrom(currentYear).withPeriodTo(afterUpperLimit).build());
+        EducationRequestDto request = createEducationRequestDto()
+                .withCourses(courses)
+                .build();
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
+
+        String expectedContent = DATE_IS_AFTER_UPPER_LIMIT_MESSAGE_TEMPLATE + UPPER_LIMIT_INCREMENT_FOR_COURSE_PERIOD_TO;
         mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
