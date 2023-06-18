@@ -128,7 +128,7 @@ class ExperienceApiControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"2020-10", "2020-01"})
+    @ValueSource(strings = {"2020-10", "2020-01", "1970-01"})
     void shouldReturn201WhenPeriodFromIsValid(String periodFrom) throws Exception {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto().withPeriodFrom(YearMonth.parse(periodFrom)).build());
