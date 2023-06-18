@@ -142,6 +142,23 @@ class ExperienceApiControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"1900-01", "1969-12"})
+    void shouldReturn400WhenPeriodFromIsEarlierThanBottomLimit(String periodFrom) throws Exception {
+        List<ExperienceRequestDto> request =
+                List.of(createExperienceRequestDto().withPeriodFrom(YearMonth.parse(periodFrom)).build());
+        
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
+        
+        String expectedContent = "Date should not be earlier than 1970-01";
+        mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
     @Test
     void shouldReturn400WhenJsonIsInvalidWithInvalidPeriod() throws Exception {
         String invalidJson = getInvalidExperienceRequestJsonWithInvalidPeriod();

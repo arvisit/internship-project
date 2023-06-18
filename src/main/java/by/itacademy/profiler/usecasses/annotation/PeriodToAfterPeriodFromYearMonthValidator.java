@@ -7,8 +7,8 @@ import java.time.YearMonth;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class PeriodToPeriodFromYearMonthValidator
-        implements ConstraintValidator<PeriodToPeriodFromValidation, Periodic<YearMonth>> {
+public class PeriodToAfterPeriodFromYearMonthValidator
+        implements ConstraintValidator<PeriodToAfterPeriodFromValidation, Periodic<YearMonth>> {
 
     @Override
     public boolean isValid(Periodic<YearMonth> value, ConstraintValidatorContext context) {

@@ -1,5 +1,7 @@
 package by.itacademy.profiler.usecasses.dto;
 
+import by.itacademy.profiler.usecasses.annotation.DateBottomLimitValidation;
+import by.itacademy.profiler.usecasses.annotation.DateUpperLimitFromNowValidation;
 import by.itacademy.profiler.usecasses.util.Periodic;
 import by.itacademy.profiler.usecasses.util.Sequencable;
 
@@ -27,9 +29,11 @@ public record MainEducationRequestDto(
         @Schema(defaultValue = "1", description = "Sequence number")
         Integer sequenceNumber,
         @PastOrPresent(message = "Date is in the future")
+        @DateBottomLimitValidation(value = "1970")
         @NotNull(message = "Main education period start must not be null")
         @Schema(defaultValue = "2015", description = "Main education period from")
         Year periodFrom,
+        @DateUpperLimitFromNowValidation(value = 6L)
         @Schema(defaultValue = "2020", description = "Main education period to")
         Year periodTo,
         @NotNull(message = "Must be specified")

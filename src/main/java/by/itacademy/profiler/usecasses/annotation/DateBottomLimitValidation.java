@@ -2,7 +2,6 @@ package by.itacademy.profiler.usecasses.annotation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -12,14 +11,15 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Target({ FIELD, PARAMETER, TYPE_USE })
+@Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { PeriodToPeriodFromYearValidator.class,
-        PeriodToPeriodFromYearMonthValidator.class })
-public @interface PeriodToPeriodFromValidation {
+@Constraint(validatedBy = { DateBottomLimitYearMonthValidator.class, DateBottomLimitYearValidator.class})
+public @interface DateBottomLimitValidation {
 
-    String message() default "Field `periodTo` should be later than `periodFrom`";
+    String value() default "";
+
+    String message() default "Date should not be earlier than {value}";
 
     Class<?>[] groups() default {};
 
