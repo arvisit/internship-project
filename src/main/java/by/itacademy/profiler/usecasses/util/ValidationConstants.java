@@ -35,4 +35,10 @@ public final class ValidationConstants {
     public static final String REGEXP_VALIDATE_SIXTH_PAGE_TEXT_FIELDS = "^[\\p{IsLatin}0-9,\\.\\-\\/:;' ]+$";
 
     public static final String REGEXP_VALIDATE_INSTITUTION = "^[\\p{IsLatin}0-9,\\.\\-\\/:;'\" ]+$";
+
+    public static final String REGEXP_VALIDATE_ADDITIONAL_INFORMATION = "^[a-zA-Z0-9,\\.\\-/:; ]+$";
+    public static final String REGEXP_VALIDATE_HOBBY = "^[a-zA-Z0-9,\\.\\-/:; ]*$";
+    public static final String REGEXP_VALIDATE_AWARD_ISSUER = "^[a-zA-Z0-9,\\.\\-/:; ]*$";
+    public static final String REGEXP_VALIDATE_AWARD_TITLE = "^[\\p{IsLatin}0-9,\\.\\-/:; ]+$";
+    public static final String REGEXP_VALIDATE_AWARD_DESCRIPTION = "^[a-zA-Z0-9,\\.\\-/:; ]*$";
 }
