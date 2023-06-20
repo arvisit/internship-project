@@ -77,6 +77,10 @@ public class CurriculumVitae {
     @PrimaryKeyJoinColumn
     private About about;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private AdditionalInformation additionalInformation;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private CvStatus status = CvStatus.DRAFT;
@@ -128,13 +132,14 @@ public class CurriculumVitae {
         if (!Objects.equals(skills, that.skills)) return false;
         if (!Objects.equals(mainEducations, that.mainEducations)) return false;
         if (!Objects.equals(courses, that.courses)) return false;
+        if (!Objects.equals(additionalInformation, that.additionalInformation)) return false;
         return Objects.equals(experience, that.experience);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate,
-                isReadyForRemoteWork, contacts, about, status, languages, skills, experience, mainEducations, courses);
+                isReadyForRemoteWork, contacts, about, status, languages, skills, experience, mainEducations, courses, additionalInformation);
     }
 
     @Override
@@ -158,6 +163,7 @@ public class CurriculumVitae {
                 ", experience=" + experience.toString() +
                 ", mainEducations=" + mainEducations.toString() +
                 ", courses=" + courses.toString() +
+                ", additionalInformation=" + additionalInformation.toString() +
                 ", status=" + status +
                 '}';
     }
