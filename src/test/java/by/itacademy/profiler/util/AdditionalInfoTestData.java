@@ -27,6 +27,12 @@ public final class AdditionalInfoTestData {
     public static final String REGEXP_VALIDATE_DESCRIPTION_ERROR = "Invalid Description";
     public static final String MAXLENGTH_VALIDATE_DESCRIPTION_ERROR = "Description is too long, the max number of symbols is 70";
 
+    public static final String CV_NOT_FOUND_ERROR = String.format("\"CV with UUID %s not found!!!\"",
+            ADDITIONAL_INFORMATION_CV_UUID);
+    public static final String ADDITIONAL_INFORMATION_NO_CONTENT_TEMPLATE = "Additional information section is not available for CV UUID: %s of user %s";
+    public static final String ADDITIONAL_INFORMATION_NO_CONTENT_ERROR = String.format(
+            ADDITIONAL_INFORMATION_NO_CONTENT_TEMPLATE, ADDITIONAL_INFORMATION_CV_UUID, "admin@mail.com");
+
     private AdditionalInfoTestData() {
     }
 

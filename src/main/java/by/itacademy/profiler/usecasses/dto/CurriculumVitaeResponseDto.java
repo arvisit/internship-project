@@ -9,5 +9,7 @@ public record CurriculumVitaeResponseDto(String uuid, String imageUuid, String n
                                          String position, Long countryId, String country, String city,
                                          boolean isReadyToRelocate, boolean isReadyForRemoteWork,
                                          Boolean isContactsExists, Boolean isAboutExists,
-                                         Boolean isCompetencesExists, Boolean isExperienceExists, Boolean isEducationsExists, String status) implements Serializable {
+                                         Boolean isCompetencesExists, Boolean isExperienceExists,
+                                         Boolean isEducationsExists, Boolean isAdditionalInformationExists,
+                                         String status) implements Serializable {
 }

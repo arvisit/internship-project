@@ -6,4 +6,6 @@ import by.itacademy.profiler.usecasses.dto.AdditionalInformationResponseDto;
 public interface AdditionalInformationService {
 
     AdditionalInformationResponseDto save(AdditionalInformationRequestDto requestDto, String cvUuid);
+
+    AdditionalInformationResponseDto getAdditionalInformationByCvUuid(String cvUuid);
 }
