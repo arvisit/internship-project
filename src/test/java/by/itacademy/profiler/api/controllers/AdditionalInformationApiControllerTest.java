@@ -1,5 +1,6 @@
 package by.itacademy.profiler.api.controllers;
 
+import by.itacademy.profiler.api.exception.AdditionalInformationNotFoundException;
 import by.itacademy.profiler.usecasses.AdditionalInformationService;
 import by.itacademy.profiler.usecasses.CurriculumVitaeService;
 import by.itacademy.profiler.usecasses.dto.AdditionalInformationRequestDto;
@@ -25,7 +26,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static by.itacademy.profiler.util.AdditionalInfoTestData.ADDITIONAL_INFORMATION_CV_UUID;
+import static by.itacademy.profiler.util.AdditionalInfoTestData.ADDITIONAL_INFORMATION_NO_CONTENT_ERROR;
 import static by.itacademy.profiler.util.AdditionalInfoTestData.CV_ADDITIONAL_INFORMATION_URL_TEMPLATE;
+import static by.itacademy.profiler.util.AdditionalInfoTestData.CV_NOT_FOUND_ERROR;
 import static by.itacademy.profiler.util.AdditionalInfoTestData.FIELD_ADDITIONAL_INFORMATION_NOT_NULL_ERROR;
 import static by.itacademy.profiler.util.AdditionalInfoTestData.FIELD_TITLE_NOT_NULL_ERROR;
 import static by.itacademy.profiler.util.AdditionalInfoTestData.MAXLENGTH_ADDITIONAL_INFORMATION_ERROR;
@@ -43,10 +46,12 @@ import static by.itacademy.profiler.util.AdditionalInfoTestData.createAdditional
 import static by.itacademy.profiler.util.AdditionalInfoTestData.createAwardDto;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -377,6 +382,83 @@ class AdditionalInformationApiControllerTest {
         }
     }
 
+    @Nested
+    class Get {
+
+        @Test
+        void shouldReturn200AndContentTypeJsonWhenGetAdditionalInformationIsSuccessful() throws Exception {
+            AdditionalInformationResponseDto responseDto = createAdditionalInformationResponseDto().build();
+            
+            when(additionalInformationService.getAdditionalInformationByCvUuid(ADDITIONAL_INFORMATION_CV_UUID))
+                    .thenReturn(responseDto);
+            when(curriculumVitaeService.isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID)).thenReturn(true);
+            
+            mockMvc.perform(get(CV_ADDITIONAL_INFORMATION_URL_TEMPLATE)
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON));
+        }
+
+        @Test
+        void shouldReturn200AndInvokeBusinessLogicWhenGetAdditionalInformationIsSuccessful() throws Exception {
+            when(additionalInformationService.getAdditionalInformationByCvUuid(ADDITIONAL_INFORMATION_CV_UUID))
+                    .thenReturn(any());
+            when(curriculumVitaeService.isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID)).thenReturn(true);
+
+            mockMvc.perform(get(CV_ADDITIONAL_INFORMATION_URL_TEMPLATE)
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isOk());
+
+            verify(additionalInformationService, times(1)).getAdditionalInformationByCvUuid(ADDITIONAL_INFORMATION_CV_UUID);
+            verify(curriculumVitaeService, times(1)).isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID);
+        }
+
+        @Test
+        void shouldReturn200AndCorrectJsonWhenGetAdditionalInformationIsSuccessful() throws Exception {
+            AdditionalInformationResponseDto responseDto = createAdditionalInformationResponseDto().build();
+            String expectedJson = objectMapper.writeValueAsString(responseDto);
+
+            when(additionalInformationService.getAdditionalInformationByCvUuid(ADDITIONAL_INFORMATION_CV_UUID))
+                    .thenReturn(responseDto);
+            when(curriculumVitaeService.isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID)).thenReturn(true);
+
+            MvcResult mvcResult = mockMvc.perform(get(CV_ADDITIONAL_INFORMATION_URL_TEMPLATE)
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON))
+                    .andReturn();
+
+            String actualResult = mvcResult.getResponse().getContentAsString();
+
+            assertEquals(expectedJson, actualResult);
+        }
+
+        @Test
+        void shouldReturn404WhenGetAdditionalInformationWithInvalidUuid() throws Exception {
+            String expectedContent = CV_NOT_FOUND_ERROR;
+
+            when(curriculumVitaeService.isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID)).thenReturn(false);
+
+            mockMvc.perform(get(CV_ADDITIONAL_INFORMATION_URL_TEMPLATE)
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andExpect(content().string(containsString(expectedContent)));
+        }
+
+        @Test
+        void shouldReturn204WhenGetAdditionalInformationWhichIsNotExist() throws Exception {
+            String expectedContent = ADDITIONAL_INFORMATION_NO_CONTENT_ERROR;
+
+            when(additionalInformationService.getAdditionalInformationByCvUuid(ADDITIONAL_INFORMATION_CV_UUID))
+                    .thenThrow(new AdditionalInformationNotFoundException(expectedContent));
+            when(curriculumVitaeService.isCurriculumVitaeExists(ADDITIONAL_INFORMATION_CV_UUID)).thenReturn(true);
+
+            mockMvc.perform(get(CV_ADDITIONAL_INFORMATION_URL_TEMPLATE)
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isNoContent())
+                    .andExpect(content().string(containsString(expectedContent)));
+        }
+    }
 
     static Stream<Arguments> getInvalidArgumentsForAdditionalInformationValidation() {
         return Stream.of(Arguments.of("", REGEXP_VALIDATE_ADDITIONAL_INFORMATION_ERROR),

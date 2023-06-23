@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,14 @@ public class AdditionalInformationApiController {
         log.debug("Input data for saving user's additional information: {}", request);
         AdditionalInformationResponseDto response = additionalInformationService.save(request, uuid);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get user's additional information")
+    @GetMapping
+    @ApiResponse(responseCode = "200", description = "GET")
+    public ResponseEntity<AdditionalInformationResponseDto> get(@PathVariable(name = "uuid") @IsCvExists String uuid){
+        AdditionalInformationResponseDto response = additionalInformationService.getAdditionalInformationByCvUuid(uuid);
+        log.debug("Getting additional information section of CV {} from database: {} ", uuid, response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

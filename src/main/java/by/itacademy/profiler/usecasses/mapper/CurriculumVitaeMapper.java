@@ -21,6 +21,7 @@ public interface CurriculumVitaeMapper {
     @Mapping(target = "isAboutExists", expression = "java(map(curriculumVitae.getAbout()))")
     @Mapping(target = "isContactsExists", expression = "java(map(curriculumVitae.getContacts()))")
     @Mapping(target = "isExperienceExists", expression = "java(mapList(curriculumVitae.getExperience()))")
+    @Mapping(target = "isAdditionalInformationExists", expression = "java(map(curriculumVitae.getAdditionalInformation()))")
     @Mapping(target = "imageUuid", source = "image.uuid")
     @Mapping(target = "positionId", source = "position.id")
     @Mapping(target = "position", source = "position.name")
