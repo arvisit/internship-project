@@ -79,10 +79,10 @@ public record ExperienceRequestDto(
     private static final Integer SEQUENCE_NUMBER_FROM = 2;
     private static final Integer SEQUENCE_NUMBER_TO = 6;
 
-    @AssertTrue(message = "Field `periodTo` should be later than `periodFrom`")
-    private boolean isPeriodToAfterPeriodFrom() {
+    @AssertTrue(message = "Field `periodTo` should be later than or equal to `periodFrom`")
+    private boolean isPeriodToAfterOrEqualToPeriodFrom() {
         if (periodTo != null) {
-            return periodFrom.isBefore(periodTo);
+            return periodFrom.isBefore(periodTo) || periodFrom.equals(periodTo);
         }
         return true;
     }

@@ -15,7 +15,8 @@ import jakarta.validation.Payload;
 @Target({ FIELD, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = PeriodToAfterOrEqualToPeriodFromYearValidator.class)
+@Constraint(validatedBy = { PeriodToAfterOrEqualToPeriodFromYearValidator.class,
+        PeriodToAfterOrEqualToPeriodFromYearMonthValidator.class })
 public @interface PeriodToAfterOrEqualToPeriodFromValidation {
 
     String message() default "Field `periodTo` should be later than or equal to `periodFrom`";

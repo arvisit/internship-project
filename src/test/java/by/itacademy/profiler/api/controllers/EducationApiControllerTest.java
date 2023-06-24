@@ -75,7 +75,6 @@ class EducationApiControllerTest {
     private static final int GREATER_THAN_ALLOWED_FIELD_LENGTH = 260;
     private static final String PRESENT_TIME_PERIOD_TO_VALIDATION_MESSAGE = "If field `presentTime` is true, then field `periodTo` should be null, otherwise should not be";
     private static final String PRESENT_TIME_NULL_MESSAGE = "Must be specified";
-    private static final String PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE = "Field `periodTo` should be later than `periodFrom`";
     private static final String PERIOD_TO_AFTER_OR_EQUAL_TO_PERIOD_FROM_VALIDATION_MESSAGE = "Field `periodTo` should be later than or equal to `periodFrom`";
     private static final String DATE_IS_IN_THE_FUTURE_MESSAGE = "Date is in the future";
     private static final String SEQUENCE_NUMBER_MUST_NOT_BE_NULL_MESSAGE = "Sequence number must not be null";
@@ -1007,7 +1006,7 @@ class EducationApiControllerTest {
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
 
-        String expectedContent = PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE;
+        String expectedContent = PERIOD_TO_AFTER_OR_EQUAL_TO_PERIOD_FROM_VALIDATION_MESSAGE;
         mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -1017,7 +1016,7 @@ class EducationApiControllerTest {
     }
 
     @Test
-    void shouldReturn400WhenSaveEducationInfoWithCoursePeriodToIsEqualToPeriodFrom() throws Exception {
+    void shouldReturn201WhenSaveEducationInfoWithCoursePeriodToIsEqualToPeriodFrom() throws Exception {
         YearMonth currentYear = YearMonth.now();
         List<CourseRequestDto> courses = List
                 .of(createCourseRequestDto().withPeriodFrom(currentYear).withPeriodTo(currentYear).build());
@@ -1027,13 +1026,11 @@ class EducationApiControllerTest {
 
         when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_EDUCATIONS)).thenReturn(true);
 
-        String expectedContent = PERIOD_TO_AFTER_PERIOD_FROM_VALIDATION_MESSAGE;
         mockMvc.perform(post(CV_EDUCATIONS_URL_TEMPLATE, CV_UUID_FOR_EDUCATIONS)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString(expectedContent)));
+                .andExpect(status().isCreated());
     }
 
     @Test
