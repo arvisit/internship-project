@@ -1,7 +1,6 @@
 package by.itacademy.profiler.usecasses.dto;
 
 import by.itacademy.profiler.usecasses.annotation.PeriodToAfterOrEqualToPeriodFromValidation;
-import by.itacademy.profiler.usecasses.annotation.PeriodToAfterPeriodFromValidation;
 import by.itacademy.profiler.usecasses.annotation.PresentTimePeriodToValidation;
 import by.itacademy.profiler.usecasses.annotation.SequenceNumbersValidation;
 
@@ -29,7 +28,7 @@ public record EducationRequestDto(
         @Valid
         List<
             @NotNull(message = "Course must not be null")
-            @PeriodToAfterPeriodFromValidation
+            @PeriodToAfterOrEqualToPeriodFromValidation
             @PresentTimePeriodToValidation CourseRequestDto> courses
 ) {
 }

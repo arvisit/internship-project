@@ -189,13 +189,30 @@ class ExperienceApiControllerTest {
     }
 
     @Test
+    void shoulReturn201WhenPeriodFromIsEqualToPeriodTo() throws Exception {
+        List<ExperienceRequestDto> request =
+                List.of(createExperienceRequestDto()
+                        .withPeriodFrom(YearMonth.parse("2020-10"))
+                        .withPeriodTo(YearMonth.parse("2020-10"))
+                        .build());
+
+        setupCommonMockBehaviorWithUuidAndIndustryAndExperience(request);
+
+        mockMvc.perform(post(CV_EXPERIENCE_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @Test
     void shouldReturn400WhenPeriodFromAndPeriodToAreInvalid() throws Exception {
         List<ExperienceRequestDto> request =
                 List.of(createExperienceRequestDto()
                         .withPeriodFrom(YearMonth.parse("2020-10"))
                         .withPeriodTo(YearMonth.parse("2019-02"))
                         .build());
-        String expectedContent = "Field `periodTo` should be later than `periodFrom";
+        String expectedContent = "Field `periodTo` should be later than or equal to `periodFrom`";
 
         setupCommonMockBehaviorWithUuidAndIndustry(request);
 
