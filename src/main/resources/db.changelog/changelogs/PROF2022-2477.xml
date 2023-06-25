@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2477" author="zagvladimir88@gmail.com">
+        <comment>Add foreign key constraint: 'additional_information.cv_id' references 'cvs.id'</comment>
+        <addForeignKeyConstraint
+                baseTableName="additional_information"
+                baseColumnNames="cv_id"
+                constraintName="fk_additional_information_cvs_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

@@ -13,7 +13,6 @@
     <include file="changelogs/PROF2022-710.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-448.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-963.xml" relativeToChangelogFile="true"/>
-    <include file="changelogs/PROF2022-448.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-933.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-529.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-1140.xml" relativeToChangelogFile="true"/>
@@ -34,6 +33,6 @@
     <include file="changelogs/PROF2022-2267.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-2253.xml" relativeToChangelogFile="true"/>
     <include file="changelogs/PROF2022-2402.xml" relativeToChangelogFile="true"/>
-
+    <include file="changelogs/PROF2022-2477.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
