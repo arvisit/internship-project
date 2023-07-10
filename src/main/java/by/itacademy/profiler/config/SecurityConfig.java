@@ -18,12 +18,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
-            "/actuator/**",
             "/api/v1/auth/login",
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/webjars/**"
+    };
+    private static final String[] ROLE_USER_API_REQUIRED = {
+            "/actuator/**"
     };
     private final JwtTokenProvider jwtTokenProvider;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
@@ -39,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers(ROLE_USER_API_REQUIRED).hasRole("USER_API")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
