@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PhoneCodeRepository extends JpaRepository<PhoneCode, Long> {
+    @Override
     @Query("SELECT p FROM PhoneCode p JOIN Country c ON p.country.id = c.id " +
             "ORDER BY FIELD(c.countryName,'Lithuania','Latvia','Ukraine','Russia','Belarus') DESC")
     List<PhoneCode> findAll();

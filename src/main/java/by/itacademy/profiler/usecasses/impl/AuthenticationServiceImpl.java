@@ -25,14 +25,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationUserDto findByEmailAndPassword(AuthenticationRequestDto requestDto) {
         User user = userRepository.findByEmail(requestDto.email());
-        AuthenticationUserDto authenticationUserDto = authenticationUserMapper.userToAuthenticationUserDto(user);
-        if (user != null) {
-            if (passwordEncoder.matches(requestDto.password(), user.getPassword())) {
-                log.info("IN findByEmailAndPassword - authenticationUserDto: {} found by email: {}", authenticationUserDto, authenticationUserDto.email());
-                return authenticationUserDto;
-            }
+        if (user != null && passwordEncoder.matches(requestDto.password(), user.getPassword())) {
+            AuthenticationUserDto authenticationUserDto = authenticationUserMapper.userToAuthenticationUserDto(user);
+            log.info("IN findByEmailAndPassword - authenticationUserDto: {} found by email: {}", authenticationUserDto,
+                    authenticationUserDto.email());
+            return authenticationUserDto;
+        } else {
+            log.info("IN findByEmailAndPassword - Invalid username or password");
+            return null;
         }
-        log.info("IN findByEmailAndPassword - Invalid username or password");
-        return null;
     }
 }

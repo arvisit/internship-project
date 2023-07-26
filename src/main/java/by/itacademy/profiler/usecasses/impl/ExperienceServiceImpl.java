@@ -26,10 +26,9 @@ public class ExperienceServiceImpl implements ExperienceService {
                 .map(experienceMapper::fromDtoToEntity)
                 .toList();
         List<Experience> experienceList = curriculumVitaeService.saveExperienceToCv(cvUuid, experience);
-        List<ExperienceResponseDto> experienceResponse = experienceList.stream()
+        return experienceList.stream()
                 .map(experienceMapper::fromEntityToDto)
                 .toList();
-        return experienceResponse;
     }
 
     @Override

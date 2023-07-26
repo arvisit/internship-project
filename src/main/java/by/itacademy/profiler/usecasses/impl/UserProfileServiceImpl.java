@@ -62,14 +62,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Transactional
     public Optional<UserProfileResponseDto> updateUserProfile(UserProfileDto userProfileDto) {
         String username = authService.getUsername();
-        Optional<UserProfile> userProfile = userProfileRepository.findByUsername(username);
-        if (userProfile.isPresent()) {
-            UserProfile profile = userProfile.get();
-            updateProfile(userProfileDto, profile);
-            userProfileRepository.save(profile);
-            return Optional.ofNullable(userProfileMapper.userProfileToUserProfileResponseDto(profile));
-        }
-        return Optional.empty();
+        return userProfileRepository.findByUsername(username)
+                .map(profile -> {
+                    updateProfile(userProfileDto, profile);
+                    userProfileRepository.save(profile);
+                    return userProfileMapper.userProfileToUserProfileResponseDto(profile);
+                });
     }
 
     private void updateProfile(UserProfileDto userProfileDto, UserProfile userProfile) {

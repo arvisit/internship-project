@@ -164,6 +164,7 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         return curriculumVitaeRepository.findCountByUsername(username);
     }
 
+    @Override
     public boolean isCreationCvAvailable() {
         return getAllCvByUser() < numberOfUserCv;
     }

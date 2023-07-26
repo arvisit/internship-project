@@ -5,6 +5,7 @@ import by.itacademy.profiler.api.exception.EmptyFileException;
 import by.itacademy.profiler.api.exception.WrongMediaTypeException;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
 import static by.itacademy.profiler.util.ImageTestData.createMultipartImageFileWithNoContent;
 import static by.itacademy.profiler.util.ImageTestData.createMultipartImageFileWithUnsupportedType;
@@ -30,13 +31,14 @@ class ValidateImageTest {
     @Test
     void shouldThrowEmptyFileExceptionWhenInvokeValidateAndPassEmptyFile() {
 
-        assertThrows(EmptyFileException.class, () -> ValidateImage.validate(createMultipartImageFileWithNoContent()));
+        MockMultipartFile emptyFile = createMultipartImageFileWithNoContent();
+        assertThrows(EmptyFileException.class, () -> ValidateImage.validate(emptyFile));
     }
 
     @Test
     void shouldThrowWrongMediaTypeExceptionWhenInvokeValidateAndPassWrongMediaTypeFile() {
 
-        assertThrows(WrongMediaTypeException.class,
-                () -> ValidateImage.validate(createMultipartImageFileWithUnsupportedType()));
+        MockMultipartFile wrongMediaTypeFile = createMultipartImageFileWithUnsupportedType();
+        assertThrows(WrongMediaTypeException.class, () -> ValidateImage.validate(wrongMediaTypeFile));
     }
 }
