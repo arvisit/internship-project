@@ -5,7 +5,6 @@ import by.itacademy.profiler.persistence.model.Industry;
 import by.itacademy.profiler.usecasses.IndustryService;
 import by.itacademy.profiler.usecasses.dto.ExperienceRequestDto;
 import by.itacademy.profiler.usecasses.dto.ExperienceResponseDto;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
@@ -31,16 +30,12 @@ class ExperienceMapperTest {
     @Mock
     private IndustryService industryService;
 
-    @Before
-    public void before() {
-        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
-    }
-
     @Test
     void shouldMapPeriodFromCorrectlyWhenInvokeFromDtoToEntity() {
         YearMonth yearMonth = YearMonth.of(2020, 11);
         ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withPeriodFrom(yearMonth).build();
 
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
         assertEquals(yearMonth, experience.getPeriodFrom());
     }
@@ -50,6 +45,7 @@ class ExperienceMapperTest {
         YearMonth yearMonth = YearMonth.of(2021, 2);
         ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withPeriodFrom(yearMonth).build();
 
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
         assertEquals(yearMonth, experience.getPeriodFrom());
     }
@@ -70,6 +66,7 @@ class ExperienceMapperTest {
     void shouldMapCompanyCorrectlyWhenInvokeFromDtoToEntity() {
         String company = "Other company";
         ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withCompany(company).build();
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
 
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
         assertEquals(company, experience.getCompany());
@@ -79,6 +76,7 @@ class ExperienceMapperTest {
     void shouldMapPositionCorrectlyWhenInvokeFromDtoToEntity() {
         String position = "Other position";
         ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withPosition(position).build();
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
 
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
         assertEquals(position, experience.getPosition());
@@ -88,6 +86,7 @@ class ExperienceMapperTest {
     void shouldMapDutiesCorrectlyWhenInvokeFromDtoToEntity() {
         List<String> duties = List.of("duty1", "duty2", "duty3");
         ExperienceRequestDto experienceRequestDto = createExperienceRequestDto().withDuties(duties).build();
+        when(industryService.getIndustryById(1L)).thenReturn(createIndustry().build());
 
         Experience experience = experienceMapper.fromDtoToEntity(experienceRequestDto);
         assertEquals(duties, experience.getDuties());

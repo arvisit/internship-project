@@ -7,6 +7,7 @@ import by.itacademy.profiler.util.UserProfileTestData;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserProfileMapperTest {
@@ -45,5 +46,11 @@ class UserProfileMapperTest {
         assertEquals(profile.getPosition().getName(), userProfileResponseDto.position());
         assertEquals(profile.getProfileImage().getUuid(), userProfileResponseDto.profileImageUuid());
         assertEquals(profile.getUniqueStudentIdentifier(), userProfileResponseDto.uniqueStudentIdentifier());
+    }
+
+    @Test
+    void givenNullUserProfile_whenMapsUserProfileToUserProfileResponseDto_thenReturnNull() {
+        UserProfileResponseDto userProfile = userProfileMapper.userProfileToUserProfileResponseDto(null);
+        assertNull(userProfile);
     }
 }

@@ -29,12 +29,12 @@ public class AuthenticationApiController {
 
     @Operation(summary = "Authenticate user")
     @PostMapping("login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody AuthenticationRequestDto requestDto) {
         AuthenticationUserDto user = authenticationService.findByEmailAndPassword(requestDto);
         if (user == null) {
             throw new BadRequestException("Wrong email or password");
         }
-        Map<Object, Object> response = new HashMap<>();
+        Map<String, String> response = new HashMap<>();
         response.put("username", user.email());
         response.put("token", jwtTokenProvider.createToken(user));
         return ResponseEntity.ok(response);

@@ -1,12 +1,10 @@
 package by.itacademy.profiler.usecasses.mapper;
 
-import by.itacademy.profiler.persistence.model.Country;
 import by.itacademy.profiler.persistence.model.PhoneCode;
 import by.itacademy.profiler.usecasses.dto.PhoneCodeDto;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static by.itacademy.profiler.util.PhoneCodeTestData.createPhoneCode;
