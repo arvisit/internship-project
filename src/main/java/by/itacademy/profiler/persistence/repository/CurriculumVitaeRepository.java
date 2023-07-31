@@ -5,6 +5,7 @@ import by.itacademy.profiler.persistence.model.CurriculumVitae;
 import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.MainEducation;
+import by.itacademy.profiler.persistence.model.Recommendation;
 import by.itacademy.profiler.persistence.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,4 +43,7 @@ public interface CurriculumVitaeRepository extends JpaRepository<CurriculumVitae
 
     @Query("SELECT c.courses FROM CurriculumVitae c WHERE c.uuid = ?1")
     List<Course> findAllCoursesByCVUuid(String uuid);
+
+    @Query("SELECT c.recommendations FROM CurriculumVitae c WHERE c.uuid = ?1")
+    List<Recommendation> findAllRecommendationsByCvUuid(String cvUuid);
 }

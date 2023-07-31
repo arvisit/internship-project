@@ -46,4 +46,6 @@ public interface CurriculumVitaeService {
     List<Course> getCoursesByCvUuid(String cvUuid);
 
     List<Recommendation> saveRecommendationsToCv(String cvUuid, List<Recommendation> recommendations);
+
+    List<Recommendation> getRecommendationsByCvUuid(String cvUuid);
 }

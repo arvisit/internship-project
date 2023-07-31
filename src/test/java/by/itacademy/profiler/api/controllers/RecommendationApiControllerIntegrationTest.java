@@ -18,6 +18,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import java.util.List;
 import java.util.Map;
@@ -74,6 +77,46 @@ class RecommendationApiControllerIntegrationTest {
         assertThat(actualResponse).hasSize(EXPECTED_SIZE_OF_RECOMMENDATION_LIST);
 
         recommendationRepository.deleteAll();
+    }
+
+    @Test
+    @SqlGroup({
+        @Sql(scripts = "classpath:testdata/add_recommendation_test_data.sql",
+                executionPhase = ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:testdata/clear_recommendation_test_data.sql",
+                executionPhase = ExecutionPhase.AFTER_TEST_METHOD)})
+    void shouldReturn200AndJsonContentTypeWhenGetRecommendationsByCvUuidSuccessful() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                CV_RECOMMENDATION_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                String.class
+        );
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+    }
+
+    @Test
+    @SqlGroup({
+        @Sql(scripts = "classpath:testdata/add_recommendation_test_data.sql",
+                executionPhase = ExecutionPhase.BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:testdata/clear_recommendation_test_data.sql",
+                executionPhase = ExecutionPhase.AFTER_TEST_METHOD)})
+    void shouldReturnExpectedResponseJsonWhenGetExperienceByCvUuidSuccessful() {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getAuthHeader());
+
+        ResponseEntity<List<RecommendationResponseDto>> responseEntity = restTemplate.exchange(
+                CV_RECOMMENDATION_URL_TEMPLATE,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {}
+        );
+
+        List<RecommendationResponseDto> actualResponse = responseEntity.getBody();
+        assertThat(actualResponse).hasSize(EXPECTED_SIZE_OF_RECOMMENDATION_LIST);
     }
 
     @SneakyThrows

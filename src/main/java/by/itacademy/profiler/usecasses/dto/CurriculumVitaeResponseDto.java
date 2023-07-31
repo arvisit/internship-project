@@ -11,5 +11,5 @@ public record CurriculumVitaeResponseDto(String uuid, String imageUuid, String n
                                          Boolean isContactsExists, Boolean isAboutExists,
                                          Boolean isCompetencesExists, Boolean isExperienceExists,
                                          Boolean isEducationsExists, Boolean isAdditionalInformationExists,
-                                         String status) implements Serializable {
+                                         Boolean isRecommendationsExists, String status) implements Serializable {
 }

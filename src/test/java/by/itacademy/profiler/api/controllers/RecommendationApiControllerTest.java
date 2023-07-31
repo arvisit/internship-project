@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
+import static by.itacademy.profiler.util.RecommendationTestData.CV_NOT_FOUND_ERROR;
 import static by.itacademy.profiler.util.RecommendationTestData.CV_RECOMMENDATION_URL_TEMPLATE;
 import static by.itacademy.profiler.util.RecommendationTestData.CV_UUID_FOR_RECOMMENDATION;
 import static by.itacademy.profiler.util.RecommendationTestData.createListOfRecommendationRequestDto;
@@ -30,6 +31,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -611,6 +614,68 @@ class RecommendationApiControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString(expectedContent)));
+    }
+
+    @Test
+    void shouldReturn200AndContentTypeJsonWhenGetRecommendationsIsSuccessful() throws Exception {
+        List<RecommendationResponseDto> responseDtos = createListRecommendationResponseDto();
+
+        when(recommendationService.getRecommendationsByCvUuid(CV_UUID_FOR_RECOMMENDATION)).thenReturn(responseDtos);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_RECOMMENDATION)).thenReturn(true);
+
+        mockMvc.perform(get(CV_RECOMMENDATION_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void shouldReturn200AndInvokeBusinessLogicWhenGetRecommendationsIsSuccessful() throws Exception {
+        List<RecommendationResponseDto> responseDtos = createListRecommendationResponseDto();
+
+        when(recommendationService.getRecommendationsByCvUuid(CV_UUID_FOR_RECOMMENDATION)).thenReturn(responseDtos);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_RECOMMENDATION)).thenReturn(true);
+
+        mockMvc.perform(get(CV_RECOMMENDATION_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        verify(recommendationService, times(1)).getRecommendationsByCvUuid(CV_UUID_FOR_RECOMMENDATION);
+        verify(curriculumVitaeService, times(1)).isCurriculumVitaeExists(CV_UUID_FOR_RECOMMENDATION);
+    }
+
+    @Test
+    void shouldReturn200AndCorrectJsonWhenGetRecommendationsIsSuccessful() throws Exception {
+        List<RecommendationResponseDto> responseDtos = createListRecommendationResponseDto();
+        String expectedJson = objectMapper.writeValueAsString(responseDtos);
+
+        when(recommendationService.getRecommendationsByCvUuid(CV_UUID_FOR_RECOMMENDATION)).thenReturn(responseDtos);
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_RECOMMENDATION)).thenReturn(true);
+
+        MvcResult mvcResult = mockMvc.perform(get(CV_RECOMMENDATION_URL_TEMPLATE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        String actualResult = mvcResult.getResponse().getContentAsString();
+
+        assertEquals(expectedJson, actualResult);
+    }
+
+    @Test
+    void shouldReturn404WhenGetRecommendationsWithInvalidUuid() throws Exception {
+        String expectedContent = CV_NOT_FOUND_ERROR;
+
+        when(curriculumVitaeService.isCurriculumVitaeExists(CV_UUID_FOR_RECOMMENDATION)).thenReturn(false);
+
+        mockMvc.perform(get(CV_RECOMMENDATION_URL_TEMPLATE)
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString(expectedContent)));
     }
 

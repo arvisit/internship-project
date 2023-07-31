@@ -13,6 +13,8 @@ public class RecommendationTestData {
     public static final String CV_UUID_FOR_RECOMMENDATION = "123e4567-e89b-12d3-a456-426614174001";
     public static final String CV_RECOMMENDATION_URL_TEMPLATE = String.format("/api/v1/cvs/%s/recommendations", CV_UUID_FOR_RECOMMENDATION);
     public static final Integer EXPECTED_SIZE_OF_RECOMMENDATION_LIST = 3;
+    public static final String CV_NOT_FOUND_ERROR = String.format("\"CV with UUID %s not found!!!\"",
+            CV_UUID_FOR_RECOMMENDATION);
 
     public static RecommendationRequestDto.RecommendationRequestDtoBuilder createRecommendationRequestDto() {
         return RecommendationRequestDto.builder()
