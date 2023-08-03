@@ -7,6 +7,7 @@ import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.Image;
 import by.itacademy.profiler.persistence.model.MainEducation;
+import by.itacademy.profiler.persistence.model.Recommendation;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.persistence.model.User;
 import by.itacademy.profiler.persistence.repository.CountryRepository;
@@ -159,6 +160,17 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         return curriculumVitaeRepository.findAllCoursesByCVUuid(cvUuid);
     }
 
+    @Override
+    @Transactional
+    public List<Recommendation> saveRecommendationsToCv(String cvUuid, List<Recommendation> recommendations) {
+        CurriculumVitae curriculumVitae = curriculumVitaeRepository.getReferenceByUuid(cvUuid);
+        List<Recommendation> curriculumVitaeRecommendations = curriculumVitae.getRecommendations();
+        curriculumVitaeRecommendations.clear();
+        curriculumVitaeRecommendations.addAll(recommendations);
+        CurriculumVitae savedCv = curriculumVitaeRepository.save(curriculumVitae);
+        return savedCv.getRecommendations();
+    }
+
     public Long getAllCvByUser() {
         String username = authService.getUsername();
         return curriculumVitaeRepository.findCountByUsername(username);
@@ -213,8 +225,8 @@ public class CurriculumVitaeServiceImpl implements CurriculumVitaeService {
         if (!curriculumVitaeRequestDto.city().equals(curriculumVitae.getCity())) {
             curriculumVitae.setCity(curriculumVitaeRequestDto.city());
         }
-            curriculumVitae.setIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate());
-            curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
+        curriculumVitae.setIsReadyToRelocate(curriculumVitaeRequestDto.isReadyToRelocate());
+        curriculumVitae.setIsReadyForRemoteWork(curriculumVitaeRequestDto.isReadyForRemoteWork());
     }
 
     @Override

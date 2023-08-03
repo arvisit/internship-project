@@ -8,6 +8,7 @@ import by.itacademy.profiler.usecasses.mapper.PhoneCodeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public class PhoneCodeServiceImpl implements PhoneCodeService {
     @Override
     public boolean isPhoneCodeExist(Long id) {
         return phoneCodeRepository.existsById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PhoneCode getPhoneCodeById(Long id) {
+        return phoneCodeRepository.getPhoneCodeById(id);
     }
 }

@@ -4,6 +4,7 @@ import by.itacademy.profiler.persistence.model.Course;
 import by.itacademy.profiler.persistence.model.CvLanguage;
 import by.itacademy.profiler.persistence.model.Experience;
 import by.itacademy.profiler.persistence.model.MainEducation;
+import by.itacademy.profiler.persistence.model.Recommendation;
 import by.itacademy.profiler.persistence.model.Skill;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeRequestDto;
 import by.itacademy.profiler.usecasses.dto.CurriculumVitaeResponseDto;
@@ -43,4 +44,6 @@ public interface CurriculumVitaeService {
     List<MainEducation> getMainEducationsByCvUuid(String cvUuid);
 
     List<Course> getCoursesByCvUuid(String cvUuid);
+
+    List<Recommendation> saveRecommendationsToCv(String cvUuid, List<Recommendation> recommendations);
 }

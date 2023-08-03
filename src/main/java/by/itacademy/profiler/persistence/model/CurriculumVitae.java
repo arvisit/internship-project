@@ -98,14 +98,18 @@ public class CurriculumVitae {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "cv_id", nullable = false)
     private List<Experience> experience = new ArrayList<>();
-    
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "cv_id", nullable = false)
     private List<MainEducation> mainEducations = new ArrayList<>();
-    
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "cv_id", nullable = false)
     private List<Course> courses = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cv_id", nullable = false)
+    private List<Recommendation> recommendations = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -132,6 +136,7 @@ public class CurriculumVitae {
         if (!Objects.equals(skills, that.skills)) return false;
         if (!Objects.equals(mainEducations, that.mainEducations)) return false;
         if (!Objects.equals(courses, that.courses)) return false;
+        if (!Objects.equals(recommendations, that.recommendations)) return false;
         if (!Objects.equals(additionalInformation, that.additionalInformation)) return false;
         return Objects.equals(experience, that.experience);
     }
@@ -139,7 +144,7 @@ public class CurriculumVitae {
     @Override
     public int hashCode() {
         return Objects.hash(id, uuid, user, image, name, surname, position, country, city, isReadyToRelocate,
-                isReadyForRemoteWork, contacts, about, status, languages, skills, experience, mainEducations, courses, additionalInformation);
+                isReadyForRemoteWork, contacts, about, status, languages, skills, experience, mainEducations, courses, recommendations, additionalInformation);
     }
 
     @Override
@@ -163,6 +168,7 @@ public class CurriculumVitae {
                 ", experience=" + experience.toString() +
                 ", mainEducations=" + mainEducations.toString() +
                 ", courses=" + courses.toString() +
+                ", recommendations=" + recommendations.toString() +
                 ", additionalInformation=" + additionalInformation.toString() +
                 ", status=" + status +
                 '}';
