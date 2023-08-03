@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,5 +54,17 @@ public class RecommendationApiController {
         log.debug("Input data for creating list of recommendations: {}", request);
         List<RecommendationResponseDto> response = recommendationService.save(request, uuid);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get list of user recommendations by CV uuid")
+    @ApiResponse(responseCode = "200", description = "GET", content = @Content(mediaType = APPLICATION_JSON_VALUE,
+            array = @ArraySchema(schema = @Schema(implementation = RecommendationResponseDto.class))))
+    @GetMapping
+    public ResponseEntity<List<RecommendationResponseDto>> getRecommendationsByCvUuid(
+            @PathVariable(name = "uuid") @IsCvExists String cvUuid) {
+        List<RecommendationResponseDto> recommendationResponseDtos = recommendationService
+                .getRecommendationsByCvUuid(cvUuid);
+        log.debug("Getting list of recommendations of CV {} from database: {} ", cvUuid, recommendationResponseDtos);
+        return ResponseEntity.ok(recommendationResponseDtos);
     }
 }

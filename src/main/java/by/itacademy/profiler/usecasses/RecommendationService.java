@@ -8,4 +8,6 @@ import java.util.List;
 public interface RecommendationService {
 
     List<RecommendationResponseDto> save(List<RecommendationRequestDto> listOfRecommendation, String cvUuid);
+
+    List<RecommendationResponseDto> getRecommendationsByCvUuid(String cvUuid);
 }

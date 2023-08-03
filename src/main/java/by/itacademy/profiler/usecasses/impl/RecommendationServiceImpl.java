@@ -30,4 +30,14 @@ public class RecommendationServiceImpl implements RecommendationService {
                 .map(recommendationMapper::fromEntityToDto)
                 .toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RecommendationResponseDto> getRecommendationsByCvUuid(String cvUuid) {
+        List<Recommendation> recommendations = curriculumVitaeService.getRecommendationsByCvUuid(cvUuid);
+
+        return recommendations.stream()
+                .map(recommendationMapper::fromEntityToDto)
+                .toList();
+    }
 }
