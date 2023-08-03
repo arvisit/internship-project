@@ -15,4 +15,6 @@ public interface PhoneCodeRepository extends JpaRepository<PhoneCode, Long> {
 
     @Query("SELECT p FROM PhoneCode p WHERE p.code =:code")
     PhoneCode findByCode(@Param("code") int code);
+
+    PhoneCode getPhoneCodeById(Long id);
 }

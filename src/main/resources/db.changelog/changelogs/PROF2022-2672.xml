@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="PROF2022-2672" author="natalapetracenko@gmail.com">
+        <comment>Create table for recommendation - recommendations</comment>
+        <createTable tableName="recommendations">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="full_name" type="varchar(40)"/>
+            <column name="company" type="varchar(40)"/>
+            <column name="position" type="varchar(40)"/>
+            <column name="phone_code_id" type="bigint"/>
+            <column name="phone_number" type="varchar(25)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="linked_in" type="varchar(255)"/>
+            <column name="telegram" type="varchar(50)"/>
+            <column name="viber" type="varchar(50)"/>
+            <column name="whats_app" type="varchar(50)"/>
+            <column name="recommendation" type="varchar(255)"/>
+            <column name="cv_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="recommendations"
+                baseColumnNames="cv_id"
+                constraintName="fk_recommendations_cv_id"
+                referencedTableName="cvs"
+                referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint
+                baseTableName="recommendations"
+                baseColumnNames="phone_code_id"
+                constraintName="fk_recommendations_phone_code_id"
+                referencedTableName="phone_codes"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

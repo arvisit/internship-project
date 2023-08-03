@@ -41,4 +41,6 @@ public final class ValidationConstants {
     public static final String REGEXP_VALIDATE_AWARD_ISSUER = "^[a-zA-Z0-9,\\.\\-/:; ]*$";
     public static final String REGEXP_VALIDATE_AWARD_TITLE = "^[\\p{IsLatin}0-9,\\.\\-/:; ]+$";
     public static final String REGEXP_VALIDATE_AWARD_DESCRIPTION = "^[a-zA-Z0-9,\\.\\-/:; ]*$";
+    public static final String REGEXP_VALIDATE_RECOMMENDATION_FULL_NAME = "^[\\p{IsLatin}\\- ]*$";
+    public static final String REGEXP_VALIDATE_RECOMMENDATION_COMPANY_POSITION = "^[\\p{IsLatin}0-9,.\\-/:;'\" ]*$";
 }
