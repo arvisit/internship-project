@@ -27,6 +27,7 @@ public class SecurityConfig {
     private static final String[] ROLE_USER_API_REQUIRED = {
             "/actuator/**"
     };
+    private static final String KUBERNETES_HEALTH_CHECK = "/actuator/health";
     private final JwtTokenProvider jwtTokenProvider;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
 
@@ -41,6 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers(KUBERNETES_HEALTH_CHECK).permitAll()
                 .requestMatchers(ROLE_USER_API_REQUIRED).hasRole("USER_API")
                 .anyRequest().authenticated()
                 .and()
