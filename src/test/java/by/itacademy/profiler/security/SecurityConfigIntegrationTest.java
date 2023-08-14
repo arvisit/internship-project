@@ -60,6 +60,8 @@ class SecurityConfigIntegrationTest {
 
     private static final String ACTUATOR_URL = "/actuator";
 
+    private static final String ACTUATOR_HEALTH_URL = "/actuator/health";
+
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -203,6 +205,18 @@ class SecurityConfigIntegrationTest {
         assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
         assertThat(actualResponse).containsKey(IF_FORBIDDEN_MESSAGE_KEY);
         assertEquals(expectedMessage, actualResponse.get(IF_FORBIDDEN_MESSAGE_KEY));
+    }
+
+    @Test
+    void shouldReturn200AndJsonContentTypeWhenUseActuatorHealthWithoutAuthentication() throws Exception {
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                ACTUATOR_HEALTH_URL,
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                String.class);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
     }
 
     private AuthenticationRequestDto createInvalidCredentials() {
